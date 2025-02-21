@@ -1,0 +1,328 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Урок 7.4 - Обтекание текстом изображения собаки | CSS Курс</title>
+    <link rel="stylesheet" href="../styles/main.css">
+    <link rel="stylesheet" href="../styles/lesson.css">
+    <style>
+        /* Базовые стили для демонстраций */
+        .demo-section {
+            margin-bottom: 40px;
+        }
+
+        /* Стили для блоков с кодом */
+        .code-block {
+            background: #1E1E1E;
+            color: #D4D4D4;
+            padding: 15px;
+            border-radius: 8px;
+            margin: 20px 0;
+            font-family: monospace;
+        }
+
+        .code-block pre {
+            margin: 0;
+        }
+
+        .code-block code {
+            color: #D4D4D4;
+            font-family: monospace;
+        }
+
+        /* Подсветка синтаксиса */
+        .code-block .keyword { color: #569CD6; }
+        .code-block .property { color: #9CDCFE; }
+        .code-block .value { color: #CE9178; }
+        .code-block .punctuation { color: #D4D4D4; }
+        .code-block .comment { color: #6A9955; }
+        .code-block .selector { color: #D7BA7D; }
+
+        /* Демонстрация обтекания */
+        .float-demo {
+            background: #fff;
+            padding: 20px;
+            margin: 20px 0;
+            border: 1px solid #ddd;
+            overflow: hidden;
+            border-radius: 8px;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+        }
+
+        .float-demo img {
+            float: left;
+            width: 300px;
+            height: 300px;
+            margin-right: 20px;
+            background: linear-gradient(45deg, #466A85, #7be6e8);
+            shape-margin: 20px;
+        }
+
+        /* Демонстрация path() */
+        .path-demo {
+            background: #f7f5e8;
+            padding: 20px;
+            margin: 20px 0;
+            border-radius: 8px;
+            overflow: hidden;
+        }
+
+        .path-demo img {
+            float: left;
+            width: 300px;
+            height: 300px;
+            margin-right: 20px;
+            background: linear-gradient(135deg, #FF6B6B, #FFD93D);
+            shape-outside: polygon(30% 0%, 70% 0%, 100% 30%, 100% 70%, 70% 100%, 30% 100%, 0% 70%, 0% 30%);
+            clip-path: polygon(30% 0%, 70% 0%, 100% 30%, 100% 70%, 70% 100%, 30% 100%, 0% 70%, 0% 30%);
+        }
+
+        /* Интерактивные элементы */
+        .controls {
+            margin: 15px 0;
+            display: flex;
+            gap: 10px;
+            flex-wrap: wrap;
+            background: #f5f5f5;
+            padding: 15px;
+            border-radius: 8px;
+        }
+
+        .controls button {
+            position: relative;
+            overflow: hidden;
+            padding: 12px 24px;
+            background: #466A85;
+            color: white;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            font-weight: bold;
+            outline: none;
+        }
+
+        .controls button:hover {
+            background: #557a95;
+            transform: translateY(-2px);
+        }
+
+        .controls button:active {
+            transform: translateY(0);
+        }
+
+        .controls button.active {
+            background: #7be6e8;
+            color: #333;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.2);
+        }
+
+        /* Демонстрация shape-margin */
+        .margin-examples {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 20px;
+            margin: 20px 0;
+        }
+
+        .margin-example {
+            background: #fff;
+            padding: 20px;
+            border: 1px solid #ddd;
+            border-radius: 8px;
+            overflow: hidden;
+        }
+
+        .margin-example img {
+            float: left;
+            width: 200px;
+            height: 200px;
+            background: linear-gradient(225deg, #4834D4, #686DE0);
+            shape-outside: polygon(30% 0%, 70% 0%, 100% 30%, 100% 70%, 70% 100%, 30% 100%, 0% 70%, 0% 30%);
+            clip-path: polygon(30% 0%, 70% 0%, 100% 30%, 100% 70%, 70% 100%, 30% 100%, 0% 70%, 0% 30%);
+        }
+
+        /* Практическое задание */
+        .practice-area {
+            background: #fff;
+            padding: 20px;
+            margin: 20px 0;
+            border: 1px solid #ddd;
+            border-radius: 8px;
+            overflow: hidden;
+        }
+
+        .practice-preview {
+            margin-top: 20px;
+            padding: 20px;
+            background: #f7f5e8;
+            border-radius: 8px;
+            overflow: hidden;
+            position: relative;
+        }
+
+        .practice-preview img {
+            float: left;
+            width: 250px;
+            height: 250px;
+            margin-right: 20px;
+            background: linear-gradient(315deg, #6C5CE7, #A8E6CF);
+            shape-outside: polygon(30% 0%, 70% 0%, 100% 30%, 100% 70%, 70% 100%, 30% 100%, 0% 70%, 0% 30%);
+            clip-path: polygon(30% 0%, 70% 0%, 100% 30%, 100% 70%, 70% 100%, 30% 100%, 0% 70%, 0% 30%);
+            transition: all 0.3s ease;
+        }
+
+        /* Дополнительные стили */
+        .shape-tips {
+            margin: 20px 0;
+            padding-left: 20px;
+        }
+
+        .shape-tips li {
+            margin: 10px 0;
+            color: #555;
+        }
+
+        .shape-tips strong {
+            color: #466A85;
+        }
+    </style>
+</head>
+<body>
+    <header class="main-header">
+        <nav class="main-nav">
+            <a href="../index.html" class="logo">CSS Курс</a>
+            <ul class="nav-links">
+                <li><a href="../index.html">На главную</a></li>
+                <li><a href="../chapters.html">Главы</a></li>
+            </ul>
+        </nav>
+    </header>
+
+    <main class="lesson-content">
+        <nav class="lesson-nav">
+            <a href="7-3.html" class="prev-lesson">← Урок 7.3: Обтекание текстом изображения компаса</a>
+            <a href="8-1.html" class="next-lesson">Урок 8.1: Следующая глава →</a>
+        </nav>
+
+        <div class="chapter-navigation">
+            <h3>Навигация по главе 7:</h3>
+            <ul>
+                <li><a href="7-1.html">7.1 Использование float и создание drop cap</a></li>
+                <li><a href="7-2.html">7.2 Стилизация цитаты</a></li>
+                <li><a href="7-3.html">7.3 Обтекание текстом изображения компаса</a></li>
+                <li><a href="7-4.html" class="current">7.4 Обтекание текстом изображения собаки</a></li>
+            </ul>
+        </div>
+
+        <article class="lesson">
+            <h1>Урок 7.4 - Обтекание текстом изображения собаки</h1>
+
+            <div class="theory-block">
+                <h2>1. Использование path() для сложных форм</h2>
+                <p>Свойство path() позволяет создавать сложные формы обтекания, но пока имеет ограниченную поддержку браузерами. Рассмотрим альтернативные подходы:</p>
+
+                <div class="code-block">
+                    <pre><code><span class="comment">/* Использование polygon() вместо path() */</span>
+<span class="selector">.complex-shape</span> {
+    <span class="property">shape-outside</span>: <span class="value">polygon(30% 0%, 70% 0%, 100% 30%, 100% 70%, 70% 100%, 30% 100%, 0% 70%, 0% 30%)</span>;
+    <span class="property">clip-path</span>: <span class="value">polygon(30% 0%, 70% 0%, 100% 30%, 100% 70%, 70% 100%, 30% 100%, 0% 70%, 0% 30%)</span>;
+}</code></pre>
+                </div>
+
+                <div class="path-demo">
+                    <img src="../images/dog.jpg" alt="Сложная форма">
+                    <p>Пример использования polygon() для создания сложной формы обтекания. Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.</p>
+                </div>
+            </div>
+
+            <div class="theory-block">
+                <h2>2. Настройка shape-margin</h2>
+                <p>shape-margin позволяет создать отступ между текстом и формой обтекания:</p>
+
+                <div class="margin-examples">
+                    <div class="margin-example">
+                        <img src="../images/dog.jpg" alt="Без отступа" style="shape-margin: 0;">
+                        <p>Без отступа (shape-margin: 0)</p>
+                    </div>
+                    <div class="margin-example">
+                        <img src="../images/dog.jpg" alt="С отступом" style="shape-margin: 20px;">
+                        <p>С отступом (shape-margin: 20px)</p>
+                    </div>
+                </div>
+
+                <div class="code-block">
+                    <pre><code><span class="comment">/* Добавление отступа */</span>
+<span class="selector">.image-with-margin</span> {
+    <span class="property">shape-margin</span>: <span class="value">20px</span>;    <span class="comment">/* Отступ от формы */</span>
+    <span class="property">margin-right</span>: <span class="value">20px</span>;    <span class="comment">/* Обычный отступ справа */</span>
+}</code></pre>
+                </div>
+            </div>
+
+            <div class="practice-block">
+                <h2>3. Практическое задание</h2>
+                <p>Создайте обтекание изображения с использованием различных значений shape-margin:</p>
+
+                <div class="controls">
+                    <button onclick="changeMargin('0px')">Без отступа</button>
+                    <button onclick="changeMargin('10px')">Малый отступ</button>
+                    <button onclick="changeMargin('20px')">Средний отступ</button>
+                    <button onclick="changeMargin('30px')">Большой отступ</button>
+                </div>
+
+                <div class="practice-preview" id="marginPreview">
+                    <img src="../images/dog.jpg" alt="Практика">
+                    <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.</p>
+                </div>
+            </div>
+
+            <div class="theory-block">
+                <h2>4. Ключевые моменты</h2>
+                <ul class="shape-tips">
+                    <li><strong>polygon()</strong> - альтернатива path() для создания сложных форм</li>
+                    <li><strong>shape-margin</strong> - управление отступом между текстом и формой</li>
+                    <li><strong>clip-path</strong> - визуальная обрезка изображения</li>
+                    <li><strong>float</strong> - базовое свойство для обтекания</li>
+                </ul>
+            </div>
+        </article>
+    </main>
+
+    <script>
+        function changeMargin(margin) {
+            const img = document.querySelector('#marginPreview img');
+            const buttons = document.querySelectorAll('.controls button');
+            
+            img.style.shapeMargin = margin;
+            img.style.marginRight = margin;
+            
+            img.style.transform = 'scale(0.95)';
+            setTimeout(() => {
+                img.style.transform = 'scale(1)';
+            }, 150);
+            
+            buttons.forEach(btn => {
+                btn.classList.remove('active');
+                if (btn.textContent.toLowerCase().includes(margin.replace('px', ''))) {
+                    btn.classList.add('active');
+                }
+            });
+        }
+
+        document.addEventListener('DOMContentLoaded', function() {
+            changeMargin('0px');
+            
+            document.querySelectorAll('.controls button').forEach(button => {
+                button.addEventListener('click', function() {
+                    const margin = this.textContent.toLowerCase().includes('без') ? '0px' :
+                                 this.textContent.toLowerCase().includes('малый') ? '10px' :
+                                 this.textContent.toLowerCase().includes('средний') ? '20px' : '30px';
+                    changeMargin(margin);
+                });
+            });
+        });
+    </script>
+</body>
+</html> 

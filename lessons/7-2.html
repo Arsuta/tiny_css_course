@@ -1,0 +1,365 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Урок 7.2 - Стилизация цитаты | CSS Курс</title>
+    <link rel="stylesheet" href="../styles/main.css">
+    <link rel="stylesheet" href="../styles/lesson.css">
+    <style>
+        /* Стили для демонстраций */
+        .demo-section {
+            margin-bottom: 40px;
+        }
+
+        /* Стили для блоков с кодом */
+        .code-block {
+            background: #1E1E1E;
+            color: #D4D4D4;
+            padding: 15px;
+            border-radius: 8px;
+            margin: 20px 0;
+            font-family: monospace;
+        }
+
+        .code-block pre {
+            margin: 0;
+        }
+
+        .code-block code {
+            color: #D4D4D4;
+            font-family: monospace;
+        }
+
+        /* Подсветка синтаксиса */
+        .code-block .keyword { color: #569CD6; }
+        .code-block .property { color: #9CDCFE; }
+        .code-block .value { color: #CE9178; }
+        .code-block .punctuation { color: #D4D4D4; }
+        .code-block .comment { color: #6A9955; }
+        .code-block .selector { color: #D7BA7D; }
+
+        /* Демонстрация цитат */
+        .quote-demo {
+            margin: 20px 0;
+            padding: 20px;
+            background: #fff;
+            border: 1px solid #ddd;
+        }
+
+        .quote-example {
+            font-family: 'Passions Conflict', cursive;
+            font-size: 2em;
+            line-height: 1;
+            margin: 20px 0;
+            padding: 20px;
+            background: #f7f5e8;
+        }
+
+        /* Интерактивные элементы */
+        .controls {
+            margin: 15px 0;
+            display: flex;
+            gap: 10px;
+            flex-wrap: wrap;
+        }
+
+        .controls label {
+            display: flex;
+            flex-direction: column;
+            min-width: 200px;
+        }
+
+        .controls input[type="range"] {
+            width: 100%;
+        }
+
+        /* Примеры стилей цитат */
+        .quote-styles {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 20px;
+            margin: 20px 0;
+        }
+
+        .quote-style {
+            padding: 20px;
+            background: #fff;
+            border: 1px solid #ddd;
+        }
+
+        /* Демонстрация различных шрифтов */
+        .font-demo {
+            margin: 20px 0;
+        }
+
+        .font-example {
+            margin: 10px 0;
+            padding: 15px;
+            background: #f7f5e8;
+        }
+
+        /* Практическое задание */
+        .practice-area {
+            background: #fff;
+            padding: 20px;
+            margin: 20px 0;
+            border: 1px solid #ddd;
+        }
+
+        .practice-preview {
+            margin-top: 20px;
+            padding: 20px;
+            background: #f7f5e8;
+        }
+
+        /* Единицы измерения в CSS */
+        .units-explanation {
+            margin-bottom: 20px;
+        }
+
+        .units-explanation h4 {
+            margin-bottom: 10px;
+        }
+
+        .units-explanation .code-block {
+            margin-bottom: 10px;
+        }
+
+        .units-demo {
+            margin-bottom: 20px;
+        }
+
+        .units-demo .unit-example {
+            margin-bottom: 10px;
+        }
+
+        .units-comparison {
+            margin-bottom: 20px;
+        }
+
+        .units-comparison ul {
+            list-style-type: disc;
+            padding-left: 20px;
+        }
+
+        .units-practice {
+            margin-bottom: 20px;
+        }
+
+        .units-practice .controls {
+            margin-bottom: 10px;
+        }
+
+        .units-practice .controls label {
+            display: flex;
+            flex-direction: column;
+            min-width: 200px;
+        }
+
+        .units-practice .controls input[type="range"] {
+            width: 100%;
+        }
+
+        .size-demo {
+            margin-top: 10px;
+        }
+
+        .size-demo .px-text,
+        .size-demo .em-text,
+        .size-demo .rem-text,
+        .size-demo .percent-text {
+            margin-bottom: 5px;
+        }
+    </style>
+</head>
+<body>
+    <header class="main-header">
+        <nav class="main-nav">
+            <a href="../index.html" class="logo">CSS Курс</a>
+            <ul class="nav-links">
+                <li><a href="../index.html">На главную</a></li>
+                <li><a href="../chapters.html">Главы</a></li>
+            </ul>
+        </nav>
+    </header>
+
+    <main class="lesson-content">
+        <nav class="lesson-nav">
+            <a href="7-1.html" class="prev-lesson">← Урок 7.1: Использование float и создание drop cap</a>
+            <a href="7-3.html" class="next-lesson">Урок 7.3: Обтекание текстом изображения компаса →</a>
+        </nav>
+
+        <div class="chapter-navigation">
+            <h3>Навигация по главе 7:</h3>
+            <ul>
+                <li><a href="7-1.html">7.1 Использование float и создание drop cap</a></li>
+                <li><a href="7-2.html" class="current">7.2 Стилизация цитаты</a></li>
+                <li><a href="7-3.html">7.3 Обтекание текстом изображения компаса</a></li>
+                <li><a href="7-4.html">7.4 Обтекание текстом изображения собаки</a></li>
+            </ul>
+        </div>
+
+        <article class="lesson">
+            <h1>Урок 7.2 - Стилизация цитаты</h1>
+
+            <div class="theory-block">
+                <h2>1. Работа со шрифтами для цитат</h2>
+                <h3>Единицы измерения в CSS</h3>
+                <p>При работе с текстом в CSS используются различные единицы измерения. Рассмотрим самые популярные:</p>
+                
+                <div class="units-explanation">
+                    <h4>Абсолютные единицы:</h4>
+                    <div class="code-block">
+                        <pre><code><span class="comment">/* Абсолютные единицы измерения */</span>
+<span class="selector">h1</span> {
+    <span class="property">font-size</span>: <span class="value">16px</span>;   <span class="comment">/* Пиксели - самая базовая единица */</span>
+    <span class="property">font-size</span>: <span class="value">12pt</span>;   <span class="comment">/* Пункты - 1pt = 1/72 дюйма */</span>
+    <span class="property">font-size</span>: <span class="value">1cm</span>;    <span class="comment">/* Сантиметры */</span>
+    <span class="property">font-size</span>: <span class="value">1mm</span>;    <span class="comment">/* Миллиметры */</span>
+    <span class="property">font-size</span>: <span class="value">1in</span>;    <span class="comment">/* Дюймы - 1in = 96px */</span>
+}</code></pre>
+                    </div>
+
+                    <h4>Относительные единицы:</h4>
+                    <div class="code-block">
+                        <pre><code><span class="comment">/* Относительные единицы измерения */</span>
+<span class="selector">p</span> {
+    <span class="property">font-size</span>: <span class="value">1em</span>;    <span class="comment">/* Относительно размера шрифта родителя */</span>
+    <span class="property">font-size</span>: <span class="value">1rem</span>;   <span class="comment">/* Относительно размера шрифта корневого элемента */</span>
+    <span class="property">font-size</span>: <span class="value">100%</span>;   <span class="comment">/* Процент от размера шрифта родителя */</span>
+    <span class="property">font-size</span>: <span class="value">1vw</span>;    <span class="comment">/* 1% от ширины viewport */</span>
+    <span class="property">font-size</span>: <span class="value">1vh</span>;    <span class="comment">/* 1% от высоты viewport */</span>
+    <span class="property">font-size</span>: <span class="value">1ch</span>;    <span class="comment">/* Ширина символа "0" текущего шрифта */</span>
+}</code></pre>
+                    </div>
+
+                    <div class="units-demo">
+                        <h4>Демонстрация различных единиц измерения:</h4>
+                        <div class="unit-example">
+                            <p style="font-size: 16px">Текст размером 16px</p>
+                            <p style="font-size: 1.5em">Текст размером 1.5em</p>
+                            <p style="font-size: 1.5rem">Текст размером 1.5rem</p>
+                            <p style="font-size: 150%">Текст размером 150%</p>
+                        </div>
+                    </div>
+
+                    <div class="units-comparison">
+                        <h4>Когда какие единицы использовать:</h4>
+                        <ul>
+                            <li><strong>px</strong> - когда нужен точный размер, независимый от настроек пользователя</li>
+                            <li><strong>em</strong> - для элементов, размер которых должен зависеть от родителя</li>
+                            <li><strong>rem</strong> - для создания масштабируемой типографики, зависящей от корневого размера</li>
+                            <li><strong>%</strong> - для адаптивного дизайна и масштабирования относительно родителя</li>
+                            <li><strong>vw/vh</strong> - для размеров, зависящих от размера окна браузера</li>
+                        </ul>
+                    </div>
+
+                    <div class="units-practice">
+                        <h4>Интерактивная демонстрация:</h4>
+                        <div class="controls">
+                            <label>
+                                Root Font Size:
+                                <input type="range" min="12" max="24" value="16" id="rootFontSize">
+                                <span id="rootFontSizeValue">16px</span>
+                            </label>
+                        </div>
+                        <div class="size-demo" id="sizeDemo">
+                            <p class="px-text">Текст 16px (фиксированный)</p>
+                            <p class="em-text">Текст 1.5em (относительный)</p>
+                            <p class="rem-text">Текст 1.5rem (относительный корню)</p>
+                            <p class="percent-text">Текст 150% (относительный)</p>
+                        </div>
+                    </div>
+                </div>
+
+                <p>Для создания выразительных цитат мы будем использовать декоративный шрифт Passions Conflict. Этот шрифт особенно хорошо подходит для коротких текстов и заголовков.</p>
+
+                <div class="code-block">
+                    <pre><code><span class="comment">/* Импорт шрифта */</span>
+<span class="keyword">@import</span> url('https://fonts.googleapis.com/css2?family=Passions+Conflict&display=swap');
+
+<span class="comment">/* Применение шрифта к цитате */</span>
+<span class="selector">blockquote</span> {
+    <span class="property">font-family</span>: <span class="value">'Passions Conflict', cursive</span>;
+    <span class="property">font-size</span>: <span class="value">2em</span>;
+    <span class="property">line-height</span>: <span class="value">1</span>;
+}</code></pre>
+                </div>
+            </div>
+
+            <div class="example-block">
+                <h2>2. Примеры стилизации цитат</h2>
+                <div class="quote-styles">
+                    <div class="quote-style">
+                        <blockquote style="font-family: 'Passions Conflict', cursive; font-size: 2em; line-height: 1;">
+                            "Old longings nomadic leap, Chafing at custom's chain..."
+                        </blockquote>
+                    </div>
+                    <div class="quote-style">
+                        <blockquote style="font-family: Georgia, serif; font-style: italic; font-size: 1.2em;">
+                            "Old longings nomadic leap, Chafing at custom's chain..."
+                        </blockquote>
+                    </div>
+                </div>
+            </div>
+
+            <div class="practice-block">
+                <h2>3. Практическое задание</h2>
+                <p>Создайте стилизованную цитату с использованием предоставленных инструментов:</p>
+
+                <div class="controls">
+                    <label>
+                        Font Size:
+                        <input type="range" min="1.5" max="3" value="2" step="0.1" id="quoteFontSize">
+                        <span id="fontSizeValue">2em</span>
+                    </label>
+                    <label>
+                        Line Height:
+                        <input type="range" min="0.8" max="1.5" value="1" step="0.1" id="quoteLineHeight">
+                        <span id="lineHeightValue">1</span>
+                    </label>
+                </div>
+
+                <div class="practice-preview" id="quotePreview">
+                    <blockquote>
+                        "Old longings nomadic leap, Chafing at custom's chain..."
+                    </blockquote>
+                </div>
+            </div>
+
+            <div class="theory-block">
+                <h2>4. Важные моменты</h2>
+                <ul>
+                    <li>Декоративные шрифты лучше использовать для коротких текстов</li>
+                    <li>Line-height для декоративных шрифтов часто требует корректировки</li>
+                    <li>Важно учитывать читаемость при выборе размера шрифта</li>
+                    <li>Цитаты могут быть оформлены как с помощью тега blockquote, так и с помощью других элементов</li>
+                </ul>
+            </div>
+        </article>
+    </main>
+
+    <script>
+        // Добавляем обработчик для демонстрации единиц измерения
+        document.getElementById('rootFontSize').addEventListener('input', function(e) {
+            const value = e.target.value;
+            document.getElementById('rootFontSizeValue').textContent = value + 'px';
+            document.documentElement.style.fontSize = value + 'px';
+        });
+
+        // Интерактивные элементы для демонстрации
+        document.getElementById('quoteFontSize').addEventListener('input', function(e) {
+            const value = e.target.value + 'em';
+            document.getElementById('fontSizeValue').textContent = value;
+            document.querySelector('#quotePreview blockquote').style.fontSize = value;
+        });
+
+        document.getElementById('quoteLineHeight').addEventListener('input', function(e) {
+            const value = e.target.value;
+            document.getElementById('lineHeightValue').textContent = value;
+            document.querySelector('#quotePreview blockquote').style.lineHeight = value;
+        });
+    </script>
+</body>
+</html> 

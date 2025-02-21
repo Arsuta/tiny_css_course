@@ -1,0 +1,513 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Урок 3.4: Анимация элементов в CSS | CSS Курс</title>
+    <link rel="stylesheet" href="/styles/main.css">
+    <link rel="stylesheet" href="/styles/lesson.css">
+    <style>
+        /* Стили для демонстраций */
+        .demo-box {
+            width: 50px;
+            height: 50px;
+            background: #466A85;
+            border-radius: 4px;
+        }
+
+        .demo-area {
+            height: 200px;
+            background: #f8f9fa;
+            border-radius: 8px;
+            padding: 20px;
+            margin: 20px 0;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            position: relative;
+        }
+
+        /* Первая демонстрация - Keyframes */
+        @keyframes moveLeftRight {
+            0% { transform: translateX(-50px); }
+            100% { transform: translateX(50px); }
+        }
+
+        .keyframes-demo .demo-box {
+            animation: moveLeftRight 1s ease-in-out infinite alternate;
+        }
+
+        /* Вторая демонстрация - Duration */
+        @keyframes scaleUpDown {
+            0% { transform: scale(1); }
+            100% { transform: scale(1.5); }
+        }
+
+        .duration-demo .demo-box {
+            animation: scaleUpDown 2s ease-in-out infinite alternate;
+        }
+
+        .duration-control {
+            margin-top: 20px;
+            text-align: center;
+        }
+
+        .duration-slider {
+            width: 200px;
+            margin: 10px;
+        }
+
+        /* Стили для duration */
+        .demo-area input[type="range"] {
+            width: 200px;
+            margin-top: 20px;
+        }
+
+        /* Стили для iteration */
+        .iteration-buttons {
+            margin-top: 20px;
+            display: flex;
+            gap: 10px;
+            justify-content: center;
+        }
+
+        .iteration-buttons button {
+            padding: 5px 15px;
+            border: none;
+            border-radius: 4px;
+            background: #3498db;
+            color: white;
+            cursor: pointer;
+        }
+
+        .iteration-buttons button.active {
+            background: #2980b9;
+        }
+
+        /* Третья демонстрация - Iteration Count */
+        @keyframes rotate360 {
+            from { 
+                transform: rotate(0deg);
+                background: #3498db;
+            }
+            to { 
+                transform: rotate(360deg);
+                background: #e74c3c;
+            }
+        }
+
+        .iteration-demo .demo-box {
+            width: 50px;
+            height: 50px;
+            background: #3498db;
+            border-radius: 4px;
+            transition: background 0.3s;
+        }
+
+        .iteration-buttons {
+            position: absolute;
+            bottom: 20px;
+            right: 20px;
+            display: flex;
+            gap: 10px;
+        }
+
+        .iteration-buttons button {
+            padding: 5px 15px;
+            border: none;
+            border-radius: 4px;
+            background: #3498db;
+            color: white;
+            cursor: pointer;
+        }
+
+        .iteration-buttons button.active {
+            background: #2980b9;
+        }
+
+        /* Базовое объявление длительности */
+        .element {
+            animation-duration: 2s;          /* Длительность одного цикла анимации */
+        }
+
+        /* Примеры различных значений */
+        .fast {
+            animation-duration: 0.5s;        /* Быстрая анимация */
+        }
+        .normal {
+            animation-duration: 2s;          /* Стандартная скорость */
+        }
+        .slow {
+            animation-duration: 4s;          /* Медленная анимация */
+        }
+
+        /* Важно: значение должно быть в секундах (s) или миллисекундах (ms) */
+
+        /* Варианты значений iteration-count */
+        .element {
+            animation-iteration-count: 1;      /* Одно выполнение (по умолчанию) */
+        }
+        .three-times {
+            animation-iteration-count: 3;      /* Три повторения */
+        }
+        .infinite {
+            animation-iteration-count: infinite; /* Бесконечное повторение */
+        }
+
+        /* Можно использовать дробные значения */
+        .partial {
+            animation-iteration-count: 2.5;    /* Два с половиной повторения */
+        }
+
+        /* Стили для теоретических блоков */
+        .theory-block {
+            background: white;
+            padding: 1.5rem;
+            border-radius: 8px;
+            margin: 1rem 0;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+        }
+
+        .theory-block h4 {
+            color: #2c3e50;
+            margin: 1.5rem 0 1rem;
+        }
+
+        .theory-block ul {
+            list-style: none;
+            padding-left: 1.5rem;
+        }
+
+        .theory-block ul li {
+            position: relative;
+            margin: 0.5rem 0;
+        }
+
+        .theory-block ul li:before {
+            content: "•";
+            color: #3498db;
+            font-weight: bold;
+            position: absolute;
+            left: -1.5rem;
+        }
+
+        /* Стили для блоков с кодом */
+        .code-block {
+            background: #1E1E1E;
+            color: #1E1E1E;
+            padding: 15px;
+            border-radius: 8px;
+            margin: 10px 0;
+            font-family: monospace;
+        }
+
+        .code-block code {
+            font-family: monospace;
+            color: #2c3e50;
+        }
+
+        /* Стили для блоков с советами */
+        .tips-block {
+            background: #fff3cd;
+            border-left: 4px solid #ffc107;
+            padding: 15px;
+            margin: 15px 0;
+        }
+
+        /* Стили для практического задания */
+        .practice-demo {
+            border: 2px solid #466A85;
+            padding: 20px;
+            margin: 20px 0;
+            border-radius: 8px;
+        }
+
+        /* Стили для редактора кода */
+        .code-editor {
+            background: #f8f9fa;
+            border-radius: 8px;
+            margin: 20px 0;
+            overflow: hidden;
+        }
+
+        .editor-tabs {
+            background: #e9ecef;
+            padding: 10px;
+            border-bottom: 1px solid #dee2e6;
+        }
+
+        .tab {
+            background: none;
+            border: none;
+            padding: 5px 15px;
+            cursor: pointer;
+            color: #495057;
+        }
+
+        .tab.active {
+            background: #fff;
+            border-radius: 4px;
+            color: #466A85;
+        }
+
+        .code-input {
+            width: 100%;
+            min-height: 200px;
+            padding: 15px;
+            border: none;
+            font-family: monospace;
+            resize: vertical;
+        }
+
+        .run-button {
+            background: #466A85;
+            color: white;
+            border: none;
+            padding: 10px 20px;
+            border-radius: 4px;
+            cursor: pointer;
+            margin: 10px 0;
+        }
+
+        .result-preview {
+            background: white;
+            padding: 20px;
+            border-radius: 8px;
+            margin-top: 20px;
+            border: 1px solid #dee2e6;
+        }
+    </style>
+</head>
+<body>
+    <header class="main-header">
+        <nav class="main-nav">
+            <div class="logo">CSS Курс</div>
+            <ul class="nav-links">
+                <li><a href="/">На главную</a></li>
+                <li><a href="#chapters">Главы</a></li>
+            </ul>
+        </nav>
+    </header>
+
+    <main class="lesson-content">
+        <nav class="lesson-nav">
+            <a href="/lessons/3-3" class="prev-lesson">← Урок 3.3: Применение стилей к SVG</a>
+            <a href="/lessons/3-5" class="next-lesson">Урок 3.5: Доступность и prefers-reduced-motion →</a>
+        </nav>
+
+        <article class="lesson">
+            <header class="lesson-header">
+                <h1>Урок 3.4: Анимация элементов в CSS</h1>
+            </header>
+
+            <section class="theory">
+                <h2>Теория</h2>
+
+                <!-- Первая демонстрация -->
+                <div class="demo-section">
+                    <h3>Ключевые кадры (Keyframes)</h3>
+                    <p>Ключевые кадры позволяют определить состояния анимации в разные моменты времени. Это основа любой CSS-анимации.</p>
+                    
+                    <div class="demo-area keyframes-demo">
+                        <div class="demo-box"></div>
+                    </div>
+
+                    <div class="code-block">
+                        <pre><code>@keyframes moveLeftRight {
+    0% { transform: translateX(-50px); }
+    100% { transform: translateX(50px); }
+}
+
+.box {
+    animation: moveLeftRight 1s infinite alternate;
+}</code></pre>
+                    </div>
+                </div>
+
+                <!-- Вторая демонстрация -->
+                <div class="demo-section">
+                    <h3>Длительность анимации (Duration)</h3>
+                    
+                    <div class="theory-block">
+                        <p>Свойство animation-duration определяет время выполнения одного полного цикла анимации. Это ключевой параметр, влияющий на скорость анимации.</p>
+                        
+                        <h4>Основные характеристики:</h4>
+                        <ul>
+                            <li>Значение задаётся в секундах (s) или миллисекундах (ms)</li>
+                            <li>Нельзя использовать отрицательные значения</li>
+                            <li>Значение 0s отключает анимацию</li>
+                            <li>Можно указывать дробные значения (например, 0.5s)</li>
+                        </ul>
+
+                        <div class="code-block">
+                            <pre><code>/* Базовый синтаксис */
+.element {
+    animation-name: myAnimation;     /* Имя анимации */
+    animation-duration: 2s;          /* Длительность */
+}
+
+/* Примеры различных значений */
+.quick {
+    animation-duration: 0.5s;        /* Быстрая анимация */
+}
+.normal {
+    animation-duration: 2s;          /* Средняя скорость */
+}
+.slow {
+    animation-duration: 4s;          /* Медленная анимация */
+}
+.milliseconds {
+    animation-duration: 500ms;       /* Значение в миллисекундах */
+}</code></pre>
+                        </div>
+
+                        <div class="tips-block">
+                            <h4>Рекомендации по использованию:</h4>
+                            <ul>
+                                <li>Для интерфейсных анимаций используйте короткие длительности (0.2s - 0.5s)</li>
+                                <li>Для декоративных анимаций можно использовать более длительные значения</li>
+                                <li>Слишком долгие анимации могут раздражать пользователей</li>
+                                <li>Учитывайте контекст использования при выборе длительности</li>
+                            </ul>
+                        </div>
+                    </div>
+                    
+                    <!-- Демонстрация -->
+                    <div class="demo-area duration-demo">
+                        <div class="demo-box"></div>
+                        <input type="range" min="0.5" max="3" step="0.5" value="2">
+                    </div>
+                </div>
+
+                <!-- Третья демонстрация -->
+                <div class="demo-section">
+                    <h3>Количество повторений (Iteration Count)</h3>
+                    
+                    <div class="theory-block">
+                        <p>Свойство animation-iteration-count определяет, сколько раз должна повториться анимация. Это позволяет контролировать цикличность анимации.</p>
+                        
+                        <h4>Возможные значения:</h4>
+                        <ul>
+                            <li>Числовое значение (целое или дробное)</li>
+                            <li>infinite (бесконечное повторение)</li>
+                            <li>По умолчанию: 1 (одно выполнение)</li>
+                        </ul>
+
+                        <div class="code-block">
+                            <pre><code>/* Различные способы использования */
+.once {
+    animation-iteration-count: 1;      /* Одно выполнение */
+}
+.three-times {
+    animation-iteration-count: 3;      /* Три повторения */
+}
+.infinite {
+    animation-iteration-count: infinite; /* Бесконечное повторение */
+}
+.partial {
+    animation-iteration-count: 2.5;    /* Два с половиной повторений */
+}
+
+/* Пример с полным объявлением анимации */
+.element {
+    animation-name: rotate;            /* Имя анимации */
+    animation-duration: 2s;            /* Длительность */
+    animation-iteration-count: 3;      /* Количество повторений */
+    animation-timing-function: linear; /* Функция времени */
+}</code></pre>
+                        </div>
+
+                        <div class="tips-block">
+                            <h4>Важные замечания:</h4>
+                            <ul>
+                                <li>Дробные значения приводят к остановке анимации в промежуточном состоянии</li>
+                                <li>Значение infinite следует использовать с осторожностью</li>
+                                <li>Для интерфейсных элементов лучше использовать конечное число повторений</li>
+                                <li>Можно комбинировать с другими свойствами анимации</li>
+                            </ul>
+                        </div>
+                    </div>
+                    
+                    <!-- Демонстрация -->
+                    <div class="demo-area iteration-demo">
+                        <div class="demo-box"></div>
+                        <div class="iteration-buttons">
+                            <button data-count="1">1</button>
+                            <button data-count="3">3</button>
+                            <button data-count="infinite">∞</button>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <section class="practice">
+                <h2>Практика</h2>
+                <div class="task">
+                    <h3>Задание: Создание анимированного загрузчика</h3>
+                    <p>Создайте анимированный индикатор загрузки, используя CSS-анимации.</p>
+
+                    <div class="code-editor">
+                        <div class="editor-tabs">
+                            <button class="tab active">HTML</button>
+                            <button class="tab">CSS</button>
+                        </div>
+                        <textarea class="code-input html-input">
+<div class="loader">
+    <div class="spinner"></div>
+</div></textarea>
+                        <textarea class="code-input css-input" style="display: none;">
+/* Определите keyframes для вращения */
+@keyframes spin {
+    /* Добавьте ключевые кадры */
+}
+
+.spinner {
+    /* Добавьте стили и анимацию */
+    /* Используйте animation-duration */
+    /* Задайте animation-iteration-count */
+}</textarea>
+                    </div>
+
+                    <button class="run-button">Запустить</button>
+
+                    <div class="result-preview">
+                        <h3>Результат</h3>
+                        <div class="preview-frame"></div>
+                    </div>
+                </div>
+            </section>
+        </article>
+    </main>
+
+    <footer class="main-footer">
+        <p>&copy; 2024 CSS Курс. Все права защищены.</p>
+    </footer>
+
+    <script src="/scripts/lesson.js"></script>
+    <script>
+        // Управление длительностью
+        const durationInput = document.querySelector('.duration-demo input');
+        const durationBox = document.querySelector('.duration-demo .demo-box');
+
+        durationInput.addEventListener('input', (e) => {
+            durationBox.style.animationDuration = `${e.target.value}s`;
+        });
+
+        // Управление повторениями
+        const iterationButtons = document.querySelectorAll('.iteration-buttons button');
+        const iterationBox = document.querySelector('.iteration-demo .demo-box');
+
+        iterationButtons.forEach(button => {
+            button.addEventListener('click', () => {
+                iterationButtons.forEach(btn => btn.classList.remove('active'));
+                button.classList.add('active');
+                
+                const iterations = button.dataset.count;
+                iterationBox.style.animation = 'none';
+                iterationBox.offsetHeight;
+                iterationBox.style.animation = `rotate360 1s linear ${iterations}`;
+            });
+        });
+    </script>
+</body>
+</html>

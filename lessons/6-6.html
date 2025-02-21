@@ -1,0 +1,510 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Урок 6.6: Настройка размера и позиции фона | CSS Курс</title>
+    <link rel="stylesheet" href="../styles/main.css">
+    <link rel="stylesheet" href="../styles/lesson.css">
+    <style>
+        /* Общие стили демонстраций */
+        .demo-container {
+            background: #f8f9fa;
+            border-radius: 8px;
+            padding: 20px;
+            margin: 20px 0;
+        }
+
+        .demo-box {
+            background: white;
+            border-radius: 8px;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+            padding: 20px;
+        }
+
+        /* Стили для демонстрации свойств */
+        .properties-demo {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 20px;
+            margin: 20px 0;
+        }
+
+        .property-box {
+            border: 2px solid #466A85;
+            border-radius: 4px;
+            overflow: hidden;
+        }
+
+        .property-header {
+            background: #466A85;
+            color: white;
+            padding: 10px;
+            font-size: 14px;
+        }
+
+        .property-content {
+            height: 200px;
+            position: relative;
+            background: url('../images/demo/pattern.jpg') no-repeat;
+        }
+
+        /* Стили для интерактивной демонстрации */
+        .interactive-demo {
+            margin-top: 20px;
+        }
+
+        .demo-controls {
+            display: flex;
+            gap: 10px;
+            margin-bottom: 10px;
+        }
+
+        .demo-button {
+            padding: 8px 16px;
+            background: #466A85;
+            color: white;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+        }
+
+        .demo-button.active {
+            background: #7be6e8;
+        }
+
+        .demo-preview {
+            height: 300px;
+            border: 2px solid #466A85;
+            border-radius: 4px;
+            position: relative;
+            overflow: hidden;
+            transition: background-size 0.3s ease, background-position 0.3s ease;
+        }
+
+        .grid-overlay {
+            position: absolute;
+            inset: 0;
+            background-image: 
+                linear-gradient(rgba(70, 106, 133, 0.1) 1px, transparent 1px),
+                linear-gradient(90deg, rgba(70, 106, 133, 0.1) 1px, transparent 1px);
+            background-size: 25% 25%;
+            pointer-events: none;
+        }
+
+        /* Стили для примеров кода */
+        .code-block {
+            background: #1E1E1E;
+            color: #D4D4D4;
+            padding: 15px;
+            border-radius: 8px;
+            margin: 10px 0;
+            font-family: monospace;
+        }
+
+        .code-block .property { color: #9CDCFE; }
+        .code-block .value { color: #CE9178; }
+        .code-block .comment { color: #6A9955; }
+
+        /* Добавляем стили для демонстрации background-position */
+        .position-demo {
+            margin-top: 30px;
+        }
+
+        .position-preview {
+            height: 300px;
+            border: 2px solid #466A85;
+            border-radius: 4px;
+            position: relative;
+            background: url('../images/demo/pattern.jpg') no-repeat;
+        }
+
+        .position-marker {
+            width: 40px;
+            height: 40px;
+            background: #7be6e8;
+            border: 2px solid #466A85;
+            border-radius: 50%;
+            position: absolute;
+            transform: translate(-50%, -50%);
+            cursor: move;
+            transition: left 0.3s ease, top 0.3s ease;
+        }
+
+        .marker-coords {
+            position: absolute;
+            top: 100%;
+            left: 50%;
+            transform: translateX(-50%);
+            background: rgba(70, 106, 133, 0.8);
+            color: white;
+            padding: 2px 6px;
+            border-radius: 4px;
+            font-size: 12px;
+            margin-top: 5px;
+            white-space: nowrap;
+        }
+
+        .position-inputs {
+            display: flex;
+            gap: 20px;
+            margin-bottom: 10px;
+        }
+
+        .position-inputs label {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .position-inputs input[type="range"] {
+            width: 150px;
+        }
+
+        .position-presets {
+            display: flex;
+            gap: 10px;
+        }
+
+        /* Добавляем в стили */
+        .property-info {
+            position: absolute;
+            bottom: 10px;
+            right: 10px;
+            background: rgba(70, 106, 133, 0.8);
+            color: white;
+            padding: 4px 8px;
+            border-radius: 4px;
+            font-size: 12px;
+        }
+
+        .size-info {
+            position: absolute;
+            bottom: 10px;
+            right: 10px;
+            background: rgba(70, 106, 133, 0.8);
+            color: white;
+            padding: 4px 8px;
+            border-radius: 4px;
+            font-size: 12px;
+        }
+    </style>
+</head>
+<body>
+    <header class="main-header">
+        <nav class="main-nav">
+            <a href="../index.html" class="logo">CSS Курс</a>
+            <ul class="nav-links">
+                <li><a href="../index.html">На главную</a></li>
+                <li><a href="../chapters.html">Главы</a></li>
+            </ul>
+        </nav>
+    </header>
+
+    <main class="lesson-content">
+        <nav class="lesson-nav">
+            <a href="6-5.html" class="prev-lesson">← Урок 6.5: Позиционирование изображения профиля</a>
+            <a href="6-7.html" class="next-lesson">Урок 6.7: Стилизация контента →</a>
+        </nav>
+
+        <div class="chapter-navigation">
+            <h3>Навигация по главе 6:</h3>
+            <ul>
+                <li><a href="6-1.html">6.1 Введение в проект</a></li>
+                <li><a href="6-2.html">6.2 CSS Custom Properties</a></li>
+                <li><a href="6-3.html">6.3 Создание фона</a></li>
+                <li><a href="6-4.html">6.4 Стилизация и центрирование карточки</a></li>
+                <li><a href="6-5.html">6.5 Позиционирование изображения профиля</a></li>
+                <li><a href="6-6.html" class="current">6.6 Настройка размера и позиции фона</a></li>
+                <li><a href="6-7.html">6.7 Стилизация контента</a></li>
+                <li><a href="6-8.html">6.8 Стилизация действий</a></li>
+            </ul>
+        </div>
+
+        <article class="lesson">
+            <header class="lesson-header">
+                <h1>Урок 6.6: Настройка размера и позиции фона</h1>
+            </header>
+
+            <section class="theory">
+                <h2>Теория</h2>
+                
+                <!-- Базовая концепция -->
+                <div class="demo-container">
+                    <h3>Свойства background-size и background-position</h3>
+                    <div class="demo-box">
+                        <div class="properties-demo">
+                            <div class="property-box">
+                                <div class="property-header">background-size</div>
+                                <div class="property-content" style="background-size: cover">
+                                    <div class="property-info">Управляет размером фона</div>
+                                </div>
+                            </div>
+                            <div class="property-box">
+                                <div class="property-header">background-position</div>
+                                <div class="property-content" style="background-position: top right">
+                                    <div class="property-info">Управляет положением фона</div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Демонстрация background-size -->
+                <div class="demo-container">
+                    <h3>Демонстрация background-size</h3>
+                    <div class="demo-box">
+                        <div class="interactive-demo">
+                            <div class="demo-controls">
+                                <button class="demo-button active" data-size="cover">cover</button>
+                                <button class="demo-button" data-size="contain">contain</button>
+                                <button class="demo-button" data-size="100%">100%</button>
+                            </div>
+                            <div class="demo-preview" id="sizeDemo">
+                                <div class="grid-overlay"></div>
+                                <div class="size-info">cover</div>
+                            </div>
+                        </div>
+                        <div class="code-block">
+                            <pre><code><span class="property">background-size</span>: <span class="value">cover</span>;    <span class="comment">/* Заполняет контейнер */</span>
+<span class="property">background-size</span>: <span class="value">contain</span>;  <span class="comment">/* Вписывается целиком */</span>
+<span class="property">background-size</span>: <span class="value">100%</span>;     <span class="comment">/* Точный размер */</span></code></pre>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Демонстрация background-position -->
+                <div class="demo-container">
+                    <h3>Демонстрация background-position</h3>
+                    <div class="demo-box">
+                        <div class="interactive-demo">
+                            <div class="demo-controls">
+                                <div class="position-inputs">
+                                    <label>X: <input type="range" id="posX" min="0" max="100" value="50"><span>50%</span></label>
+                                    <label>Y: <input type="range" id="posY" min="0" max="100" value="50"><span>50%</span></label>
+                                </div>
+                                <div class="position-presets">
+                                    <button class="demo-button active" data-pos="center">center</button>
+                                    <button class="demo-button" data-pos="top right">top right</button>
+                                    <button class="demo-button" data-pos="bottom left">bottom left</button>
+                                </div>
+                            </div>
+                            <div class="demo-preview" id="positionDemo">
+                                <div class="grid-overlay"></div>
+                                <div class="position-marker">
+                                    <div class="marker-coords">50%, 50%</div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="code-block">
+                            <pre><code><span class="property">background-position</span>: <span class="value">center</span>;
+<span class="property">background-position</span>: <span class="value">top right</span>;
+<span class="property">background-position</span>: <span class="value">50% 50%</span>;</code></pre>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <section class="practice">
+                <h2>Практика</h2>
+                <div class="task">
+                    <h3>Задание: Настройка фона для карточки профиля</h3>
+                    <p>Создайте карточку с настроенным фоновым изображением в header.</p>
+
+                    <div class="task-description">
+                        <h4>Требования:</h4>
+                        <ul>
+                            <li>Добавьте фоновое изображение в header</li>
+                            <li>Настройте правильный размер изображения</li>
+                            <li>Задайте оптимальное позиционирование</li>
+                            <li>Добавьте градиент поверх изображения</li>
+                        </ul>
+                    </div>
+                    
+                    <div class="code-editor">
+                        <div class="editor-tabs">
+                            <button class="tab active">HTML</button>
+                            <button class="tab">CSS</button>
+                        </div>
+                        <textarea class="code-input html-input">
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <title>Фон карточки</title>
+    <style>
+        :root {
+            --header-height: 120px;
+            --card-width: 300px;
+            --border-radius: 8px;
+        }
+
+        body {
+            margin: 0;
+            min-height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            background: #f0f2f5;
+        }
+    </style>
+</head>
+<body>
+    <div class="profile-card">
+        <div class="card-header"></div>
+        <div class="card-content">
+            <h2>Имя пользователя</h2>
+            <p>Должность</p>
+        </div>
+    </div>
+</body>
+</html></textarea>
+                        <textarea class="code-input css-input" style="display: none;">
+/* Стили для карточки */
+.profile-card {
+    width: var(--card-width);
+    background: white;
+    border-radius: var(--border-radius);
+    overflow: hidden;
+    box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+}
+
+/* Стили для header */
+.card-header {
+    height: var(--header-height);
+    /* Добавьте фоновое изображение */
+    
+    /* Настройте размер фона */
+    
+    /* Задайте позицию фона */
+    
+    /* Добавьте градиент поверх */
+}
+
+/* Стили для контента */
+.card-content {
+    padding: 20px;
+    text-align: center;
+}</textarea>
+                    </div>
+
+                    <div class="task-solution">
+                        <h4>Подсказки:</h4>
+                        <ul>
+                            <li>Используйте <code>background-image</code> для добавления изображения</li>
+                            <li>Примените <code>background-size: cover</code> для заполнения</li>
+                            <li>Задайте <code>background-position: center</code> для центрирования</li>
+                            <li>Используйте <code>linear-gradient</code> с <code>background-image</code></li>
+                        </ul>
+                    </div>
+                </div>
+            </section>
+        </article>
+    </main>
+
+    <script>
+        // Функции для демонстрации background-size
+        function updateSizeDemo(size) {
+            const demo = document.getElementById('sizeDemo');
+            const buttons = document.querySelectorAll('[data-size]');
+            const sizeInfo = demo.querySelector('.size-info');
+            
+            // Обновляем стиль и информацию
+            demo.style.backgroundSize = size;
+            sizeInfo.textContent = `background-size: ${size}`;
+            
+            // Обновляем активную кнопку
+            buttons.forEach(btn => btn.classList.toggle('active', btn.dataset.size === size));
+        }
+
+        // Drag & Drop для position-marker
+        let isDragging = false;
+
+        function handleDrag(e) {
+            if (!isDragging) return;
+            
+            const demo = document.getElementById('positionDemo');
+            const rect = demo.getBoundingClientRect();
+            
+            // Вычисляем проценты
+            let x = ((e.clientX - rect.left) / rect.width * 100).toFixed(0);
+            let y = ((e.clientY - rect.top) / rect.height * 100).toFixed(0);
+            
+            // Ограничиваем значения
+            x = Math.max(0, Math.min(100, x));
+            y = Math.max(0, Math.min(100, y));
+            
+            updatePositionDemo(x, y);
+        }
+
+        function updatePositionDemo(x, y) {
+            const demo = document.getElementById('positionDemo');
+            const marker = demo.querySelector('.position-marker');
+            const coords = marker.querySelector('.marker-coords');
+            
+            // Обновляем позицию маркера
+            marker.style.left = `${x}%`;
+            marker.style.top = `${y}%`;
+            
+            // Обновляем фон
+            demo.style.backgroundPosition = `${x}% ${y}%`;
+            
+            // Обновляем координаты
+            coords.textContent = `${x}%, ${y}%`;
+            
+            // Обновляем ползунки
+            document.getElementById('posX').value = x;
+            document.getElementById('posY').value = y;
+            document.getElementById('posXValue').textContent = `${x}%`;
+            document.getElementById('posYValue').textContent = `${y}%`;
+        }
+
+        // Инициализация
+        document.addEventListener('DOMContentLoaded', function() {
+            // Инициализация size demo
+            const sizeButtons = document.querySelectorAll('[data-size]');
+            sizeButtons.forEach(btn => {
+                btn.addEventListener('click', () => updateSizeDemo(btn.dataset.size));
+            });
+            updateSizeDemo('cover');
+
+            // Инициализация position demo
+            const marker = document.querySelector('.position-marker');
+            const demo = document.getElementById('positionDemo');
+
+            // Drag & Drop события
+            marker.addEventListener('mousedown', () => isDragging = true);
+            document.addEventListener('mousemove', handleDrag);
+            document.addEventListener('mouseup', () => isDragging = false);
+
+            // Ползунки position
+            document.getElementById('posX').addEventListener('input', function(e) {
+                updatePositionDemo(e.target.value, document.getElementById('posY').value);
+            });
+
+            document.getElementById('posY').addEventListener('input', function(e) {
+                updatePositionDemo(document.getElementById('posX').value, e.target.value);
+            });
+
+            // Пресеты position
+            const presetButtons = document.querySelectorAll('[data-pos]');
+            presetButtons.forEach(btn => {
+                btn.addEventListener('click', function() {
+                    const [x, y] = {
+                        'center': [50, 50],
+                        'top right': [100, 0],
+                        'bottom left': [0, 100]
+                    }[btn.dataset.pos];
+                    
+                    updatePositionDemo(x, y);
+                    
+                    // Обновляем активную кнопку
+                    presetButtons.forEach(b => b.classList.toggle('active', b === btn));
+                });
+            });
+
+            // Начальная позиция
+            updatePositionDemo(50, 50);
+        });
+    </script>
+</body>
+</html> 

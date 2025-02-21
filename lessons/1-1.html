@@ -1,0 +1,179 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Урок 1.1: Обзор CSS | CSS Курс</title>
+    <link rel="stylesheet" href="/styles/main.css">
+    <link rel="stylesheet" href="/styles/lesson.css">
+</head>
+<body>
+    <header class="main-header">
+        <nav class="main-nav">
+            <div class="logo">CSS Курс</div>
+            <ul class="nav-links">
+                <li><a href="/">На главную</a></li>
+                <li><a href="#chapters">Главы</a></li>
+            </ul>
+        </nav>
+    </header>
+
+    <main class="lesson-content">
+        <nav class="lesson-nav">
+            <span class="prev-lesson">← Это первый урок</span>
+            <a href="/lessons/1-2" class="next-lesson">Урок 1.2: Разделение задач (SoC) →</a>
+        </nav>
+
+        <article class="lesson">
+            <header class="lesson-header">
+                <h1>Урок 1.1: Обзор CSS</h1>
+            </header>
+
+            <section class="theory">
+                <h2>Теория</h2>
+                <div class="theory-content">
+                    <h3>История и эволюция CSS</h3>
+                    <div class="timeline">
+                        <h4>Ключевые этапы развития CSS</h4>
+                        <ul class="styled-list">
+                            <li><strong>1994:</strong> Хокон Виум Ли предложил концепцию CSS</li>
+                            <li><strong>1996:</strong> CSS1 становится рекомендацией W3C</li>
+                            <li><strong>1998:</strong> CSS2 добавляет позиционирование и z-index</li>
+                            <li><strong>2011:</strong> CSS3 вводит модульный подход</li>
+                            <li><strong>Сегодня:</strong> CSS4 и современные возможности</li>
+                        </ul>
+                    </div>
+
+                    <h3>Почему CSS важен?</h3>
+                    <div class="benefits-grid">
+                        <div class="benefit-card">
+                            <h4>Разделение содержания и представления</h4>
+                            <p>CSS позволяет отделить визуальное оформление от HTML-структуры, делая код более чистым и поддерживаемым.</p>
+                        </div>
+                        <div class="benefit-card">
+                            <h4>Консистентность дизайна</h4>
+                            <p>Единые стили можно применять ко множеству страниц, обеспечивая единообразие оформления.</p>
+                        </div>
+                        <div class="benefit-card">
+                            <h4>Производительность</h4>
+                            <p>Внешние CSS-файлы кэшируются браузером, ускоряя загрузку сайта.</p>
+                        </div>
+                        <div class="benefit-card">
+                            <h4>Адаптивность</h4>
+                            <p>CSS позволяет создавать отзывчивые дизайны для разных устройств и экранов.</p>
+                        </div>
+                    </div>
+
+                    <h3>Анатомия CSS-правила</h3>
+                    <div class="css-rule-anatomy">
+                        <pre><code>.button {
+    color: blue;
+    background-color: white;
+    padding: 10px 20px;
+}</code></pre>
+                        <ul class="styled-list">
+                            <li><strong>Селектор</strong> (.button) - определяет, к каким элементам применяются стили</li>
+                            <li><strong>Свойство</strong> (color) - указывает, что именно мы хотим изменить</li>
+                            <li><strong>Значение</strong> (blue) - определяет новое значение свойства</li>
+                            <li><strong>Декларация</strong> (color: blue) - пара свойство-значение</li>
+                            <li><strong>Блок объявлений</strong> ({...}) - содержит все декларации</li>
+                        </ul>
+                    </div>
+
+                    <h3>Методы добавления CSS</h3>
+                    <div class="methods-grid">
+                        <div class="method-card">
+                            <h4>Внешний CSS-файл</h4>
+                            <div class="example">
+                                <pre><code>&lt;link rel="stylesheet" href="styles.css"></code></pre>
+                            </div>
+                            <div class="pros-cons">
+                                <span class="pros">Лучшая производительность</span>
+                                <span class="pros">Легкое обслуживание</span>
+                                <span class="pros">Кэширование браузером</span>
+                            </div>
+                        </div>
+
+                        <div class="method-card">
+                            <h4>Встроенные стили</h4>
+                            <div class="example">
+                                <pre><code>&lt;style>
+    body { background: #fff; }
+&lt;/style></code></pre>
+                            </div>
+                            <div class="pros-cons">
+                                <span class="pros">Быстрая реализация</span>
+                                <span class="cons">Смешивание HTML и CSS</span>
+                                <span class="cons">Сложное обслуживание</span>
+                            </div>
+                        </div>
+
+                        <div class="method-card">
+                            <h4>Инлайн стили</h4>
+                            <div class="example">
+                                <pre><code>&lt;div style="color: blue;"></code></pre>
+                            </div>
+                            <div class="pros-cons">
+                                <span class="pros">Высокая специфичность</span>
+                                <span class="cons">Трудно поддерживать</span>
+                                <span class="cons">Нет переиспользования</span>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="info-block">
+                        <h4>Важно помнить</h4>
+                        <p>CSS - это не просто язык стилей, это мощный инструмент для создания современных веб-интерфейсов. Правильное понимание его основ критически важно для разработки качественных веб-приложений.</p>
+                    </div>
+                </div>
+            </section>
+
+            <section class="practice">
+                <h2>Практика</h2>
+                <div class="task">
+                    <h3>Задание</h3>
+                    <p>Давайте создадим простую HTML-страницу и применим к ней базовые стили, используя современные возможности CSS. Попробуйте использовать CSS-переменные для определения основных цветов.</p>
+                    
+                    <div class="code-editor">
+                        <div class="editor-tabs">
+                            <button class="tab active">HTML</button>
+                            <button class="tab">CSS</button>
+                        </div>
+                        <textarea class="code-input html-input">
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Мой первый CSS</title>
+</head>
+<body>
+    <h1>Добро пожаловать в мир CSS</h1>
+    <p>Это параграф с базовыми стилями</p>
+</body>
+</html></textarea>
+                        <textarea class="code-input css-input" style="display: none;">
+/* Определите переменные с цветами */
+:root {
+    /* Добавьте свои переменные здесь */
+}
+
+/* Добавьте стили для элементов */</textarea>
+                    </div>
+
+                    <button class="run-button">Запустить</button>
+
+                    <div class="result-preview">
+                        <h3>Результат</h3>
+                        <div class="preview-frame"></div>
+                    </div>
+                </div>
+            </section>
+        </article>
+    </main>
+
+    <footer class="main-footer">
+        <p>&copy; 2024 CSS Курс. Все права защищены.</p>
+    </footer>
+
+    <script src="/scripts/lesson.js"></script>
+</body>
+</html> 

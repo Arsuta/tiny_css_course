@@ -1,0 +1,324 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Урок 9.1 - Начало работы | CSS Курс</title>
+    <link rel="stylesheet" href="../styles/main.css">
+    <link rel="stylesheet" href="../styles/lesson.css">
+    <style>
+        /* Базовые стили */
+        .demo-section {
+            margin-bottom: 40px;
+            background: #fff;
+            padding: 20px;
+            border-radius: 8px;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+        }
+
+        /* Стили для кредитной карты */
+        .credit-card {
+            width: 320px;
+            height: 200px;
+            margin: 20px auto;
+            position: relative;
+            perspective: 1000px;
+            font-family: monospace;
+            cursor: pointer;
+        }
+
+        .card-face {
+            width: 100%;
+            height: 100%;
+            position: absolute;
+            backface-visibility: hidden;
+            border-radius: 15px;
+            padding: 20px;
+            box-sizing: border-box;
+            transition: transform 0.6s;
+            box-shadow: 0 4px 8px rgba(0,0,0,0.1);
+        }
+
+        .card-front {
+            background: linear-gradient(45deg, #466A85, #7be6e8);
+            color: white;
+        }
+
+        .card-back {
+            background: linear-gradient(45deg, #7be6e8, #466A85);
+            color: white;
+            transform: rotateY(180deg);
+        }
+
+        /* Стили для демонстрации */
+        .controls-panel {
+            background: #f7f5e8;
+            padding: 15px;
+            border-radius: 8px;
+            margin-bottom: 20px;
+        }
+
+        .control-group {
+            display: flex;
+            gap: 10px;
+            margin-bottom: 10px;
+        }
+
+        .control-button {
+            padding: 8px 16px;
+            background: #466A85;
+            color: white;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+
+        .control-button:hover {
+            background: #557a95;
+        }
+
+        .control-button.active {
+            background: #7be6e8;
+            color: #333;
+        }
+
+        /* Код с пояснениями */
+        .code-block {
+            background: #1E1E1E;
+            color: #D4D4D4;
+            padding: 15px;
+            border-radius: 8px;
+            margin: 20px 0;
+            font-family: monospace;
+            line-height: 1.5;
+        }
+
+        /* Улучшенные стили для подсветки синтаксиса */
+        .code-block .selector { color: #569CD6; }
+        .code-block .property { color: #9CDCFE; }
+        .code-block .value { color: #CE9178; }
+        .code-block .comment { color: #6A9955; }
+        .code-block .punctuation { color: #D4D4D4; }
+
+        /* Стили для примеров свойств */
+        .property-demo {
+            background: #f7f5e8;
+            padding: 20px;
+            border-radius: 8px;
+            margin: 20px 0;
+        }
+
+        .perspective-demo {
+            display: flex;
+            gap: 20px;
+            margin: 20px 0;
+        }
+
+        .perspective-example {
+            perspective: 1000px;
+            width: 200px;
+            height: 150px;
+        }
+
+        .demo-box {
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(45deg, #466A85, #7be6e8);
+            transform-style: preserve-3d;
+            transition: transform 0.5s;
+        }
+
+        .demo-label {
+            text-align: center;
+            margin-top: 10px;
+            font-size: 14px;
+            color: #466A85;
+        }
+    </style>
+</head>
+<body>
+    <header class="main-header">
+        <nav class="main-nav">
+            <a href="../index.html" class="logo">CSS Курс</a>
+            <ul class="nav-links">
+                <li><a href="../index.html">На главную</a></li>
+                <li><a href="../chapters.html">Главы</a></li>
+            </ul>
+        </nav>
+    </header>
+
+    <main class="lesson-content">
+        <nav class="lesson-nav">
+            <a href="8-5.html" class="prev-lesson">← Урок 8.5: Широкие экраны</a>
+            <a href="9-2.html" class="next-lesson">Урок 9.2: Создание макета →</a>
+        </nav>
+
+        <div class="chapter-navigation">
+            <h3>Навигация по главе 9:</h3>
+            <ul>
+                <li><a href="9-1.html" class="current">9.1 Начало работы</a></li>
+                <li><a href="9-2.html">9.2 Создание макета</a></li>
+                <li><a href="9-3.html">9.3 Работа с фоновыми изображениями</a></li>
+                <li><a href="9-4.html">9.4 Типографика</a></li>
+                <li><a href="9-5.html">9.5 Создание эффекта переворота</a></li>
+                <li><a href="9-6.html">9.6 Скругление углов</a></li>
+                <li><a href="9-7.html">9.7 Тени</a></li>
+                <li><a href="9-8.html">9.8 Завершение</a></li>
+            </ul>
+        </div>
+
+        <article class="lesson">
+            <h1>Урок 9.1 - Начало работы над виртуальной кредитной картой</h1>
+
+            <div class="theory-block">
+                <h2>1. Базовая структура карты</h2>
+                <p>Для создания виртуальной кредитной карты мы будем использовать несколько ключевых CSS свойств. Давайте разберем каждое из них:</p>
+                
+                <div class="property-demo">
+                    <h3>Свойство perspective</h3>
+                    <p>Определяет расстояние между пользователем и плоскостью z=0. Это влияет на то, насколько сильно будет заметен 3D-эффект:</p>
+                    
+                    <div class="controls-panel">
+                        <div class="control-group">
+                            <button class="control-button" onclick="setPerspective(500)">500px</button>
+                            <button class="control-button" onclick="setPerspective(1000)">1000px</button>
+                            <button class="control-button" onclick="setPerspective(2000)">2000px</button>
+                        </div>
+                    </div>
+                    
+                    <div class="perspective-demo">
+                        <div class="perspective-example" id="perspectiveDemo">
+                            <div class="demo-box"></div>
+                            <div class="demo-label">Perspective: <span id="perspectiveValue">1000px</span></div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="code-block">
+                    <pre><code><span class="comment">/* Базовая структура карты */</span>
+<span class="selector">.credit-card</span> {
+    <span class="property">width</span>: <span class="value">320px</span>;
+    <span class="property">height</span>: <span class="value">200px</span>;
+    <span class="property">position</span>: <span class="value">relative</span>;
+    <span class="property">perspective</span>: <span class="value">1000px</span>;
+}</code></pre>
+                </div>
+
+                <div class="code-explanation">
+                    <h3>Пояснение свойств:</h3>
+                    <ul>
+                        <li><strong>width/height:</strong> Стандартные пропорции банковской карты (соотношение 1.586)</li>
+                        <li><strong>position: relative:</strong> Создает контекст позиционирования для абсолютно позиционированных элементов</li>
+                        <li><strong>perspective:</strong> Создает 3D-пространство для эффекта переворота</li>
+                    </ul>
+                </div>
+
+                <div class="demo-section">
+                    <div class="credit-card">
+                        <div class="card-face card-front">
+                            <h3>Виртуальная карта</h3>
+                            <div class="card-number">**** **** **** ****</div>
+                        </div>
+                        <div class="card-face card-back">
+                            <div class="magnetic-strip"></div>
+                            <div class="signature-panel">***</div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="theory-block">
+                <h2>2. Основные компоненты</h2>
+                <p>В этом проекте мы будем использовать современные CSS-технологии для создания реалистичного эффекта:</p>
+                
+                <div class="property-demo">
+                    <h3>Ключевые технологии:</h3>
+                    <div class="tech-grid">
+                        <div class="tech-item">
+                            <h4>3D Трансформации</h4>
+                            <p>Используются для создания эффекта переворота карты</p>
+                            <div class="code-block">
+                                <pre><code><span class="property">transform</span>: <span class="value">rotateY(180deg)</span>;</code></pre>
+                            </div>
+                        </div>
+                        <div class="tech-item">
+                            <h4>Градиенты</h4>
+                            <p>Создают современный визуальный эффект</p>
+                            <div class="code-block">
+                                <pre><code><span class="property">background</span>: <span class="value">linear-gradient(45deg, #466A85, #7be6e8)</span>;</code></pre>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <ul>
+                    <li>Flexbox и position для создания макета</li>
+                    <li>Фоновые изображения и их размеры</li>
+                    <li>Локальные шрифты</li>
+                    <li>3D-трансформации и переходы</li>
+                    <li>Тени и градиенты</li>
+                </ul>
+            </div>
+
+            <div class="theory-block">
+                <h2>3. Подготовка к работе</h2>
+                <p>Перед началом работы важно понимать следующие концепции:</p>
+                
+                <div class="concept-grid">
+                    <div class="concept-item">
+                        <h4>3D-пространство в CSS</h4>
+                        <p>CSS позволяет создавать трехмерные эффекты с помощью свойств transform и perspective</p>
+                    </div>
+                    <div class="concept-item">
+                        <h4>Позиционирование элементов</h4>
+                        <p>Правильное позиционирование критично для создания реалистичного эффекта</p>
+                    </div>
+                </div>
+            </div>
+        </article>
+    </main>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            // Функция для демонстрации perspective
+            window.setPerspective = function(value) {
+                const demo = document.getElementById('perspectiveDemo');
+                const box = demo.querySelector('.demo-box');
+                const label = document.getElementById('perspectiveValue');
+                
+                demo.style.perspective = value + 'px';
+                label.textContent = value + 'px';
+                
+                // Добавляем вращение для демонстрации эффекта
+                box.style.transform = 'rotateY(45deg)';
+                
+                // Обновляем активную кнопку
+                const buttons = document.querySelectorAll('.control-button');
+                buttons.forEach(btn => {
+                    btn.classList.toggle('active', btn.textContent === value + 'px');
+                });
+            };
+
+            // Добавим интерактивность для демонстрации
+            const card = document.querySelector('.credit-card');
+            
+            card.addEventListener('click', function() {
+                const front = this.querySelector('.card-front');
+                const back = this.querySelector('.card-back');
+                
+                if (front.style.transform === 'rotateY(180deg)') {
+                    front.style.transform = '';
+                    back.style.transform = 'rotateY(180deg)';
+                } else {
+                    front.style.transform = 'rotateY(180deg)';
+                    back.style.transform = 'rotateY(0)';
+                }
+            });
+
+            // Инициализация демо
+            setPerspective(1000);
+        });
+    </script>
+</body>
+</html> 

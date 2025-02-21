@@ -1,0 +1,785 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Урок 1.7: Способы написания CSS | CSS Курс</title>
+    <link rel="stylesheet" href="/styles/main.css">
+    <link rel="stylesheet" href="/styles/lesson.css">
+    <style>
+        /* Стили для демонстраций */
+        .demo-container {
+            padding: 2rem;
+            background: #f8f9fa;
+            border-radius: 8px;
+            margin: 1rem 0;
+        }
+
+        /* Демонстрация BEM */
+        .bem-demo {
+            border: 1px solid #e9ecef;
+            padding: 1rem;
+            margin: 1rem 0;
+        }
+
+        .card {
+            background: white;
+            border-radius: 8px;
+            padding: 1rem;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+        }
+
+        .card__title {
+            color: #333;
+            margin-bottom: 1rem;
+        }
+
+        .card__content {
+            color: #666;
+        }
+
+        .card--featured {
+            border: 2px solid #3498db;
+        }
+
+        /* Демонстрация OOCSS */
+        .oocss-demo .structure {
+            padding: 1rem;
+            border-radius: 8px;
+        }
+
+        .oocss-demo .skin-light {
+            background: white;
+            color: #333;
+            border: 1px solid #ddd;
+        }
+
+        .oocss-demo .skin-dark {
+            background: #333;
+            color: white;
+            border: 1px solid #666;
+        }
+
+        /* Демонстрация SMACSS */
+        .smacss-demo .layout-header {
+            padding: 1rem;
+            background: #f8f9fa;
+            margin-bottom: 1rem;
+        }
+
+        .smacss-demo .module-nav {
+            display: flex;
+            gap: 1rem;
+        }
+
+        .smacss-demo .state-active {
+            color: #3498db;
+            font-weight: bold;
+        }
+
+        /* Демонстрация CSS Modules */
+        .modules-demo .button_primary_abc123 {
+            background: #3498db;
+            color: white;
+            padding: 0.5rem 1rem;
+            border-radius: 4px;
+            border: none;
+        }
+
+        /* Демонстрация CSS-in-JS */
+        .css-in-js-demo .styled-button {
+            background: linear-gradient(to right, #3498db, #2980b9);
+            color: white;
+            padding: 0.5rem 1rem;
+            border-radius: 4px;
+            border: none;
+            transition: transform 0.2s;
+        }
+
+        .css-in-js-demo .styled-button:hover {
+            transform: translateY(-2px);
+        }
+
+        /* Демонстрация файловой структуры */
+        .file-structure {
+            font-family: monospace;
+            padding: 1rem;
+            background: #2d2d2d;
+            color: #fff;
+            border-radius: 4px;
+        }
+
+        .file-structure .folder {
+            color: #88c0d0;
+        }
+
+        .file-structure .file {
+            color: #a3be8c;
+        }
+
+        /* Интерактивные демонстрации */
+        .interactive-demo {
+            position: relative;
+            overflow: hidden;
+        }
+
+        .interactive-demo:hover .overlay {
+            opacity: 1;
+        }
+
+        .overlay {
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: rgba(52, 152, 219, 0.1);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            opacity: 0;
+            transition: opacity 0.3s;
+        }
+
+        .compare-methodologies {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 1rem;
+            margin: 2rem 0;
+        }
+
+        .methodology-card {
+            background: white;
+            border-radius: 8px;
+            padding: 1.5rem;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+        }
+
+        .live-preview {
+            margin-top: 1rem;
+            padding: 1rem;
+            background: #f8f9fa;
+            border-radius: 4px;
+        }
+
+        .file-tree {
+            font-family: monospace;
+            padding: 1rem;
+            background: #2d2d2d;
+            color: #fff;
+            border-radius: 4px;
+            margin: 1rem 0;
+        }
+
+        .folder-container {
+            padding-left: 1.5rem;
+        }
+
+        .folder {
+            cursor: pointer;
+            padding: 0.25rem 0;
+        }
+
+        .folder-content {
+            padding-left: 1.5rem;
+            border-left: 1px solid #555;
+        }
+
+        .file {
+            padding: 0.25rem 0;
+            color: #a3be8c;
+        }
+
+        /* Стили для CSS Modules демо */
+        .modules-demo {
+            display: flex;
+            flex-direction: column;
+            gap: 1rem;
+        }
+
+        .example-output {
+            background: #f8f9fa;
+            padding: 0.5rem;
+            border-radius: 4px;
+            font-size: 0.9rem;
+        }
+
+        /* Стили для CSS-in-JS демо */
+        .css-in-js-demo {
+            display: flex;
+            flex-direction: column;
+            gap: 1rem;
+        }
+
+        .styled-button--hover {
+            opacity: 0.7;
+            background: #2980b9;
+            color: white;
+            padding: 0.5rem 1rem;
+            border-radius: 4px;
+            transform: translateY(-2px);
+        }
+    </style>
+</head>
+<body>
+    <header class="main-header">
+        <nav class="main-nav">
+            <div class="logo">CSS Курс</div>
+            <ul class="nav-links">
+                <li><a href="/">На главную</a></li>
+                <li><a href="#chapters">Главы</a></li>
+            </ul>
+        </nav>
+    </header>
+
+    <main class="lesson-content">
+        <nav class="lesson-nav">
+            <a href="/lessons/1-6" class="prev-lesson">← Урок 1.6: Специфичность в CSS</a>
+            <a href="/lessons/2-1" class="next-lesson">Глава 2: CSS Grid →</a>
+        </nav>
+
+        <article class="lesson">
+            <header class="lesson-header">
+                <h1>Урок 1.7: Способы написания CSS</h1>
+            </header>
+
+            <section class="theory">
+                <h2>Теория</h2>
+                <div class="theory-content">
+                    <h3>Сокращенная запись (Shorthand)</h3>
+                    <p>CSS предоставляет возможность использовать сокращенную запись для некоторых свойств, что делает код более компактным и читаемым.</p>
+
+                    <div class="shorthand-examples">
+                        <div class="example">
+                            <h4>Margin и Padding</h4>
+                            <pre><code>/* Полная запись */
+margin-top: 10px;
+margin-right: 20px;
+margin-bottom: 10px;
+margin-left: 20px;
+
+/* Сокращенная запись */
+margin: 10px 20px;</code></pre>
+                        </div>
+
+                        <div class="example">
+                            <h4>Border</h4>
+                            <pre><code>/* Полная запись */
+border-width: 1px;
+border-style: solid;
+border-color: black;
+
+/* Сокращенная запись */
+border: 1px solid black;</code></pre>
+                        </div>
+
+                        <div class="example">
+                            <h4>Background</h4>
+                            <pre><code>/* Полная запись */
+background-color: #fff;
+background-image: url('image.jpg');
+background-repeat: no-repeat;
+background-position: center;
+
+/* Сокращенная запись */
+background: #fff url('image.jpg') no-repeat center;</code></pre>
+                        </div>
+                    </div>
+
+                    <h3>Форматирование кода</h3>
+                    <div class="formatting-examples">
+                        <div class="example">
+                            <h4>Рекомендуемый стиль</h4>
+                            <pre><code>/* Хорошее форматирование */
+.button {
+    display: inline-block;
+    padding: 10px 20px;
+    background-color: #007bff;
+    color: white;
+    border-radius: 4px;
+}
+
+/* Группировка связанных свойств */
+.button {
+    /* Позиционирование */
+    position: relative;
+    z-index: 1;
+
+    /* Размеры */
+    width: 200px;
+    height: 50px;
+
+    /* Внешний вид */
+    background: #007bff;
+    border-radius: 4px;
+    color: white;
+}</code></pre>
+                        </div>
+
+                        <div class="info-block">
+                            <h4>Рекомендации по форматированию</h4>
+                            <ul class="styled-list">
+                                <li>Используйте отступы для вложенных правил</li>
+                                <li>Группируйте связанные свойства</li>
+                                <li>Добавляйте пробел после двоеточия</li>
+                                <li>Ставьте каждое свойство на новой строке</li>
+                                <li>Используйте комментарии для описания сложных участков</li>
+                            </ul>
+                        </div>
+                    </div>
+
+                    <h3>Методологии написания CSS</h3>
+                    <p>Существует несколько популярных подходов к организации CSS-кода, каждый со своими преимуществами и особенностями.</p>
+
+                    <div class="compare-methodologies">
+                        <div class="methodology-card">
+                            <h4>BEM (Block Element Modifier)</h4>
+                            <div class="demo-container bem-demo">
+                                <div class="card card--featured">
+                                    <h2 class="card__title">Заголовок карточки</h2>
+                                    <div class="card__content">
+                                        Содержимое карточки
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="example">
+                                <pre><code>.card { }
+.card__title { }
+.card__content { }
+.card--featured { }</code></pre>
+                            </div>
+                            <p class="explanation">
+                                BEM обеспечивает четкую и понятную структуру именования классов:
+                                <ul>
+                                    <li>Блок: самостоятельная сущность</li>
+                                    <li>Элемент: часть блока (__)</li>
+                                    <li>Модификатор: вариация блока/элемента (--)</li>
+                                </ul>
+                            </p>
+                        </div>
+
+                        <div class="methodology-card">
+                            <h4>OOCSS (Object-Oriented CSS)</h4>
+                            <div class="demo-container oocss-demo">
+                                <!-- Демонстрация разделения структуры и скина -->
+                                <div class="structure skin-light">
+                                    <h3>Светлая тема</h3>
+                                    <p>Пример разделения структуры и оформления</p>
+                                </div>
+                                <div class="structure skin-dark">
+                                    <h3>Темная тема</h3>
+                                    <p>Тот же компонент, другой скин</p>
+                                </div>
+                            </div>
+                            <div class="example">
+                                <pre><code>/* Структура (независима от оформления) */
+.structure {
+    padding: 1rem;
+    border-radius: 8px;
+    margin: 1rem 0;
+}
+
+/* Скины (независимы от структуры) */
+.skin-light {
+    background: white;
+    color: #333;
+    border: 1px solid #ddd;
+}
+
+.skin-dark {
+    background: #333;
+    color: white;
+    border: 1px solid #666;
+}</code></pre>
+                            </div>
+                            <p class="explanation">
+                                OOCSS разделяет структуру и оформление:
+                                <ul>
+                                    <li>Структура: размеры, отступы, позиционирование</li>
+                                    <li>Скин: цвета, границы, тени</li>
+                                    <li>Многократное использование стилей</li>
+                                </ul>
+                            </p>
+                        </div>
+
+                        <div class="methodology-card">
+                            <h4>SMACSS (Scalable and Modular Architecture for CSS)</h4>
+                            <div class="demo-container smacss-demo">
+                                <!-- Демонстрация категорий SMACSS -->
+                                <header class="layout-header">
+                                    <h3>Пример макета (Layout)</h3>
+                                </header>
+                                <nav class="module-nav">
+                                    <a href="#" class="nav-item state-active">Активная ссылка</a>
+                                    <a href="#" class="nav-item">Обычная ссылка</a>
+                                    <a href="#" class="nav-item">Еще ссылка</a>
+                                </nav>
+                            </div>
+                            <div class="example">
+                                <pre><code>/* Базовые стили */
+a { color: #666; }
+
+/* Стили макета */
+.layout-header { 
+    width: 100%;
+    padding: 1rem;
+}
+
+/* Модули */
+.nav-item {
+    padding: 0.5rem 1rem;
+}
+
+/* Состояния */
+.state-active {
+    color: #3498db;
+    font-weight: bold;
+}</code></pre>
+                            </div>
+                            <p class="explanation">
+                                SMACSS разделяет стили на категории:
+                                <ul>
+                                    <li>Base: базовые стили элементов</li>
+                                    <li>Layout: макет и сетка</li>
+                                    <li>Module: независимые компоненты</li>
+                                    <li>State: состояния элементов</li>
+                                    <li>Theme: темы оформления</li>
+                                </ul>
+                            </p>
+                        </div>
+
+                        <div class="methodology-card">
+                            <h4>CSS Modules</h4>
+                            <div class="demo-container modules-demo">
+                                <button class="button_primary_abc123">CSS Modules Button</button>
+                                <div class="example-output">
+                                    <p>Сгенерированный класс: <code>button_primary_abc123</code></p>
+                                </div>
+                            </div>
+                            <div class="example">
+                                <pre><code>/* Button.module.css */
+.button {
+    background: var(--primary-color);
+    color: white;
+    padding: 0.5rem 1rem;
+    border-radius: 4px;
+}
+
+/* React Component */
+import styles from './Button.module.css';
+
+function Button() {
+    return <button className={styles.button}>
+        Click me
+    </button>;
+}</code></pre>
+                            </div>
+                            <p class="explanation">
+                                CSS Modules автоматически создают уникальные имена классов:
+                                <ul>
+                                    <li>Локальная область видимости стилей</li>
+                                    <li>Нет конфликтов имен</li>
+                                    <li>Лучшая интеграция с компонентами</li>
+                                </ul>
+                            </p>
+                        </div>
+
+                        <div class="methodology-card">
+                            <h4>CSS-in-JS</h4>
+                            <div class="demo-container css-in-js-demo">
+                                <button class="styled-button">Styled Button</button>
+                                <div class="styled-button--hover">Hover State</div>
+                            </div>
+                            <div class="example">
+                                <pre><code>const Button = styled.button`
+    background: ${props => props.primary 
+        ? 'var(--primary-color)' 
+        : 'gray'};
+    color: white;
+    padding: 0.5rem 1rem;
+    border-radius: 4px;
+    transition: transform 0.2s;
+
+    &:hover {
+        transform: translateY(-2px);
+    }
+`;</code></pre>
+                            </div>
+                            <p class="explanation">
+                                CSS-in-JS предлагает:
+                                <ul>
+                                    <li>Динамические стили на основе props</li>
+                                    <li>Изоляцию стилей на уровне компонентов</li>
+                                    <li>Автоматическое удаление неиспользуемых стилей</li>
+                                    <li>Поддержку тем и динамических значений</li>
+                                </ul>
+                            </p>
+                        </div>
+                    </div>
+
+                    <h3>Организация CSS-файлов</h3>
+                    <div class="file-structure-demo">
+                        <h4>Интерактивная файловая структура</h4>
+                        <div class="file-tree">
+                            <div class="folder-container">
+                                <div class="folder">📁 styles/</div>
+                                <div class="folder-content">
+                                    <div class="folder">
+                                        <span>📁 components/</span>
+                                        <div class="file">📄 button.css</div>
+                                        <div class="file">📄 card.css</div>
+                                        <div class="file">📄 nav.css</div>
+                                    </div>
+                                    <div class="folder">
+                                        <span>📁 layout/</span>
+                                        <div class="file">📄 grid.css</div>
+                                        <div class="file">📄 header.css</div>
+                                    </div>
+                                    <div class="folder">
+                                        <span>📁 utils/</span>
+                                        <div class="file">📄 variables.css</div>
+                                        <div class="file">📄 mixins.css</div>
+                                    </div>
+                                    <div class="file">📄 main.css</div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <h3>CSS-препроцессоры</h3>
+                    <div class="preprocessors-grid">
+                        <div class="preprocessor-card">
+                            <h4>SASS/SCSS</h4>
+                            <div class="example">
+                                <pre><code>// Переменные
+$primary-color: #007bff;
+
+// Вложенность
+.card {
+    &__title {
+        color: $primary-color;
+    }
+    
+    &--featured {
+        background: lighten($primary-color, 40%);
+    }
+}</code></pre>
+                            </div>
+                        </div>
+
+                        <div class="preprocessor-card">
+                            <h4>Less</h4>
+                            <div class="example">
+                                <pre><code>// Миксины
+.button-styles() {
+    padding: 10px;
+    border-radius: 4px;
+}
+
+.button {
+    .button-styles();
+    background: @primary-color;
+}</code></pre>
+                            </div>
+                        </div>
+                    </div>
+
+                    <h3>Современные подходы</h3>
+                    <div class="modern-approaches">
+                        <div class="approach-card">
+                            <h4>CSS Modules</h4>
+                            <div class="example">
+                                <pre><code>/* button.module.css */
+.button {
+    background: var(--primary-color);
+}
+
+/* Использование */
+import styles from './button.module.css';
+<button className={styles.button}></code></pre>
+                            </div>
+                        </div>
+
+                        <div class="approach-card">
+                            <h4>CSS-in-JS</h4>
+                            <div class="example">
+                                <pre><code>const Button = styled.button`
+    background: ${props => props.primary ? 'blue' : 'gray'};
+    padding: 10px 20px;
+    border-radius: 4px;
+`;</code></pre>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="info-block">
+                        <h4>Рекомендации по выбору подхода</h4>
+                        <ul class="styled-list">
+                            <li>Для небольших проектов: простая организация по компонентам</li>
+                            <li>Для средних проектов: BEM + препроцессор</li>
+                            <li>Для крупных проектов: CSS Modules или CSS-in-JS</li>
+                            <li>Для команд: согласованный подход важнее конкретной методологии</li>
+                        </ul>
+                    </div>
+                </div>
+            </section>
+
+            <section class="practice">
+                <h2>Практика</h2>
+                
+                <div class="task">
+                    <h3>Задание 1: BEM методология</h3>
+                    <p>Создайте компонент карточки товара, используя методологию BEM. Карточка должна включать изображение, название, цену и кнопку "Купить".</p>
+                    
+                    <div class="code-editor">
+                        <div class="editor-tabs">
+                            <button class="tab active">HTML</button>
+                            <button class="tab">CSS</button>
+                        </div>
+                        <textarea class="code-input html-input">
+<!DOCTYPE html>
+<html>
+<head>
+    <title>BEM Карточка товара</title>
+</head>
+<body>
+    <!-- Создайте структуру карточки товара по BEM -->
+    <article class="product-card">
+        <!-- Добавьте элементы с правильными BEM классами -->
+    </article>
+</body>
+</html></textarea>
+                        <textarea class="code-input css-input" style="display: none;">
+/* Используйте BEM нотацию для стилей */
+.product-card {
+    /* Стили блока */
+}
+
+.product-card__image {
+    /* Стили элемента */
+}
+
+.product-card--featured {
+    /* Стили модификатора */
+}</textarea>
+                    </div>
+
+                    <button class="run-button">Запустить</button>
+
+                    <div class="result-preview">
+                        <h3>Результат</h3>
+                        <div class="preview-frame"></div>
+                    </div>
+                </div>
+
+                <div class="task">
+                    <h3>Задание 2: OOCSS подход</h3>
+                    <p>Создайте набор кнопок, используя принципы OOCSS (разделение структуры и скина).</p>
+                    
+                    <div class="code-editor">
+                        <div class="editor-tabs">
+                            <button class="tab active">HTML</button>
+                            <button class="tab">CSS</button>
+                        </div>
+                        <textarea class="code-input html-input">
+<!DOCTYPE html>
+<html>
+<head>
+    <title>OOCSS Кнопки</title>
+</head>
+<body>
+    <div class="buttons-demo">
+        <button class="btn skin-primary">Основная</button>
+        <button class="btn skin-secondary">Вторичная</button>
+        <button class="btn skin-danger">Опасность</button>
+    </div>
+</body>
+</html></textarea>
+                        <textarea class="code-input css-input" style="display: none;">
+/* Структура (общая для всех кнопок) */
+.btn {
+    /* Добавьте базовые стили структуры */
+}
+
+/* Скины */
+.skin-primary {
+    /* Добавьте стили оформления */
+}
+
+.skin-secondary {
+    /* Добавьте стили оформления */
+}
+
+.skin-danger {
+    /* Добавьте стили оформления */
+}</textarea>
+                    </div>
+
+                    <button class="run-button">Запустить</button>
+
+                    <div class="result-preview">
+                        <h3>Результат</h3>
+                        <div class="preview-frame"></div>
+                    </div>
+                </div>
+
+                <div class="task">
+                    <h3>Задание 3: Организация файловой структуры</h3>
+                    <p>Создайте правильную структуру CSS файлов для небольшого проекта интернет-магазина. Опишите назначение каждого файла и его содержимое.</p>
+                    
+                    <div class="code-editor">
+                        <div class="editor-tabs">
+                            <button class="tab active">Структура</button>
+                            <button class="tab">Описание</button>
+                        </div>
+                        <textarea class="code-input html-input">
+styles/
+├── base/
+│   ├── reset.css
+│   ├── typography.css
+│   └── variables.css
+├── components/
+│   ├── button.css
+│   ├── card.css
+│   └── form.css
+├── layout/
+│   ├── header.css
+│   ├── footer.css
+│   └── grid.css
+└── pages/
+    ├── home.css
+    ├── catalog.css
+    └── product.css</textarea>
+                        <textarea class="code-input css-input" style="display: none;">
+/* Опишите содержимое каждого файла */
+
+/* base/reset.css */
+/* Сброс стилей браузера */
+
+/* base/typography.css */
+/* Базовые стили текста */
+
+/* components/button.css */
+/* Стили кнопок */
+
+/* Добавьте описания для остальных файлов */</textarea>
+                    </div>
+
+                    <button class="run-button">Запустить</button>
+
+                    <div class="result-preview">
+                        <h3>Результат</h3>
+                        <div class="preview-frame"></div>
+                    </div>
+                </div>
+            </section>
+        </article>
+    </main>
+
+    <footer class="main-footer">
+        <p>&copy; 2024 CSS Курс. Все права защищены.</p>
+    </footer>
+
+    <script src="/scripts/lesson.js"></script>
+</body>
+</html> 

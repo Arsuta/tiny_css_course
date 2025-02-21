@@ -1,0 +1,277 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Урок 2.6: Доступность в CSS Grid | CSS Курс</title>
+    <link rel="stylesheet" href="/styles/main.css">
+    <link rel="stylesheet" href="/styles/lesson.css">
+</head>
+<body>
+    <header class="main-header">
+        <nav class="main-nav">
+            <div class="logo">CSS Курс</div>
+            <ul class="nav-links">
+                <li><a href="/">На главную</a></li>
+                <li><a href="#chapters">Главы</a></li>
+            </ul>
+        </nav>
+    </header>
+
+    <main class="lesson-content">
+        <nav class="lesson-nav">
+            <a href="/lessons/2-5" class="prev-lesson">← Урок 2.5: Медиа-запросы</a>
+            <a href="/lessons/3-1" class="next-lesson">Глава 3: Анимированный экран загрузки →</a>
+        </nav>
+
+        <article class="lesson">
+            <header class="lesson-header">
+                <h1>Урок 2.6: Доступность в CSS Grid</h1>
+            </header>
+
+            <section class="theory">
+                <h2>Теория</h2>
+                <div class="theory-content">
+                    <h3>Почему важна доступность в Grid Layout?</h3>
+                    <p>Доступность в CSS Grid - это не просто дополнительная функция, а необходимость для создания 
+                    инклюзивных веб-интерфейсов, которыми могут пользоваться все, включая людей с ограниченными возможностями.</p>
+
+                    <div class="accessibility-basics">
+                        <div class="basics-card">
+                            <h4>Основные принципы доступности в Grid</h4>
+                            <div class="example">
+                                <pre><code>/* Логический порядок HTML */
+<div class="grid-container">
+    <header>Шапка</header>
+    <nav>Навигация</nav>
+    <main>Основной контент</main>
+    <aside>Дополнительная информация</aside>
+    <footer>Подвал</footer>
+</div>
+
+/* CSS с сохранением логического порядка */
+.grid-container {
+    display: grid;
+    grid-template-areas:
+        "header header"
+        "nav main"
+        "aside main"
+        "footer footer";
+}</code></pre>
+                            </div>
+                            <p class="explanation">
+                                В этом примере HTML-структура сохраняет логический порядок контента, что важно для 
+                                скринридеров и клавиатурной навигации. Grid используется только для визуального 
+                                представления, не нарушая семантику документа.
+                            </p>
+                        </div>
+
+                        <div class="accessibility-features">
+                            <h4>Ключевые аспекты доступности</h4>
+                            <ul class="feature-list">
+                                <li>
+                                    <strong>Порядок чтения</strong>
+                                    <p>Визуальный порядок не должен противоречить логическому порядку контента</p>
+                                    <div class="example">
+                                        <pre><code>/* Плохо - нарушает порядок чтения */
+.item { grid-row: 3; }
+
+/* Хорошо - использует order для визуального порядка */
+.item { order: 3; }</code></pre>
+                                    </div>
+                                </li>
+                                <li>
+                                    <strong>Адаптивность</strong>
+                                    <p>Контент должен быть доступен при любом размере экрана и ориентации</p>
+                                    <div class="example">
+                                        <pre><code>@media (max-width: 768px) {
+    .grid-container {
+        grid-template-areas:
+            "header"
+            "nav"
+            "main"
+            "aside"
+            "footer";
+    }
+}</code></pre>
+                                    </div>
+                                </li>
+                                <li>
+                                    <strong>Контраст и размеры</strong>
+                                    <p>Элементы должны быть достаточно большими и контрастными</p>
+                                    <div class="example">
+                                        <pre><code>.grid-item {
+    min-height: 44px; /* Минимальный размер для тач-интерфейсов */
+    padding: 1rem;
+    background: #fff;
+    color: #333; /* Контраст 4.5:1 */
+}</code></pre>
+                                    </div>
+                                </li>
+                            </ul>
+                        </div>
+                    </div>
+
+                    <h3>Работа с порядком элементов</h3>
+                    <div class="order-management">
+                        <div class="order-card">
+                            <h4>Визуальный vs логический порядок</h4>
+                            <div class="example">
+                                <pre><code>.grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+}
+
+/* Используйте order вместо grid-row/column 
+   для изменения визуального порядка */
+.first { order: 1; }
+.second { order: 2; }
+.third { order: 3; }</code></pre>
+                            </div>
+                            <p class="explanation">
+                                Свойство order позволяет изменять визуальный порядок элементов без влияния на 
+                                порядок в DOM, что важно для скринридеров. Однако используйте его осторожно, 
+                                так как различие между визуальным и логическим порядком может запутать пользователей.
+                            </p>
+                        </div>
+                    </div>
+
+                    <div class="info-block">
+                        <h4>Чек-лист доступности Grid-макета</h4>
+                        <ul class="styled-list">
+                            <li>Логический порядок HTML соответствует порядку чтения</li>
+                            <li>Все интерактивные элементы доступны с клавиатуры</li>
+                            <li>Контент читаем при любом размере экрана</li>
+                            <li>Достаточный контраст между текстом и фоном</li>
+                            <li>Корректная работа при увеличении масштаба страницы</li>
+                        </ul>
+                    </div>
+                </div>
+            </section>
+
+            <section class="practice">
+                <h2>Практика</h2>
+                <div class="task">
+                    <h3>Задание 1: Доступный макет новостного сайта</h3>
+                    <p>Создайте доступный макет новостного сайта с использованием Grid и правильной семантической структуры.</p>
+                    
+                    <div class="code-editor">
+                        <div class="editor-tabs">
+                            <button class="tab active">HTML</button>
+                            <button class="tab">CSS</button>
+                        </div>
+                        <textarea class="code-input html-input">
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <title>Новостной сайт</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+</head>
+<body>
+    <div class="news-layout">
+        <header role="banner">
+            <h1>Новости</h1>
+            <nav role="navigation" aria-label="Основная навигация">
+                <ul>
+                    <li><a href="#" aria-current="page">Главная</a></li>
+                    <li><a href="#">Политика</a></li>
+                    <li><a href="#">Экономика</a></li>
+                </ul>
+            </nav>
+        </header>
+        
+        <main role="main">
+            <article>
+                <h2>Главная новость</h2>
+                <p>Текст новости...</p>
+            </article>
+        </main>
+        
+        <aside role="complementary">
+            <section>
+                <h3>Популярные новости</h3>
+                <ul>
+                    <li><a href="#">Новость 1</a></li>
+                    <li><a href="#">Новость 2</a></li>
+                </ul>
+            </section>
+        </aside>
+        
+        <footer role="contentinfo">
+            <p>&copy; 2024 Новости</p>
+        </footer>
+    </div>
+</body>
+</html></textarea>
+                        <textarea class="code-input css-input" style="display: none;">
+/* Создайте доступный grid-макет */
+.news-layout {
+    display: grid;
+    /* Добавьте grid-свойства */
+}
+
+/* Добавьте стили с учетом доступности */
+/* Не забудьте про :focus-visible и другие состояния */</textarea>
+                    </div>
+
+                    <button class="run-button">Запустить</button>
+
+                    <div class="result-preview">
+                        <h3>Результат</h3>
+                        <div class="preview-frame"></div>
+                    </div>
+                </div>
+
+                <div class="task">
+                    <h3>Задание 2: Адаптивные карточки с сохранением доступности</h3>
+                    <p>Создайте сетку карточек товаров, которая адаптируется под разные устройства и сохраняет доступность.</p>
+                    
+                    <div class="code-editor">
+                        <div class="editor-tabs">
+                            <button class="tab active">HTML</button>
+                            <button class="tab">CSS</button>
+                        </div>
+                        <textarea class="code-input html-input">
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <title>Каталог товаров</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+</head>
+<body>
+    <main>
+        <h1>Каталог товаров</h1>
+        <div class="products-grid">
+            <!-- Добавьте карточки товаров с правильной семантикой -->
+        </div>
+    </main>
+</body>
+</html></textarea>
+                        <textarea class="code-input css-input" style="display: none;">
+.products-grid {
+    display: grid;
+    /* Добавьте grid-свойства */
+}
+
+/* Добавьте стили с учетом доступности */
+/* Убедитесь, что все интерактивные элементы доступны */</textarea>
+                    </div>
+
+                    <button class="run-button">Запустить</button>
+
+                    <div class="result-preview">
+                        <h3>Результат</h3>
+                        <div class="preview-frame"></div>
+                    </div>
+                </div>
+            </section>
+        </article>
+    </main>
+
+    <footer class="main-footer">
+        <p>&copy; 2024 CSS Курс. Все права защищены.</p>
+    </footer>
+
+    <script src="/scripts/lesson.js"></script>
+</body>
+</html> 

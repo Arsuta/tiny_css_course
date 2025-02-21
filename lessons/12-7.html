@@ -1,0 +1,143 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Урок 12.7 - Псевдоклассы | CSS Курс</title>
+    <link rel="stylesheet" href="../styles/main.css">
+    <link rel="stylesheet" href="../styles/lesson.css">
+    <style>
+        .demo-section {
+            margin-bottom: 40px;
+            background: #fff;
+            padding: 20px;
+            border-radius: 8px;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+        }
+
+        /* Стили для псевдоклассов */
+        .pseudo-class {
+            padding: 20px;
+            background: #f7f5e8;
+            border-radius: 8px;
+            text-align: center;
+            margin: 20px 0;
+            transition: background 0.3s ease;
+        }
+
+        .pseudo-class:hover {
+            background: #466A85;
+            color: white;
+        }
+
+        /* Код с пояснениями */
+        .code-block {
+            background: #1E1E1E;
+            color: #ffffff;
+            padding: 15px;
+            border-radius: 8px;
+            margin: 20px 0;
+            font-family: monospace;
+            line-height: 1.5;
+        }
+
+        .code-block .selector { color: #89DDFF; }
+        .code-block .property { color: #A6E22E; }
+        .code-block .value { color: #FFD700; }
+        .code-block .comment { color: #75715E; }
+    </style>
+</head>
+<body>
+    <header class="main-header">
+        <nav class="main-nav">
+            <a href="../index.html" class="logo">CSS Курс</a>
+            <ul class="nav-links">
+                <li><a href="../index.html">На главную</a></li>
+                <li><a href="../chapters.html">Главы</a></li>
+            </ul>
+        </nav>
+    </header>
+
+    <main class="lesson-content">
+        <nav class="lesson-nav">
+            <a href="12-6.html" class="prev-lesson">← Урок 12.6: Псевдоэлементы</a>
+            <a href="12-8.html" class="next-lesson">Урок 12.8: CSS функции →</a>
+        </nav>
+
+        <article class="lesson">
+            <h1>Урок 12.7 - Псевдоклассы</h1>
+
+            <div class="theory-block">
+                <h2>Что такое псевдоклассы?</h2>
+                <p>Псевдоклассы позволяют применять стили к элементам в зависимости от их состояния или положения в документе. Они начинаются с одиночного двоеточия (:).</p>
+
+                <div class="theory-explanation">
+                    <h3>Основные псевдоклассы:</h3>
+                    <ul>
+                        <li><strong>:hover</strong> - применяется при наведении курсора на элемент.</li>
+                        <li><strong>:focus</strong> - применяется, когда элемент получает фокус (например, при нажатии на него).</li>
+                        <li><strong>:active</strong> - применяется в момент нажатия на элемент.</li>
+                        <li><strong>:nth-child(n)</strong> - применяется к элементам в зависимости от их позиции в родительском элементе.</li>
+                    </ul>
+                </div>
+            </div>
+
+            <div class="theory-block">
+                <h2>Пример использования псевдоклассов</h2>
+                <p>Рассмотрим пример, как использовать псевдоклассы для стилизации элементов:</p>
+
+                <div class="demo-section">
+                    <div class="pseudo-class">
+                        Наведите курсор на меня!
+                    </div>
+                </div>
+
+                <div class="code-block">
+                    <pre><code><span class="comment">/* Пример использования псевдоклассов */</span>
+<span class="selector">.pseudo-class:hover</span> {
+    <span class="property">background</span>: <span class="value">#466A85</span>;
+    <span class="property">color</span>: <span class="value">white</span>;
+}</code></pre>
+                </div>
+            </div>
+
+            <div class="theory-block">
+                <h2>Использование :nth-child</h2>
+                <p>Псевдокласс <code>:nth-child</code> позволяет стилизовать элементы в зависимости от их позиции в родительском элементе. Это очень полезно для создания различных эффектов и стилей для четных и нечетных элементов списка.</p>
+                
+                <div class="theory-explanation">
+                    <h3>Синтаксис :nth-child</h3>
+                    <p>Синтаксис псевдокласса выглядит следующим образом:</p>
+                    <code>:nth-child(an + b)</code>
+                    <ul>
+                        <li><strong>a</strong> - шаг, с которым выбираются элементы (например, 2 для каждого второго элемента).</li>
+                        <li><strong>b</strong> - смещение, которое определяет, с какого элемента начинать выбор (например, 1 для первого элемента).</li>
+                    </ul>
+                </div>
+                
+                <div class="theory-explanation">
+                    <h3>Примеры использования :nth-child</h3>
+                    <ul>
+                        <li><code>li:nth-child(odd)</code> - выбирает все нечетные элементы списка.</li>
+                        <li><code>li:nth-child(even)</code> - выбирает все четные элементы списка.</li>
+                        <li><code>li:nth-child(3)</code> - выбирает третий элемент списка.</li>
+                        <li><code>li:nth-child(2n)</code> - выбирает каждый второй элемент, начиная со второго.</li>
+                        <li><code>li:nth-child(2n + 1)</code> - выбирает каждый нечетный элемент, начиная с первого.</li>
+                    </ul>
+                </div>
+
+                <div class="code-block">
+                    <pre><code><span class="comment">/* Пример использования :nth-child */</span>
+<span class="selector">li:nth-child(odd)</span> {
+    <span class="property">background</span>: <span class="value">#f0f0f0</span>;
+}
+
+<span class="selector">li:nth-child(even)</span> {
+    <span class="property">background</span>: <span class="value">#d0d0d0</span>;
+}</code></pre>
+                </div>
+            </div>
+        </article>
+    </main>
+</body>
+</html> 

@@ -1,0 +1,582 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Урок 9.5 - Создание эффекта переворота | CSS Курс</title>
+    <link rel="stylesheet" href="../styles/main.css">
+    <link rel="stylesheet" href="../styles/lesson.css">
+    <style>
+        /* Базовые стили */
+        .demo-section {
+            margin-bottom: 40px;
+            background: #fff;
+            padding: 20px;
+            border-radius: 8px;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+        }
+
+        /* Стили для кредитной карты */
+        .credit-card {
+            width: 320px;
+            height: 200px;
+            margin: 20px auto;
+            position: relative;
+            perspective: 1000px;
+            font-family: monospace;
+            cursor: pointer;
+        }
+
+        .card-face {
+            width: 100%;
+            height: 100%;
+            position: absolute;
+            backface-visibility: hidden;
+            border-radius: 15px;
+            padding: 20px;
+            box-sizing: border-box;
+            transition: transform 0.6s cubic-bezier(0.4, 0, 0.2, 1);
+            box-shadow: 0 4px 8px rgba(0,0,0,0.1);
+        }
+
+        .card-front {
+            background: linear-gradient(45deg, #466A85, #7be6e8);
+            color: white;
+            transform: rotateY(0);
+        }
+
+        .card-back {
+            background: linear-gradient(45deg, #7be6e8, #466A85);
+            color: white;
+            transform: rotateY(180deg);
+        }
+
+        .credit-card.flipped .card-front {
+            transform: rotateY(180deg);
+        }
+
+        .credit-card.flipped .card-back {
+            transform: rotateY(360deg);
+        }
+
+        /* Демонстрация position */
+        .position-demo {
+            height: 200px;
+            background: #f7f5e8;
+            padding: 20px;
+            border-radius: 8px;
+            position: relative;
+            margin: 20px 0;
+            overflow: hidden;
+        }
+
+        .position-controls {
+            margin-bottom: 15px;
+            display: flex;
+            gap: 10px;
+            justify-content: center;
+        }
+
+        .position-example {
+            width: 100px;
+            height: 100px;
+            background: #466A85;
+            color: white;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            position: absolute;
+            transition: all 0.3s ease;
+            border-radius: 8px;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.2);
+            font-size: 14px;
+            cursor: pointer;
+        }
+
+        .position-example:hover {
+            transform: scale(1.05);
+            box-shadow: 0 4px 8px rgba(0,0,0,0.3);
+        }
+
+        /* Демонстрация transition */
+        .transition-demo {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 20px;
+            margin: 20px 0;
+        }
+
+        .transition-example {
+            background: #f7f5e8;
+            padding: 20px;
+            border-radius: 8px;
+            text-align: center;
+        }
+
+        .transition-box {
+            width: 100px;
+            height: 100px;
+            background: #466A85;
+            margin: 0 auto;
+            transition: transform 0.6s;
+        }
+
+        /* Код с пояснениями */
+        .code-block {
+            background: #1E1E1E;
+            color: #D4D4D4;
+            padding: 15px;
+            border-radius: 8px;
+            margin: 20px 0;
+            font-family: monospace;
+            line-height: 1.5;
+        }
+
+        /* Улучшенные стили для подсветки синтаксиса */
+        .code-block .selector { color: #569CD6; }
+        .code-block .property { color: #9CDCFE; }
+        .code-block .value { color: #CE9178; }
+        .code-block .comment { color: #6A9955; }
+        .code-block .punctuation { color: #D4D4D4; }
+
+        /* Стили для демонстрации cubic-bezier */
+        .bezier-demo {
+            background: #fff;
+            padding: 20px;
+            border-radius: 8px;
+            margin: 20px 0;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+        }
+
+        .bezier-graph {
+            height: 300px;
+            background: #fff;
+            border: 2px solid #f0f0f0;
+            border-radius: 8px;
+            position: relative;
+            margin-bottom: 20px;
+            padding: 20px;
+        }
+
+        .bezier-point {
+            width: 16px;
+            height: 16px;
+            background: #466A85;
+            border-radius: 50%;
+            position: absolute;
+            cursor: pointer;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.2);
+            transition: transform 0.2s ease;
+        }
+
+        .bezier-point:hover {
+            transform: scale(1.2);
+            background: #7be6e8;
+        }
+
+        .bezier-curve {
+            position: absolute;
+            width: 100%;
+            height: 100%;
+            pointer-events: none;
+            border-left: 2px dashed #466A85;
+            border-bottom: 2px dashed #466A85;
+            opacity: 0.3;
+        }
+
+        .demo-object {
+            width: 60px;
+            height: 60px;
+            background: #466A85;
+            border-radius: 8px;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.2);
+            position: relative;
+            left: 0;
+            transition: left 1s;
+        }
+
+        /* Улучшенная демонстрация flip */
+        .credit-card {
+            cursor: pointer;
+            transition: transform 0.3s ease;
+        }
+
+        .credit-card:hover {
+            transform: translateY(-5px);
+        }
+
+        .card-face {
+            display: flex;
+            flex-direction: column;
+            justify-content: space-between;
+        }
+
+        .card-face h3 {
+            margin: 0;
+            font-size: 1.2em;
+            text-shadow: 1px 1px 2px rgba(0,0,0,0.2);
+        }
+
+        /* Стили для теоретических блоков */
+        .theory-explanation {
+            background: #f7f5e8;
+            padding: 15px;
+            border-radius: 8px;
+            margin-bottom: 20px;
+        }
+
+        .theory-explanation h3 {
+            margin-top: 0;
+            margin-bottom: 10px;
+        }
+
+        .theory-explanation ul {
+            margin-left: 20px;
+        }
+
+        .code-explanation {
+            background: #f7f5e8;
+            padding: 15px;
+            border-radius: 8px;
+            margin-bottom: 20px;
+        }
+
+        .code-explanation h3 {
+            margin-top: 0;
+            margin-bottom: 10px;
+        }
+
+        .code-explanation ul {
+            margin-left: 20px;
+        }
+
+        .position-types {
+            display: flex;
+            gap: 20px;
+            margin-bottom: 20px;
+        }
+
+        .position-type {
+            flex: 1;
+            padding: 20px;
+            background: #fff;
+            border-radius: 8px;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+        }
+
+        .position-type h3 {
+            margin-top: 0;
+            margin-bottom: 10px;
+        }
+
+        .position-type p {
+            margin-left: 20px;
+        }
+
+        .position-example-box {
+            position: relative;
+            padding: 20px;
+            border: 1px solid #466A85;
+            border-radius: 8px;
+            margin-bottom: 10px;
+        }
+
+        .position-example-box.static {
+            background: #f7f5e8;
+        }
+
+        .position-example-box.relative {
+            background: #f7f5e8;
+        }
+
+        .position-example-box.absolute {
+            background: #f7f5e8;
+        }
+
+        .position-example-box.fixed {
+            background: #f7f5e8;
+        }
+
+        .position-example-box.sticky {
+            background: #f7f5e8;
+        }
+
+        .offset-indicator {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            text-align: center;
+        }
+
+        .parent-indicator {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            text-align: center;
+        }
+
+        .viewport-indicator {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            text-align: center;
+        }
+
+        .scroll-indicator {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            text-align: center;
+        }
+
+        .use-cases {
+            margin-top: 10px;
+        }
+
+        .use-cases h4 {
+            margin-top: 0;
+            margin-bottom: 5px;
+        }
+
+        .use-cases ul {
+            margin-left: 20px;
+        }
+
+        .example-note {
+            font-size: 0.8em;
+            color: #666;
+            margin-top: 5px;
+        }
+    </style>
+</head>
+<body>
+    <header class="main-header">
+        <nav class="main-nav">
+            <a href="../index.html" class="logo">CSS Курс</a>
+            <ul class="nav-links">
+                <li><a href="../index.html">На главную</a></li>
+                <li><a href="../chapters.html">Главы</a></li>
+            </ul>
+        </nav>
+    </header>
+
+    <main class="lesson-content">
+        <nav class="lesson-nav">
+            <a href="9-4.html" class="prev-lesson">← Урок 9.4: Типографика</a>
+            <a href="9-6.html" class="next-lesson">Урок 9.6: Скругление углов →</a>
+        </nav>
+
+        <article class="lesson">
+            <h1>Урок 9.5 - Создание эффекта переворота</h1>
+
+            <div class="theory-block">
+                <h2>1. Свойство position</h2>
+                <p>Position - это ключевое свойство CSS для управления расположением элементов на странице. Давайте рассмотрим каждый тип на практических примерах:</p>
+                
+                <div class="position-playground">
+                    <div class="position-container">
+                        <div class="position-box" id="demoBox">
+                            <div class="box-content">
+                                <div class="box-type">static</div>
+                                <div class="box-coords"></div>
+                            </div>
+                        </div>
+                        <div class="position-grid"></div>
+                    </div>
+                    
+                    <div class="position-controls">
+                        <div class="control-section">
+                            <h3>Тип позиционирования:</h3>
+                            <div class="button-group">
+                                <button class="control-button active" onclick="setPositionType('static')">Static</button>
+                                <button class="control-button" onclick="setPositionType('relative')">Relative</button>
+                                <button class="control-button" onclick="setPositionType('absolute')">Absolute</button>
+                                <button class="control-button" onclick="setPositionType('fixed')">Fixed</button>
+                                <button class="control-button" onclick="setPositionType('sticky')">Sticky</button>
+                            </div>
+                        </div>
+                        
+                        <div class="control-section">
+                            <h3>Координаты:</h3>
+                            <div class="coords-control">
+                                <label>Top: <input type="range" min="-50" max="50" value="0" onInput="updatePosition('top', this.value)"></label>
+                                <label>Left: <input type="range" min="-50" max="50" value="0" onInput="updatePosition('left', this.value)"></label>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="position-info">
+                    <div class="info-panel">
+                        <h3>Текущие настройки:</h3>
+                        <pre id="currentCSS">
+position: static;
+top: 0;
+left: 0;</pre>
+                    </div>
+                    
+                    <div class="info-panel">
+                        <h3>Описание:</h3>
+                        <p id="positionDescription">
+                            Static - стандартное поведение элемента в потоке документа. 
+                            Координаты top, left, right, bottom не влияют на положение элемента.
+                        </p>
+                    </div>
+                </div>
+            </div>
+
+            <div class="theory-block">
+                <h2>2. Transitions и backface-visibility</h2>
+                <p>Для создания плавного эффекта переворота используем комбинацию CSS свойств:</p>
+                
+                <div class="theory-explanation">
+                    <h3>Ключевые свойства:</h3>
+                    <ul>
+                        <li><strong>backface-visibility</strong> - Скрывает обратную сторону элемента при повороте</li>
+                        <li><strong>transform</strong> - Выполняет 3D-трансформацию элемента</li>
+                        <li><strong>transition</strong> - Обеспечивает плавность анимации</li>
+                    </ul>
+                </div>
+
+                <div class="code-block">
+                    <pre><code><span class="comment">/* Настройка переворота */</span>
+<span class="selector">.card-face</span> {
+    <span class="property">backface-visibility</span>: <span class="value">hidden</span>;
+    <span class="property">transition</span>: <span class="value">transform 0.6s cubic-bezier(0.4, 0, 0.2, 1)</span>;
+}
+
+<span class="selector">.card-back</span> {
+    <span class="property">transform</span>: <span class="value">rotateY(180deg)</span>;
+}</code></pre>
+                </div>
+
+                <div class="code-explanation">
+                    <h3>Как работает переворот:</h3>
+                    <ol>
+                        <li>Изначально задняя сторона повернута на 180 градусов</li>
+                        <li>При клике передняя сторона поворачивается на 180 градусов</li>
+                        <li>Задняя сторона поворачивается на 360 градусов (возвращается в нормальное положение)</li>
+                        <li>backface-visibility скрывает обратные стороны во время поворота</li>
+                    </ol>
+                </div>
+
+                <div class="demo-section">
+                    <div class="credit-card" id="flipDemo">
+                        <div class="card-face card-front">
+                            <h3>Лицевая сторона</h3>
+                        </div>
+                        <div class="card-face card-back">
+                            <h3>Обратная сторона</h3>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="theory-block">
+                <h2>3. Функция cubic-bezier</h2>
+                <p>Функция cubic-bezier позволяет создать пользовательскую кривую анимации для более реалистичного эффекта:</p>
+                
+                <div class="theory-explanation">
+                    <h3>Параметры cubic-bezier:</h3>
+                    <ul>
+                        <li><strong>Первая точка (P1)</strong> - Контролирует начало анимации</li>
+                        <li><strong>Вторая точка (P2)</strong> - Контролирует конец анимации</li>
+                        <li><strong>Значения</strong> - Каждая точка имеет X и Y координаты от 0 до 1</li>
+                    </ul>
+                </div>
+
+                <div class="code-block">
+                    <pre><code><span class="comment">/* Примеры timing-function */</span>
+<span class="selector">.element</span> {
+    <span class="property">transition-timing-function</span>: <span class="value">ease</span>;         <span class="comment">/* Плавное начало и конец */</span>
+    <span class="property">transition-timing-function</span>: <span class="value">linear</span>;       <span class="comment">/* Линейная анимация */</span>
+    <span class="property">transition-timing-function</span>: <span class="value">cubic-bezier(0.4, 0, 0.2, 1)</span>;  <span class="comment">/* Пользовательская */</span>
+}</code></pre>
+                </div>
+
+                <div class="controls-panel">
+                    <div class="control-group">
+                        <button class="control-button" onclick="setBezier('ease')">Ease</button>
+                        <button class="control-button" onclick="setBezier('linear')">Linear</button>
+                        <button class="control-button" onclick="setBezier('custom')">Custom</button>
+                    </div>
+                </div>
+
+                <div class="bezier-demo">
+                    <div class="bezier-graph">
+                        <div class="bezier-point" id="p1"></div>
+                        <div class="bezier-point" id="p2"></div>
+                        <div class="bezier-curve"></div>
+                    </div>
+                    <div class="bezier-example" id="bezierDemo">
+                        <div class="demo-object"></div>
+                    </div>
+                </div>
+            </div>
+        </article>
+    </main>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            // Демонстрация переворота
+            const card = document.getElementById('flipDemo');
+            card.addEventListener('click', function() {
+                this.classList.toggle('flipped');
+            });
+
+            // Функция для позиционирования
+            window.togglePosition = function(position) {
+                const demo = document.getElementById('positionDemo');
+                const positions = {
+                    top: { top: '0', bottom: 'auto', transform: 'none' },
+                    center: { top: '50%', bottom: 'auto', transform: 'translateY(-50%)' },
+                    bottom: { top: 'auto', bottom: '0', transform: 'none' }
+                };
+                
+                Object.assign(demo.style, positions[position]);
+                
+                // Обновляем активные кнопки
+                document.querySelectorAll('.position-controls .control-button').forEach(btn => {
+                    btn.classList.toggle('active', btn.textContent.toLowerCase().includes(position));
+                });
+            };
+
+            // Функция для демонстрации cubic-bezier
+            window.setBezier = function(type) {
+                const demo = document.getElementById('bezierDemo');
+                const object = demo.querySelector('.demo-object');
+                
+                switch(type) {
+                    case 'ease':
+                        object.style.transition = 'left 1s ease';
+                        break;
+                    case 'linear':
+                        object.style.transition = 'left 1s linear';
+                        break;
+                    case 'custom':
+                        object.style.transition = 'left 1s cubic-bezier(0.4, 0, 0.2, 1)';
+                        break;
+                }
+                object.style.left = object.style.left === '80%' ? '0' : '80%';
+
+                // Обновляем активную кнопку
+                const buttons = document.querySelectorAll('.control-button');
+                buttons.forEach(btn => {
+                    btn.classList.remove('active');
+                    if (btn.textContent.toLowerCase() === type) {
+                        btn.classList.add('active');
+                    }
+                });
+            };
+
+            // Инициализация
+            togglePosition('center');
+            setBezier('ease');
+        });
+    </script>
+</body>
+</html> 

@@ -1,0 +1,275 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Урок 11.4 - Стилизация блока | CSS Курс</title>
+    <link rel="stylesheet" href="../styles/main.css">
+    <link rel="stylesheet" href="../styles/lesson.css">
+    <style>
+        .demo-section {
+            margin-bottom: 40px;
+            background: #fff;
+            padding: 20px;
+            border-radius: 8px;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+        }
+
+        /* Демонстрация компонента */
+        .social-share {
+            position: relative;
+            display: inline-block;
+        }
+
+        .social-share__button {
+            width: 48px;
+            height: 48px;
+            border-radius: 50%;
+            border: none;
+            background: #466A85;
+            color: white;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .social-share__button:hover {
+            background: #385674;
+            transform: scale(1.1);
+        }
+
+        .social-share__menu {
+            position: absolute;
+            top: 100%;
+            left: 50%;
+            transform: translateX(-50%);
+            margin-top: 10px;
+            padding: 8px;
+            background: white;
+            border-radius: 8px;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.2);
+            display: none;
+        }
+
+        .social-share__menu.is-open {
+            display: block;
+        }
+
+        .social-share__link {
+            display: flex;
+            align-items: center;
+            padding: 8px 16px;
+            color: #333;
+            text-decoration: none;
+            border-radius: 4px;
+            transition: 0.3s;
+            gap: 10px;
+        }
+
+        .social-share__link:hover {
+            background: #f5f5f5;
+        }
+
+        .social-share__icon {
+            width: 24px;
+            height: 24px;
+            fill: currentColor;
+        }
+
+        /* Код с пояснениями */
+        .code-block {
+            background: #1E1E1E;
+            color: #ffffff;
+            padding: 15px;
+            border-radius: 8px;
+            margin: 20px 0;
+            font-family: monospace;
+            line-height: 1.5;
+        }
+
+        .code-block .selector { color: #89DDFF; }
+        .code-block .property { color: #A6E22E; }
+        .code-block .value { color: #FFD700; }
+        .code-block .comment { color: #75715E; }
+    </style>
+</head>
+<body>
+    <header class="main-header">
+        <nav class="main-nav">
+            <a href="../index.html" class="logo">CSS Курс</a>
+            <ul class="nav-links">
+                <li><a href="../index.html">На главную</a></li>
+                <li><a href="../chapters.html">Главы</a></li>
+            </ul>
+        </nav>
+    </header>
+
+    <main class="lesson-content">
+        <nav class="lesson-nav">
+            <a href="11-3.html" class="prev-lesson">← Урок 11.3: Работа с иконками</a>
+            <a href="11-5.html" class="next-lesson">Урок 11.5: Стилизация элементов →</a>
+        </nav>
+
+        <article class="lesson">
+            <h1>Урок 11.4 - Стилизация блока</h1>
+
+            <div class="theory-block">
+                <h2>Структура компонента</h2>
+                <p>Компонент социальных кнопок построен по методологии BEM, где каждый элемент имеет свою роль и стилизацию:</p>
+                
+                <div class="theory-explanation">
+                    <h3>Основные элементы:</h3>
+                    <ul>
+                        <li><strong>Блок (.social-share)</strong> - контейнер, определяющий контекст позиционирования</li>
+                        <li><strong>Кнопка (.social-share__button)</strong> - триггер для открытия меню</li>
+                        <li><strong>Меню (.social-share__menu)</strong> - выпадающий список с соцсетями</li>
+                        <li><strong>Ссылки (.social-share__link)</strong> - элементы для шаринга</li>
+                    </ul>
+                </div>
+
+                <div class="demo-section">
+                    <div class="social-share">
+                        <button class="social-share__button" onclick="toggleMenu(this)">
+                            <svg class="social-share__icon">
+                                <use xlink:href="#icon-share"></use>
+                            </svg>
+                        </button>
+                        <div class="social-share__menu">
+                            <a href="#" class="social-share__link">
+                                <svg class="social-share__icon">
+                                    <use xlink:href="#icon-facebook"></use>
+                                </svg>
+                                Facebook
+                            </a>
+                            <a href="#" class="social-share__link">
+                                <svg class="social-share__icon">
+                                    <use xlink:href="#icon-twitter"></use>
+                                </svg>
+                                Twitter
+                            </a>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="theory-explanation">
+                    <h3>Принципы стилизации блока:</h3>
+                    <ul>
+                        <li><strong>Изоляция</strong> - компонент не должен зависеть от внешних стилей</li>
+                        <li><strong>Модульность</strong> - возможность переиспользования в разных местах</li>
+                        <li><strong>Гибкость</strong> - адаптация под разные размеры и темы</li>
+                        <li><strong>Доступность</strong> - работа с клавиатурой и скринридерами</li>
+                    </ul>
+                </div>
+
+                <div class="code-block">
+                    <pre><code><span class="comment">/* Основной блок */</span>
+<span class="selector">.social-share</span> {
+    <span class="property">position</span>: <span class="value">relative</span>;
+    <span class="property">display</span>: <span class="value">inline-block</span>;
+}
+
+<span class="comment">/* Кнопка */</span>
+<span class="selector">.social-share__button</span> {
+    <span class="property">width</span>: <span class="value">48px</span>;
+    <span class="property">height</span>: <span class="value">48px</span>;
+    <span class="property">border-radius</span>: <span class="value">50%</span>;
+    <span class="property">border</span>: <span class="value">none</span>;
+    <span class="property">background</span>: <span class="value">#466A85</span>;
+    <span class="property">color</span>: <span class="value">white</span>;
+    <span class="property">cursor</span>: <span class="value">pointer</span>;
+    <span class="property">transition</span>: <span class="value">all 0.3s ease</span>;
+}</code></pre>
+                </div>
+            </div>
+
+            <div class="theory-block">
+                <h2>Позиционирование меню</h2>
+                <p>Для правильного позиционирования выпадающего меню используется комбинация CSS свойств:</p>
+                
+                <div class="theory-explanation">
+                    <h3>Ключевые свойства позиционирования:</h3>
+                    <ul>
+                        <li>
+                            <strong>position: relative</strong> на родителе
+                            <p>Создает контекст позиционирования для абсолютно позиционированных дочерних элементов</p>
+                        </li>
+                        <li>
+                            <strong>position: absolute</strong> на меню
+                            <p>Позволяет позиционировать меню относительно родителя</p>
+                        </li>
+                        <li>
+                            <strong>transform: translateX(-50%)</strong>
+                            <p>Центрирует меню относительно кнопки</p>
+                        </li>
+                    </ul>
+                </div>
+
+                <div class="theory-explanation">
+                    <h3>Особенности реализации:</h3>
+                    <ul>
+                        <li><strong>z-index</strong> - управление слоями при наложении элементов</li>
+                        <li><strong>box-shadow</strong> - создание эффекта глубины</li>
+                        <li><strong>margin-top</strong> - отступ от кнопки для визуального разделения</li>
+                        <li><strong>border-radius</strong> - скругление углов для современного вида</li>
+                    </ul>
+                </div>
+
+                <div class="code-block">
+                    <pre><code><span class="comment">/* Меню */</span>
+<span class="selector">.social-share__menu</span> {
+    <span class="property">position</span>: <span class="value">absolute</span>;
+    <span class="property">top</span>: <span class="value">100%</span>;
+    <span class="property">left</span>: <span class="value">50%</span>;
+    <span class="property">transform</span>: <span class="value">translateX(-50%)</span>;
+    <span class="property">margin-top</span>: <span class="value">10px</span>;
+    <span class="property">background</span>: <span class="value">white</span>;
+    <span class="property">border-radius</span>: <span class="value">8px</span>;
+    <span class="property">box-shadow</span>: <span class="value">0 2px 8px rgba(0,0,0,0.2)</span>;
+}</code></pre>
+                </div>
+            </div>
+
+            <div class="theory-block">
+                <h2>Стилизация состояний</h2>
+                <p>Компонент имеет несколько состояний, которые требуют особой стилизации:</p>
+                
+                <div class="theory-explanation">
+                    <h3>Основные состояния:</h3>
+                    <ul>
+                        <li><strong>Hover</strong> - при наведении курсора</li>
+                        <li><strong>Focus</strong> - при фокусе с клавиатуры</li>
+                        <li><strong>Active</strong> - при нажатии</li>
+                        <li><strong>Open</strong> - когда меню открыто</li>
+                    </ul>
+                </div>
+
+                <div class="code-block">
+                    <pre><code><span class="comment">/* Состояния */</span>
+<span class="selector">.social-share__button:hover</span> {
+    <span class="property">background</span>: <span class="value">#385674</span>;
+    <span class="property">transform</span>: <span class="value">scale(1.1)</span>;
+}
+
+<span class="selector">.social-share__button:focus</span> {
+    <span class="property">outline</span>: <span class="value">none</span>;
+    <span class="property">box-shadow</span>: <span class="value">0 0 0 3px rgba(70, 106, 133, 0.5)</span>;
+}
+
+<span class="selector">.social-share__button:active</span> {
+    <span class="property">transform</span>: <span class="value">scale(0.95)</span>;
+}</code></pre>
+                </div>
+            </div>
+        </article>
+    </main>
+
+    <script>
+        function toggleMenu(button) {
+            const menu = button.nextElementSibling;
+            menu.classList.toggle('is-open');
+        }
+    </script>
+</body>
+</html> 

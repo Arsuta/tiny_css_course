@@ -1,0 +1,156 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Урок 12.8 - CSS функции | CSS Курс</title>
+    <link rel="stylesheet" href="../styles/main.css">
+    <link rel="stylesheet" href="../styles/lesson.css">
+    <style>
+        .demo-section {
+            margin-bottom: 40px;
+            background: #fff;
+            padding: 20px;
+            border-radius: 8px;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+        }
+
+        /* Стили для примеров функций */
+        .function-example {
+            padding: 20px;
+            background: #f7f5e8;
+            border-radius: 8px;
+            text-align: center;
+            margin: 20px 0;
+        }
+
+        /* Код с пояснениями */
+        .code-block {
+            background: #1E1E1E;
+            color: #ffffff;
+            padding: 15px;
+            border-radius: 8px;
+            margin: 20px 0;
+            font-family: monospace;
+            line-height: 1.5;
+        }
+
+        .code-block .selector { color: #89DDFF; }
+        .code-block .property { color: #A6E22E; }
+        .code-block .value { color: #FFD700; }
+        .code-block .comment { color: #75715E; }
+    </style>
+</head>
+<body>
+    <header class="main-header">
+        <nav class="main-nav">
+            <a href="../index.html" class="logo">CSS Курс</a>
+            <ul class="nav-links">
+                <li><a href="../index.html">На главную</a></li>
+                <li><a href="../chapters.html">Главы</a></li>
+            </ul>
+        </nav>
+    </header>
+
+    <main class="lesson-content">
+        <nav class="lesson-nav">
+            <a href="12-7.html" class="prev-lesson">← Урок 12.7: Псевдоклассы</a>
+            <a href="13-1.html" class="next-lesson">Глава 13: CSS и JavaScript →</a>
+        </nav>
+
+        <article class="lesson">
+            <h1>Урок 12.8 - CSS функции</h1>
+
+            <div class="theory-block">
+                <h2>Что такое CSS функции?</h2>
+                <p>CSS функции позволяют выполнять вычисления и манипуляции с значениями в стилях. Они упрощают работу с цветами, размерами и другими параметрами, делая код более динамичным и адаптивным.</p>
+                
+                <div class="theory-explanation">
+                    <h3>Зачем использовать CSS функции?</h3>
+                    <ul>
+                        <li><strong>Упрощение вычислений</strong> - позволяет выполнять математические операции прямо в CSS.</li>
+                        <li><strong>Управление переменными</strong> - использование переменных для упрощения изменений стилей.</li>
+                        <li><strong>Адаптивность</strong> - возможность задавать значения, которые автоматически подстраиваются под размеры экрана.</li>
+                    </ul>
+                </div>
+
+                <div class="theory-explanation">
+                    <h3>Основные CSS функции:</h3>
+                    <ul>
+                        <li><strong>calc()</strong> - позволяет выполнять математические вычисления для задания значений.</li>
+                        <li><strong>var()</strong> - используется для работы с CSS переменными.</li>
+                        <li><strong>clamp()</strong> - позволяет задавать значения с ограничениями, что полезно для адаптивного дизайна.</li>
+                        <li><strong>min() и max()</strong> - выбирают минимальное или максимальное значение из списка, что позволяет управлять размерами элементов.</li>
+                    </ul>
+                </div>
+            </div>
+
+            <div class="theory-block">
+                <h2>Использование calc()</h2>
+                <p>Функция <code>calc()</code> позволяет выполнять математические операции:</p>
+                <p>С помощью <code>calc()</code> можно комбинировать разные единицы измерения, например, проценты и пиксели.</p>
+
+                <div class="code-block">
+                    <pre><code><span class="comment">/* Пример использования calc() */</span>
+<span class="selector">.element</span> {
+    <span class="property">width</span>: <span class="value">calc(100% - 20px)</span>;
+}</code></pre>
+                </div>
+
+                <div class="demo-section">
+                    <div class="function-example" style="width: calc(100% - 20px);">
+                        Пример с использованием calc()
+                    </div>
+                </div>
+                
+                <div class="theory-explanation">
+                    <h3>Применение calc():</h3>
+                    <p>С помощью <code>calc()</code> можно задавать размеры, которые зависят от других значений, что делает макеты более гибкими.</p>
+                </div>
+            </div>
+
+            <div class="theory-block">
+                <h2>Использование var()</h2>
+                <p>Функция <code>var()</code> позволяет использовать CSS переменные:</p>
+                <p>CSS переменные упрощают управление стилями, так как их значения можно изменять в одном месте, и они будут применяться ко всем элементам, использующим эту переменную.</p>
+
+                <div class="code-block">
+                    <pre><code><span class="comment">/* Определение переменных */</span>
+<span class="selector">:root</span> {
+    <span class="property">--main-color</span>: <span class="value">#466A85</span>;
+}</code></pre>
+                </div>
+
+                <div class="code-block">
+                    <pre><code><span class="selector">.element</span> {
+    <span class="property">background-color</span>: <span class="value">var(--main-color)</span>;
+}</code></pre>
+                </div>
+                
+                <div class="theory-explanation">
+                    <h3>Применение var():</h3>
+                    <p>С помощью <code>var()</code> можно легко изменять темы и стили, просто меняя значения переменных.</p>
+                </div>
+            </div>
+
+            <div class="theory-block">
+                <h2>Использование clamp()</h2>
+                <p>Функция <code>clamp()</code> позволяет задавать значения с ограничениями:</p>
+                <p>Это полезно для адаптивного дизайна, так как позволяет задавать минимальные и максимальные размеры для элементов.</p>
+
+                <div class="code-block">
+                    <pre><code><span class="comment">/* Пример использования clamp() */</span>
+<span class="selector">.element</span> {
+    <span class="property">font-size</span>: <span class="value">clamp(1rem, 2vw + 1rem, 2rem)</span>;
+}</code></pre>
+                </div>
+                
+                <div class="theory-explanation">
+                    <h3>Применение clamp():</h3>
+                    <p>С помощью <code>clamp()</code> можно задавать размеры, которые будут адаптироваться к размеру экрана, оставаясь в заданных пределах.</p>
+                </div>
+            </div>
+        </article>
+    </main>
+</body>
+</html> 

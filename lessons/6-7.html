@@ -1,0 +1,474 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Урок 6.7 - Стилизация профильной карточки | CSS Курс</title>
+    <link rel="stylesheet" href="../styles/main.css">
+    <link rel="stylesheet" href="../styles/lesson.css">
+    <style>
+        /* Стили для демонстраций */
+        .demo-section {
+            margin-bottom: 40px;
+        }
+
+        /* Стили для блоков с кодом */
+        .code-block {
+            background: #1E1E1E;
+            color: #D4D4D4;
+            padding: 15px;
+            border-radius: 8px;
+            margin: 20px 0;
+            font-family: monospace;
+        }
+
+        .code-block pre {
+            margin: 0;
+        }
+
+        .code-block code {
+            color: #D4D4D4;
+            font-family: monospace;
+        }
+
+        /* Подсветка синтаксиса */
+        .code-block .keyword { color: #569CD6; }
+        .code-block .property { color: #9CDCFE; }
+        .code-block .value { color: #CE9178; }
+        .code-block .punctuation { color: #D4D4D4; }
+        .code-block .comment { color: #6A9955; }
+        .code-block .selector { color: #D7BA7D; }
+
+        /* Остальные стили оставляем без изменений */
+        h1, h2, h3, h4 {
+            color: #466A85;
+            font-family: Arial, sans-serif;
+            font-style: italic;
+            font-weight: bold;
+        }
+
+        h1 {
+            font-size: 24px;
+            margin-bottom: 20px;
+        }
+
+        h2 {
+            font-size: 20px;
+            margin-top: 30px;
+        }
+
+        h3 {
+            font-size: 18px;
+            margin-top: 20px;
+        }
+
+        p {
+            color: #252525;
+            font-size: 16px;
+            line-height: 1.5;
+            margin: 10px 0;
+        }
+
+        /* Блоки с теорией и примерами */
+        .theory-block {
+            background: #fff;
+            padding: 20px;
+            margin: 20px 0;
+            border: 1px solid #ddd;
+        }
+
+        .example-block {
+            background: #f7f5e8;
+            padding: 20px;
+            margin: 20px 0;
+        }
+
+        .practice-block {
+            background: #fff;
+            padding: 20px;
+            margin: 20px 0;
+            border: 1px solid #ddd;
+        }
+
+        /* Демонстрационные компоненты */
+        .demo-flex {
+            margin: 20px 0;
+            display: flex;
+            justify-content: space-around;
+            gap: 20px;
+        }
+
+        .flex-container {
+            display: flex;
+            gap: 10px;
+            background: #f7f5e8;
+            padding: 15px;
+            margin: 10px 0;
+            min-height: 80px;
+            border: 1px solid #ddd;
+        }
+
+        .flex-item {
+            background: #466A85;
+            color: white;
+            padding: 15px 25px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-family: Arial, sans-serif;
+        }
+
+        /* Интерактивные элементы */
+        .interactive-demo {
+            background: #fff;
+            padding: 20px;
+            margin: 20px 0;
+            border: 1px solid #466A85;
+        }
+
+        .controls {
+            margin: 15px 0;
+            display: flex;
+            gap: 10px;
+        }
+
+        .controls button {
+            padding: 8px 15px;
+            background: #466A85;
+            color: white;
+            border: none;
+            font-family: Arial, sans-serif;
+            cursor: pointer;
+        }
+
+        .controls button:hover {
+            background: #557a95;
+        }
+
+        /* Профильная карточка */
+        .profile-card {
+            background: #fff;
+            border: 1px solid #ddd;
+            position: relative;
+            width: 100%;
+            max-width: 400px;
+            margin: 20px auto;
+        }
+
+        .profile-header {
+            background: #466A85;
+            height: 100px;
+            position: relative;
+        }
+
+        .profile-avatar {
+            width: 200px;
+            height: 200px;
+            border-radius: 50%;
+            border: 5px solid white;
+            position: absolute;
+            bottom: 0;
+            left: 50%;
+            transform: translate(-50%, 50%);
+            object-fit: cover;
+        }
+
+        .profile-info {
+            margin-top: 120px;
+            text-align: center;
+            padding: 20px;
+        }
+
+        /* Навигация */
+        .main-header {
+            background: #466A85;
+            padding: 15px 20px;
+            margin: -20px -20px 20px -20px;
+        }
+
+        .main-nav {
+            display: flex;
+            gap: 20px;
+        }
+
+        .main-nav a {
+            color: white;
+            text-decoration: none;
+            font-family: Arial, sans-serif;
+            padding: 5px 10px;
+        }
+
+        .main-nav a:hover {
+            text-decoration: underline;
+        }
+
+        /* Списки */
+        ul, ol {
+            color: #252525;
+            margin: 10px 0;
+            padding-left: 30px;
+        }
+
+        li {
+            margin: 5px 0;
+        }
+
+        /* Навигация по уроку */
+        .lesson-nav {
+            display: flex;
+            justify-content: space-between;
+            margin: 20px 0;
+        }
+
+        .chapter-navigation {
+            background: #f8f9fa;
+            padding: 20px;
+            border-radius: 8px;
+            margin: 20px 0;
+        }
+
+        .chapter-navigation ul {
+            list-style: none;
+            padding: 0;
+        }
+
+        .chapter-navigation .current {
+            color: #466A85;
+            font-weight: bold;
+        }
+    </style>
+</head>
+<body>
+    <header class="main-header">
+        <nav class="main-nav">
+            <a href="../index.html" class="logo">CSS Курс</a>
+            <ul class="nav-links">
+                <li><a href="../index.html">На главную</a></li>
+                <li><a href="../chapters.html">Главы</a></li>
+            </ul>
+        </nav>
+    </header>
+
+    <main class="lesson-content">
+        <nav class="lesson-nav">
+            <a href="6-6.html" class="prev-lesson">← Урок 6.6: Предыдущий урок</a>
+            <a href="6-8.html" class="next-lesson">Урок 6.8: Следующий урок →</a>
+        </nav>
+
+        <div class="chapter-navigation">
+            <h3>Навигация по главе 6:</h3>
+            <ul>
+                <li><a href="6-1.html">6.1 Введение в проект</a></li>
+                <li><a href="6-2.html">6.2 Основы CSS Custom Properties</a></li>
+                <li><a href="6-7.html" class="current">6.7 Стилизация профильной карточки</a></li>
+                <li><a href="6-8.html">6.8 Завершение проекта</a></li>
+            </ul>
+        </div>
+
+        <article class="lesson">
+            <h1>Урок 6.7 - Стилизация профильной карточки</h1>
+
+            <!-- Теория CSS Custom Properties -->
+            <div class="theory-block">
+                <h2>1. CSS Custom Properties и их применение</h2>
+                <p>CSS Custom Properties (пользовательские свойства) - это мощный механизм для создания переиспользуемых значений в CSS. Они особенно полезны при работе с темами и компонентами.</p>
+                
+                <div class="code-block">
+                    <pre><code><span class="comment">/* Определение переменных в корневом элементе */</span>
+<span class="selector">:root</span> {
+    <span class="property">--primary</span>: <span class="value">#466A85</span>;         <span class="comment">/* Основной цвет */</span>
+    <span class="property">--secondary</span>: <span class="value">#717777</span>;       <span class="comment">/* Вторичный цвет */</span>
+    <span class="property">--imageSize</span>: <span class="value">200px</span>;         <span class="comment">/* Размер изображения */</span>
+    <span class="property">--spacing-base</span>: <span class="value">8px</span>;        <span class="comment">/* Базовый отступ */</span>
+}</code></pre>
+                </div>
+                
+                <h3>Преимущества использования CSS переменных:</h3>
+                <ul>
+                    <li>Централизованное управление значениями</li>
+                    <li>Возможность изменения значений через JavaScript</li>
+                    <li>Поддержка каскадности и области видимости</li>
+                    <li>Упрощение поддержки темной темы</li>
+                </ul>
+
+                <div class="code-block">
+                    <pre><code><span class="comment">/* Пример использования calc() с переменными */</span>
+<span class="selector">.card</span> {
+    <span class="property">padding</span>: <span class="value">calc(var(--spacing-base) * 2)</span>;
+    <span class="property">margin-top</span>: <span class="value">calc(var(--imageSize) / 3)</span>;
+}</code></pre>
+                </div>
+            </div>
+
+            <!-- Расширенная теория по Flexbox -->
+            <div class="theory-block">
+                <h2>2. Глубокое понимание Flexbox</h2>
+                <p>Flexbox работает с двумя осями: главной (main axis) и поперечной (cross axis). Направление главной оси определяется свойством flex-direction.</p>
+
+                <div class="code-block">
+                    <pre><code><span class="comment">/* Основные свойства Flexbox */</span>
+<span class="selector">.flex-container</span> {
+    <span class="property">display</span>: <span class="value">flex</span>;              <span class="comment">/* Активация flex-контекста */</span>
+    <span class="property">flex-direction</span>: <span class="value">row</span>;        <span class="comment">/* Направление главной оси */</span>
+    <span class="property">justify-content</span>: <span class="value">space-between</span>; <span class="comment">/* Распределение по главной оси */</span>
+    <span class="property">align-items</span>: <span class="value">center</span>;        <span class="comment">/* Выравнивание по поперечной оси */</span>
+    <span class="property">gap</span>: <span class="value">10px</span>;                 <span class="comment">/* Отступы между элементами */</span>
+}
+
+<span class="selector">.flex-item</span> {
+    <span class="property">flex-basis</span>: <span class="value">200px</span>;         <span class="comment">/* Базовый размер элемента */</span>
+    <span class="property">flex-grow</span>: <span class="value">1</span>;              <span class="comment">/* Коэффициент роста */</span>
+    <span class="property">flex-shrink</span>: <span class="value">0</span>;            <span class="comment">/* Коэффициент сжатия */</span>
+}</code></pre>
+                </div>
+            </div>
+
+            <!-- Переход к следующей главе -->
+            <div class="next-chapter-preview">
+                <h2>Переход к следующей главе</h2>
+                <p>В следующей главе мы рассмотрим:</p>
+                <ul>
+                    <li>Продвинутые техники позиционирования</li>
+                    <li>Работу с CSS Grid</li>
+                    <li>Создание адаптивных макетов</li>
+                    <li>Оптимизацию производительности CSS</li>
+                </ul>
+                <a href="7-1.html" class="next-chapter-link">Перейти к главе 7 →</a>
+            </div>
+
+            <!-- Демонстрация Flexbox -->
+            <div class="example-block">
+                <h2>2. Flexbox Layout</h2>
+                <p>Flexbox предоставляет эффективный способ распределения пространства и выравнивания элементов.</p>
+
+                <h3>justify-content</h3>
+                <div class="flex-demo">
+                    <p>flex-start:</p>
+                    <div class="flex-container" style="justify-content: flex-start;">
+                        <div class="flex-item">1</div>
+                        <div class="flex-item">2</div>
+                        <div class="flex-item">3</div>
+                    </div>
+
+                    <p>center:</p>
+                    <div class="flex-container" style="justify-content: center;">
+                        <div class="flex-item">1</div>
+                        <div class="flex-item">2</div>
+                        <div class="flex-item">3</div>
+                    </div>
+
+                    <p>space-between:</p>
+                    <div class="flex-container" style="justify-content: space-between;">
+                        <div class="flex-item">1</div>
+                        <div class="flex-item">2</div>
+                        <div class="flex-item">3</div>
+                    </div>
+                </div>
+
+                <h3>align-items</h3>
+                <div class="flex-demo">
+                    <div class="flex-container" style="align-items: center; height: 150px;">
+                        <div class="flex-item">1</div>
+                        <div class="flex-item" style="height: 80px;">2</div>
+                        <div class="flex-item">3</div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Практическое задание -->
+            <div class="practice-block">
+                <h2>3. Практическое задание: Создание профильной карточки</h2>
+                
+                <div class="profile-card">
+                    <div class="profile-header">
+                        <img src="https://placekitten.com/200/200" alt="Аватар" class="profile-avatar">
+                    </div>
+                    <div class="profile-info">
+                        <h3>Анна Иванова</h3>
+                        <p>Веб-разработчик</p>
+                        <div class="demo-flex">
+                            <div>
+                                <strong>150</strong>
+                                <div>постов</div>
+                            </div>
+                            <div>
+                                <strong>2.5k</strong>
+                                <div>подписчиков</div>
+                            </div>
+                            <div>
+                                <strong>500</strong>
+                                <div>подписок</div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <h3>Код профильной карточки:</h3>
+                <pre>
+.profile-card {
+    background: var(--card-background);
+    border-radius: 8px;
+    overflow: hidden;
+    position: relative;
+    width: 100%;
+    max-width: 400px;
+    margin: 20px auto;
+}
+
+.profile-header {
+    background: var(--primary);
+    height: 100px;
+    position: relative;
+}
+
+.profile-avatar {
+    width: var(--imageSize);
+    height: var(--imageSize);
+    border-radius: 50%;
+    border: 5px solid white;
+    position: absolute;
+    bottom: 0;
+    left: 50%;
+    transform: translate(-50%, 50%);
+    object-fit: cover;
+}
+                </pre>
+            </div>
+
+            <!-- Интерактивное демо -->
+            <div class="interactive-demo">
+                <h2>4. Интерактивная демонстрация Flexbox</h2>
+                <div class="controls">
+                    <button onclick="changeJustify('flex-start')">flex-start</button>
+                    <button onclick="changeJustify('center')">center</button>
+                    <button onclick="changeJustify('flex-end')">flex-end</button>
+                    <button onclick="changeJustify('space-between')">space-between</button>
+                </div>
+                <div id="interactive-flex" class="flex-container">
+                    <div class="flex-item">1</div>
+                    <div class="flex-item">2</div>
+                    <div class="flex-item">3</div>
+                </div>
+            </div>
+
+            <!-- Важные моменты -->
+            <div class="theory-block">
+                <h2>5. Ключевые моменты урока</h2>
+                <ul>
+                    <li>CSS переменные делают код более поддерживаемым и гибким</li>
+                    <li>Flexbox предоставляет мощные инструменты для выравнивания</li>
+                    <li>object-fit необходим для правильной работы с изображениями</li>
+                    <li>Свойство gap упрощает создание отступов между элементами</li>
+                    <li>Позиционирование элементов может комбинировать различные подходы</li>
+                </ul>
+            </div>
+        </article>
+    </main>
+
+    <script>
+        function changeJustify(value) {
+            document.getElementById('interactive-flex').style.justifyContent = value;
+        }
+    </script>
+</body>
+</html> 

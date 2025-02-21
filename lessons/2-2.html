@@ -1,0 +1,261 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Урок 2.2: Display grid | CSS Курс</title>
+    <link rel="stylesheet" href="/styles/main.css">
+    <link rel="stylesheet" href="/styles/lesson.css">
+</head>
+<body>
+    <header class="main-header">
+        <nav class="main-nav">
+            <div class="logo">CSS Курс</div>
+            <ul class="nav-links">
+                <li><a href="/">На главную</a></li>
+                <li><a href="#chapters">Главы</a></li>
+            </ul>
+        </nav>
+    </header>
+
+    <main class="lesson-content">
+        <nav class="lesson-nav">
+            <a href="/lessons/2-1" class="prev-lesson">← Урок 2.1: CSS Grid</a>
+            <a href="/lessons/2-3" class="next-lesson">Урок 2.3: Треки и линии сетки →</a>
+        </nav>
+
+        <article class="lesson">
+            <header class="lesson-header">
+                <h1>Урок 2.2: Display grid</h1>
+            </header>
+
+            <section class="theory">
+                <h2>Теория</h2>
+                <div class="theory-content">
+                    <h3>Свойство display: grid</h3>
+                    <p>Свойство display: grid создает контекст сетки, превращая элемент в grid-контейнер. Это базовое свойство для начала работы с CSS Grid Layout.</p>
+
+                    <div class="display-types">
+                        <div class="type-card">
+                            <h4>display: grid</h4>
+                            <p>Создает блочный grid-контейнер</p>
+                            <div class="example">
+                                <pre><code>.container {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 20px;
+}</code></pre>
+                            </div>
+                            <div class="grid-demo block-grid">
+                                <div>1</div>
+                                <div>2</div>
+                                <div>3</div>
+                            </div>
+                        </div>
+
+                        <div class="type-card">
+                            <h4>display: inline-grid</h4>
+                            <p>Создает строчный grid-контейнер</p>
+                            <div class="example">
+                                <pre><code>.container {
+    display: inline-grid;
+    grid-template-columns: repeat(2, 100px);
+    gap: 10px;
+}</code></pre>
+                            </div>
+                            <div class="grid-demo inline-grid">
+                                <div>1</div>
+                                <div>2</div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <h3>Поведение grid-элементов</h3>
+                    <div class="grid-behavior">
+                        <div class="behavior-card">
+                            <h4>Автоматическое размещение</h4>
+                            <div class="example">
+                                <pre><code>.grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+}
+/* Элементы автоматически размещаются по сетке */</code></pre>
+                            </div>
+                            <div class="grid-demo auto-placement">
+                                <div>1</div>
+                                <div>2</div>
+                                <div>3</div>
+                                <div>4</div>
+                                <div>5</div>
+                            </div>
+                        </div>
+
+                        <div class="behavior-card">
+                            <h4>Явное позиционирование</h4>
+                            <div class="example">
+                                <pre><code>.item {
+    grid-column: 2 / 4;
+    grid-row: 1 / 3;
+}</code></pre>
+                            </div>
+                            <div class="grid-demo explicit-placement">
+                                <div class="positioned">Позиционированный</div>
+                                <div>2</div>
+                                <div>3</div>
+                                <div>4</div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <h3>Вложенные сетки</h3>
+                    <div class="nested-grids">
+                        <div class="example-card">
+                            <h4>Создание вложенных сеток</h4>
+                            <div class="example">
+                                <pre><code>.outer-grid {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 20px;
+}
+
+.inner-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 10px;
+}</code></pre>
+                            </div>
+                            <div class="grid-demo nested-demo">
+                                <div class="inner-grid">
+                                    <div>1</div>
+                                    <div>2</div>
+                                    <div>3</div>
+                                </div>
+                                <div>B</div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="info-block">
+                        <h4>Важные особенности</h4>
+                        <ul class="styled-list">
+                            <li>Grid-контейнер создает новый контекст форматирования</li>
+                            <li>Прямые потомки становятся grid-элементами автоматически</li>
+                            <li>Можно создавать неограниченное количество вложенных сеток</li>
+                            <li>Сетки могут комбинироваться с Flexbox</li>
+                        </ul>
+                    </div>
+                </div>
+            </section>
+
+            <section class="practice">
+                <h2>Практика</h2>
+                <div class="task">
+                    <h3>Задание 1: Базовая сетка</h3>
+                    <p>Создайте простую сетку из 6 элементов, расположенных в 2 ряда по 3 элемента.</p>
+                    
+                    <div class="code-editor">
+                        <div class="editor-tabs">
+                            <button class="tab active">HTML</button>
+                            <button class="tab">CSS</button>
+                        </div>
+                        <textarea class="code-input html-input">
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Базовая сетка</title>
+</head>
+<body>
+    <div class="grid-container">
+        <div class="item">1</div>
+        <div class="item">2</div>
+        <div class="item">3</div>
+        <div class="item">4</div>
+        <div class="item">5</div>
+        <div class="item">6</div>
+    </div>
+</body>
+</html></textarea>
+                        <textarea class="code-input css-input" style="display: none;">
+.grid-container {
+    /* Добавьте свойства для создания сетки */
+}
+
+.item {
+    background-color: #e9ecef;
+    padding: 20px;
+    text-align: center;
+    border-radius: 4px;
+}</textarea>
+                    </div>
+
+                    <button class="run-button">Запустить</button>
+
+                    <div class="result-preview">
+                        <h3>Результат</h3>
+                        <div class="preview-frame"></div>
+                    </div>
+                </div>
+
+                <div class="task">
+                    <h3>Задание 2: Вложенные сетки</h3>
+                    <p>Создайте макет с вложенной сеткой внутри одной из ячеек основной сетки.</p>
+                    
+                    <div class="code-editor">
+                        <div class="editor-tabs">
+                            <button class="tab active">HTML</button>
+                            <button class="tab">CSS</button>
+                        </div>
+                        <textarea class="code-input html-input">
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Вложенные сетки</title>
+</head>
+<body>
+    <div class="outer-grid">
+        <div class="inner-grid">
+            <div class="inner-item">A</div>
+            <div class="inner-item">B</div>
+            <div class="inner-item">C</div>
+        </div>
+        <div class="outer-item">2</div>
+        <div class="outer-item">3</div>
+        <div class="outer-item">4</div>
+    </div>
+</body>
+</html></textarea>
+                        <textarea class="code-input css-input" style="display: none;">
+.outer-grid {
+    /* Стили для внешней сетки */
+}
+
+.inner-grid {
+    /* Стили для вложенной сетки */
+}
+
+.outer-item, .inner-item {
+    background-color: #e9ecef;
+    padding: 20px;
+    text-align: center;
+    border-radius: 4px;
+}</textarea>
+                    </div>
+
+                    <button class="run-button">Запустить</button>
+
+                    <div class="result-preview">
+                        <h3>Результат</h3>
+                        <div class="preview-frame"></div>
+                    </div>
+                </div>
+            </section>
+        </article>
+    </main>
+
+    <footer class="main-footer">
+        <p>&copy; 2024 CSS Курс. Все права защищены.</p>
+    </footer>
+
+    <script src="/scripts/lesson.js"></script>
+</body>
+</html> 

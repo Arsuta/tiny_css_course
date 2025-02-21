@@ -1,0 +1,656 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Урок 2.1: CSS Grid | CSS Курс</title>
+    <link rel="stylesheet" href="/styles/main.css">
+    <link rel="stylesheet" href="/styles/lesson.css">
+    <style>
+        /* Стили для демонстраций */
+        .demo-container {
+            padding: 2rem;
+            background: #f8f9fa;
+            border-radius: 8px;
+            margin: 1rem 0;
+        }
+
+        /* Интерактивная сетка */
+        .interactive-grid {
+            display: grid;
+            gap: 10px;
+            padding: 20px;
+            background: #f8f9fa;
+            border-radius: 8px;
+        }
+
+        .grid-item {
+            background: #3498db;
+            color: white;
+            padding: 20px;
+            border-radius: 4px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: bold;
+        }
+
+        /* Контролы для интерактивной сетки */
+        .grid-controls {
+            margin-bottom: 1rem;
+            display: flex;
+            gap: 1rem;
+            flex-wrap: wrap;
+        }
+
+        .control-group {
+            display: flex;
+            flex-direction: column;
+            gap: 0.5rem;
+        }
+
+        .control-group label {
+            font-size: 0.9rem;
+            color: #666;
+        }
+
+        /* FR единицы демонстрация */
+        .fr-demo {
+            display: grid;
+            gap: 10px;
+            margin: 1rem 0;
+        }
+
+        .fr-item {
+            background: #2ecc71;
+            color: white;
+            padding: 1rem;
+            text-align: center;
+            border-radius: 4px;
+        }
+
+        /* Grid vs Flexbox сравнение */
+        .comparison-container {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 2rem;
+            margin: 2rem 0;
+        }
+
+        .grid-example, .flex-example {
+            padding: 1rem;
+            background: #f8f9fa;
+            border-radius: 8px;
+        }
+
+        .grid-example {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 10px;
+        }
+
+        .flex-example {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 10px;
+        }
+
+        .example-item {
+            background: #3498db;
+            color: white;
+            padding: 1rem;
+            text-align: center;
+            border-radius: 4px;
+        }
+
+        /* Анимированные линии сетки */
+        .grid-lines {
+            position: relative;
+            background: #f8f9fa;
+            padding: 2rem;
+            border-radius: 8px;
+            margin: 1rem 0;
+        }
+
+        .grid-line {
+            position: absolute;
+            background: rgba(52, 152, 219, 0.2);
+        }
+
+        .grid-line-vertical {
+            width: 1px;
+            height: 100%;
+            top: 0;
+            animation: showLine 1s ease-out forwards;
+        }
+
+        .grid-line-horizontal {
+            height: 1px;
+            width: 100%;
+            left: 0;
+            animation: showLine 1s ease-out forwards;
+        }
+
+        @keyframes showLine {
+            from {
+                transform: scale(0);
+                opacity: 0;
+            }
+            to {
+                transform: scale(1);
+                opacity: 1;
+            }
+        }
+
+        /* Интерактивные примеры */
+        .interactive-example {
+            margin: 2rem 0;
+        }
+
+        .code-output {
+            display: flex;
+            gap: 2rem;
+        }
+
+        .code-editor {
+            flex: 1;
+        }
+
+        .live-preview {
+            flex: 1;
+            padding: 1rem;
+            background: #f8f9fa;
+            border-radius: 8px;
+        }
+
+        /* Responsive Grid демонстрация */
+        .responsive-grid {
+            display: grid;
+            gap: 1rem;
+            margin: 1rem 0;
+        }
+
+        @media (min-width: 768px) {
+            .responsive-grid {
+                grid-template-columns: repeat(2, 1fr);
+            }
+        }
+
+        @media (min-width: 1024px) {
+            .responsive-grid {
+                grid-template-columns: repeat(3, 1fr);
+            }
+        }
+    </style>
+</head>
+<body>
+    <header class="main-header">
+        <nav class="main-nav">
+            <div class="logo">CSS Курс</div>
+            <ul class="nav-links">
+                <li><a href="/">На главную</a></li>
+                <li><a href="#chapters">Главы</a></li>
+            </ul>
+        </nav>
+    </header>
+
+    <main class="lesson-content">
+        <nav class="lesson-nav">
+            <a href="/lessons/1-7" class="prev-lesson">← Урок 1.7: Способы написания CSS</a>
+            <a href="/lessons/2-2" class="next-lesson">Урок 2.2: Display grid →</a>
+        </nav>
+
+        <article class="lesson">
+            <header class="lesson-header">
+                <h1>Урок 2.1: CSS Grid</h1>
+            </header>
+
+            <section class="theory">
+                <h2>Теория</h2>
+                <div class="theory-content">
+                    <h3>Что такое CSS Grid?</h3>
+                    <p>CSS Grid Layout - это мощная система макетов, которая позволяет создавать двумерные сетки для веб-страниц. В отличие от Flexbox, который работает в одном измерении, Grid позволяет управлять как строками, так и столбцами одновременно.</p>
+
+                    <div class="grid-basics">
+                        <div class="concept-card">
+                            <h4>Основные термины</h4>
+                            <div class="terms-grid">
+                                <div class="term">
+                                    <h5>Grid Container</h5>
+                                    <p>Элемент, к которому применяется <code>display: grid</code></p>
+                                </div>
+                                <div class="term">
+                                    <h5>Grid Items</h5>
+                                    <p>Прямые потомки grid-контейнера</p>
+                                </div>
+                                <div class="term">
+                                    <h5>Grid Lines</h5>
+                                    <p>Линии, формирующие структуру сетки</p>
+                                </div>
+                                <div class="term">
+                                    <h5>Grid Tracks</h5>
+                                    <p>Пространство между двумя соседними линиями</p>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="example-card">
+                            <h4>Базовый пример Grid</h4>
+                            <div class="example">
+                                <pre><code>.container {
+    display: grid;
+    grid-template-columns: 200px 1fr 200px;
+    grid-template-rows: auto 1fr auto;
+    gap: 20px;
+}</code></pre>
+                            </div>
+                            <div class="grid-demo">
+                                <div class="header">Шапка</div>
+                                <div class="sidebar">Сайдбар</div>
+                                <div class="content">Контент</div>
+                                <div class="sidebar-right">Сайдбар</div>
+                                <div class="footer">Подвал</div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <h3>Создание сетки</h3>
+                    <div class="grid-creation">
+                        <div class="method-card">
+                            <h4>grid-template-columns</h4>
+                            <div class="example">
+                                <pre><code>/* Фиксированные значения */
+grid-template-columns: 100px 200px 100px;
+
+/* Гибкие фракции */
+grid-template-columns: 1fr 2fr 1fr;
+
+/* Смешанные значения */
+grid-template-columns: 200px 1fr 200px;</code></pre>
+                            </div>
+                            <div class="grid-demo columns-demo">
+                                <div>1</div>
+                                <div>2</div>
+                                <div>3</div>
+                            </div>
+                        </div>
+
+                        <div class="method-card">
+                            <h4>grid-template-rows</h4>
+                            <div class="example">
+                                <pre><code>/* Автоматическая высота */
+grid-template-rows: auto auto auto;
+
+/* Фиксированная высота */
+grid-template-rows: 100px 200px 100px;
+
+/* Смешанные значения */
+grid-template-rows: auto 1fr auto;</code></pre>
+                            </div>
+                            <div class="grid-demo rows-demo">
+                                <div>1</div>
+                                <div>2</div>
+                                <div>3</div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <h3>Отступы в сетке</h3>
+                    <div class="grid-gaps">
+                        <div class="gap-card">
+                            <h4>Свойство gap</h4>
+                            <div class="example">
+                                <pre><code>/* Одинаковые отступы */
+gap: 20px;
+
+/* Разные отступы */
+gap: 20px 10px; /* row-gap column-gap */
+
+/* Отдельные свойства */
+row-gap: 20px;
+column-gap: 10px;</code></pre>
+                            </div>
+                            <div class="grid-demo gap-demo">
+                                <div>1</div>
+                                <div>2</div>
+                                <div>3</div>
+                                <div>4</div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <h3>Единицы измерения в Grid</h3>
+                    <div class="grid-units">
+                        <div class="unit-card">
+                            <h4>fr (fraction)</h4>
+                            <p>Гибкая единица, распределяющая доступное пространство</p>
+                            <div class="example">
+                                <pre><code>grid-template-columns: 1fr 2fr 1fr;
+/* Пропорции: 25% 50% 25% */</code></pre>
+                            </div>
+                        </div>
+
+                        <div class="unit-card">
+                            <h4>auto</h4>
+                            <p>Размер определяется содержимым</p>
+                            <div class="example">
+                                <pre><code>grid-template-columns: auto 1fr auto;</code></pre>
+                            </div>
+                        </div>
+
+                        <div class="unit-card">
+                            <h4>minmax()</h4>
+                            <p>Задает минимальное и максимальное значения</p>
+                            <div class="example">
+                                <pre><code>grid-template-columns: minmax(200px, 1fr);</code></pre>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="info-block">
+                        <h4>Важно помнить</h4>
+                        <ul class="styled-list">
+                            <li>Grid - это двумерная система макетов</li>
+                            <li>Можно комбинировать фиксированные и гибкие размеры</li>
+                            <li>fr единицы распределяют оставшееся пространство</li>
+                            <li>gap создает отступы между элементами, но не по краям</li>
+                        </ul>
+                    </div>
+
+                    <h3>Интерактивная сетка</h3>
+                    <div class="interactive-grid-demo">
+                        <div class="grid-controls">
+                            <div class="control-group">
+                                <label>Количество колонок</label>
+                                <input type="range" min="1" max="6" value="3" id="columnsControl">
+                            </div>
+                            <div class="control-group">
+                                <label>Отступы (gap)</label>
+                                <input type="range" min="0" max="40" value="10" id="gapControl">
+                            </div>
+                            <div class="control-group">
+                                <label>Тип сетки</label>
+                                <select id="gridTypeControl">
+                                    <option value="fixed">Фиксированная</option>
+                                    <option value="responsive">Responsive</option>
+                                    <option value="auto-fit">Auto-fit</option>
+                                </select>
+                            </div>
+                        </div>
+                        <div class="interactive-grid">
+                            <div class="grid-item">1</div>
+                            <div class="grid-item">2</div>
+                            <div class="grid-item">3</div>
+                            <div class="grid-item">4</div>
+                            <div class="grid-item">5</div>
+                            <div class="grid-item">6</div>
+                        </div>
+                        <div class="code-preview">
+                            <pre><code id="gridCode">.grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 10px;
+}</code></pre>
+                        </div>
+                    </div>
+
+                    <h3>Fraction Units (fr)</h3>
+                    <div class="fr-demo-section">
+                        <p>Fr единица представляет собой долю свободного пространства в сетке.</p>
+                        <div class="fr-demo">
+                            <div class="fr-item" style="grid-column: span 1">1fr</div>
+                            <div class="fr-item" style="grid-column: span 2">2fr</div>
+                            <div class="fr-item" style="grid-column: span 1">1fr</div>
+                        </div>
+                        <div class="example">
+                            <pre><code>.fr-demo {
+    display: grid;
+    grid-template-columns: 1fr 2fr 1fr;
+    /* 1fr = 25%, 2fr = 50%, 1fr = 25% */
+}</code></pre>
+                        </div>
+                    </div>
+
+                    <h3>Grid vs Flexbox</h3>
+                    <div class="comparison-container">
+                        <div class="comparison-item">
+                            <h4>CSS Grid</h4>
+                            <div class="grid-example">
+                                <div class="example-item">1</div>
+                                <div class="example-item">2</div>
+                                <div class="example-item">3</div>
+                                <div class="example-item">4</div>
+                                <div class="example-item">5</div>
+                                <div class="example-item">6</div>
+                            </div>
+                            <div class="example">
+                                <pre><code>.grid-example {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 10px;
+}</code></pre>
+                            </div>
+                        </div>
+                        <div class="comparison-item">
+                            <h4>Flexbox</h4>
+                            <div class="flex-example">
+                                <div class="example-item">1</div>
+                                <div class="example-item">2</div>
+                                <div class="example-item">3</div>
+                                <div class="example-item">4</div>
+                                <div class="example-item">5</div>
+                                <div class="example-item">6</div>
+                            </div>
+                            <div class="example">
+                                <pre><code>.flex-example {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 10px;
+}
+
+.example-item {
+    flex: 1 1 calc(33.333% - 10px);
+}</code></pre>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <section class="practice">
+                <h2>Практика</h2>
+                <div class="task">
+                    <h3>Задание</h3>
+                    <p>Создайте простой макет страницы с использованием CSS Grid. Макет должен содержать шапку, основной контент и подвал.</p>
+                    
+                    <div class="code-editor">
+                        <div class="editor-tabs">
+                            <button class="tab active">HTML</button>
+                            <button class="tab">CSS</button>
+                        </div>
+                        <textarea class="code-input html-input">
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Grid Layout</title>
+</head>
+<body>
+    <div class="grid-container">
+        <header>Шапка сайта</header>
+        <main>Основной контент</main>
+        <footer>Подвал сайта</footer>
+    </div>
+</body>
+</html></textarea>
+                        <textarea class="code-input css-input" style="display: none;">
+/* Создайте базовый grid-макет */
+.grid-container {
+    display: grid;
+    /* Добавьте свои стили */
+}
+
+header, main, footer {
+    padding: 20px;
+    text-align: center;
+}</textarea>
+                    </div>
+
+                    <button class="run-button">Запустить</button>
+
+                    <div class="result-preview">
+                        <h3>Результат</h3>
+                        <div class="preview-frame"></div>
+                    </div>
+                </div>
+
+                <div class="task">
+                    <h3>Задание 2: Адаптивная сетка карточек</h3>
+                    <p>Создайте адаптивную сетку карточек товаров, которая автоматически перестраивается под разные размеры экрана.</p>
+                    
+                    <div class="code-editor">
+                        <div class="editor-tabs">
+                            <button class="tab active">HTML</button>
+                            <button class="tab">CSS</button>
+                        </div>
+                        <textarea class="code-input html-input">
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Адаптивная сетка</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+</head>
+<body>
+    <div class="products-grid">
+        <div class="product-card">
+            <img src="product1.jpg" alt="Товар 1">
+            <h3>Товар 1</h3>
+            <p>1000 ₽</p>
+        </div>
+        <!-- Добавьте еще карточки товаров -->
+    </div>
+</body>
+</html></textarea>
+                        <textarea class="code-input css-input" style="display: none;">
+.products-grid {
+    display: grid;
+    /* Используйте auto-fit и minmax для адаптивности */
+    gap: 20px;
+    padding: 20px;
+}
+
+.product-card {
+    /* Стилизуйте карточку товара */
+}</textarea>
+                    </div>
+
+                    <button class="run-button">Запустить</button>
+
+                    <div class="result-preview">
+                        <h3>Результат</h3>
+                        <div class="preview-frame"></div>
+                    </div>
+                </div>
+
+                <div class="task">
+                    <h3>Задание 3: Сложный макет с вложенными сетками</h3>
+                    <p>Создайте макет с основной сеткой и вложенной сеткой в одной из областей.</p>
+                    
+                    <div class="code-editor">
+                        <div class="editor-tabs">
+                            <button class="tab active">HTML</button>
+                            <button class="tab">CSS</button>
+                        </div>
+                        <textarea class="code-input html-input">
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Вложенные сетки</title>
+</head>
+<body>
+    <div class="main-grid">
+        <header>Шапка</header>
+        <nav>Меню</nav>
+        <main>
+            <div class="nested-grid">
+                <!-- Добавьте элементы вложенной сетки -->
+            </div>
+        </main>
+        <aside>Сайдбар</aside>
+        <footer>Подвал</footer>
+    </div>
+</body>
+</html></textarea>
+                        <textarea class="code-input css-input" style="display: none;">
+.main-grid {
+    display: grid;
+    /* Создайте основную сетку */
+}
+
+.nested-grid {
+    display: grid;
+    /* Создайте вложенную сетку */
+}</textarea>
+                    </div>
+
+                    <button class="run-button">Запустить</button>
+
+                    <div class="result-preview">
+                        <h3>Результат</h3>
+                        <div class="preview-frame"></div>
+                    </div>
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <footer class="main-footer">
+        <p>&copy; 2024 CSS Курс. Все права защищены.</p>
+    </footer>
+
+    <script src="/scripts/lesson.js"></script>
+    <script>
+    // Интерактивная сетка
+    const columnsControl = document.getElementById('columnsControl');
+    const gapControl = document.getElementById('gapControl');
+    const gridTypeControl = document.getElementById('gridTypeControl');
+    const interactiveGrid = document.querySelector('.interactive-grid');
+    const gridCode = document.getElementById('gridCode');
+
+    function updateGrid() {
+        const columns = columnsControl.value;
+        const gap = gapControl.value;
+        const gridType = gridTypeControl.value;
+
+        let columnsValue;
+        switch(gridType) {
+            case 'fixed':
+                columnsValue = `repeat(${columns}, 1fr)`;
+                break;
+            case 'responsive':
+                columnsValue = `repeat(auto-fill, minmax(${100/columns}%, 1fr))`;
+                break;
+            case 'auto-fit':
+                columnsValue = `repeat(auto-fit, minmax(150px, 1fr))`;
+                break;
+        }
+
+        interactiveGrid.style.gridTemplateColumns = columnsValue;
+        interactiveGrid.style.gap = `${gap}px`;
+
+        // Обновляем код
+        gridCode.textContent = `.grid {
+    display: grid;
+    grid-template-columns: ${columnsValue};
+    gap: ${gap}px;
+}`;
+    }
+
+    columnsControl.addEventListener('input', updateGrid);
+    gapControl.addEventListener('input', updateGrid);
+    gridTypeControl.addEventListener('change', updateGrid);
+
+    // Инициализация
+    updateGrid();
+    </script>
+</body>
+</html> 

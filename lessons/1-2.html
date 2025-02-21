@@ -1,0 +1,240 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Урок 1.2: Разделение задач (SoC) | CSS Курс</title>
+    <link rel="stylesheet" href="/styles/main.css">
+    <link rel="stylesheet" href="/styles/lesson.css">
+</head>
+<body>
+    <header class="main-header">
+        <nav class="main-nav">
+            <div class="logo">CSS Курс</div>
+            <ul class="nav-links">
+                <li><a href="/">На главную</a></li>
+                <li><a href="#chapters">Главы</a></li>
+            </ul>
+        </nav>
+    </header>
+
+    <main class="lesson-content">
+        <nav class="lesson-nav">
+            <a href="/lessons/1-1" class="prev-lesson">← Урок 1.1: Обзор CSS</a>
+            <a href="/lessons/1-3" class="next-lesson">Урок 1.3: Что такое CSS →</a>
+        </nav>
+
+        <article class="lesson">
+            <header class="lesson-header">
+                <h1>Урок 1.2: Разделение задач (SoC)</h1>
+            </header>
+
+            <section class="theory">
+                <h2>Теория</h2>
+                <div class="theory-content">
+                    <h3>Что такое Разделение задач (SoC)?</h3>
+                    <p>Разделение задач - это принцип проектирования, согласно которому различные аспекты программы должны быть максимально независимы друг от друга. В веб-разработке это означает разделение:</p>
+                    
+                    <div class="soc-principles">
+                        <div class="principle-card">
+                            <h4>Структура (HTML)</h4>
+                            <p>Отвечает за организацию и семантику контента</p>
+                            <div class="example">
+                                <pre><code>&lt;article>
+    &lt;h1>Заголовок&lt;/h1>
+    &lt;p>Содержание&lt;/p>
+&lt;/article></code></pre>
+                            </div>
+                        </div>
+
+                        <div class="principle-card">
+                            <h4>Представление (CSS)</h4>
+                            <p>Определяет внешний вид и стилизацию</p>
+                            <div class="example">
+                                <pre><code>article {
+    max-width: 800px;
+    margin: 0 auto;
+    padding: 20px;
+}</code></pre>
+                            </div>
+                        </div>
+
+                        <div class="principle-card">
+                            <h4>Поведение (JavaScript)</h4>
+                            <p>Обеспечивает интерактивность и функциональность</p>
+                            <div class="example">
+                                <pre><code>article.addEventListener('click', 
+    () => { /* действие */ }
+);</code></pre>
+                            </div>
+                        </div>
+                    </div>
+
+                    <h3>Преимущества разделения задач</h3>
+                    <div class="benefits-grid">
+                        <div class="benefit-card">
+                            <h4>Улучшенная поддерживаемость</h4>
+                            <p>Изменения в одном аспекте не влияют на другие. Можно обновить дизайн без изменения HTML.</p>
+                        </div>
+                        <div class="benefit-card">
+                            <h4>Повторное использование</h4>
+                            <p>Один CSS-файл может применяться к множеству HTML-страниц.</p>
+                        </div>
+                        <div class="benefit-card">
+                            <h4>Командная работа</h4>
+                            <p>Разные специалисты могут работать над разными аспектами параллельно.</p>
+                        </div>
+                        <div class="benefit-card">
+                            <h4>Производительность</h4>
+                            <p>Кэширование CSS и JavaScript улучшает скорость загрузки.</p>
+                        </div>
+                    </div>
+
+                    <h3>Распространенные анти-паттерны</h3>
+                    <div class="antipatterns-grid">
+                        <div class="antipattern-card">
+                            <h4>❌ Смешивание стилей с HTML</h4>
+                            <div class="example">
+                                <pre><code>&lt;p style="color: blue; font-size: 16px;">
+    Текст с инлайн-стилями
+&lt;/p></code></pre>
+                            </div>
+                            <p class="solution">✅ Решение: Вынести стили в CSS-файл</p>
+                        </div>
+
+                        <div class="antipattern-card">
+                            <h4>❌ Стилизация через HTML-атрибуты</h4>
+                            <div class="example">
+                                <pre><code>&lt;font color="red" size="4">
+    Устаревший подход
+&lt;/font></code></pre>
+                            </div>
+                            <p class="solution">✅ Решение: Использовать современные CSS-свойства</p>
+                        </div>
+
+                        <div class="antipattern-card">
+                            <h4>❌ Презентационные классы</h4>
+                            <div class="example">
+                                <pre><code>&lt;div class="blue bold size-14">
+    Негибкий подход
+&lt;/div></code></pre>
+                            </div>
+                            <p class="solution">✅ Решение: Использовать семантические классы</p>
+                        </div>
+                    </div>
+
+                    <h3>Лучшие практики</h3>
+                    <div class="best-practices">
+                        <div class="practice-card">
+                            <h4>Семантическая разметка</h4>
+                            <div class="comparison">
+                                <div class="bad">
+                                    <h5>❌ Плохо:</h5>
+                                    <pre><code>&lt;div class="header">
+    &lt;div class="title">Заголовок&lt;/div>
+&lt;/div></code></pre>
+                                </div>
+                                <div class="good">
+                                    <h5>✅ Хорошо:</h5>
+                                    <pre><code>&lt;header>
+    &lt;h1>Заголовок&lt;/h1>
+&lt;/header></code></pre>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="practice-card">
+                            <h4>Организация CSS</h4>
+                            <div class="example">
+                                <pre><code>/* Компонентный подход */
+.article { }
+.article__header { }
+.article__content { }
+.article--featured { }</code></pre>
+                            </div>
+                            <p>Используйте методологии типа BEM для структурирования CSS</p>
+                        </div>
+
+                        <div class="practice-card">
+                            <h4>Прогрессивное улучшение</h4>
+                            <p>Начинайте с базовой функциональности и добавляйте улучшения постепенно:</p>
+                            <ol class="styled-list">
+                                <li>Семантический HTML для всех пользователей</li>
+                                <li>Базовые стили для старых браузеров</li>
+                                <li>Продвинутые стили с современными свойствами</li>
+                                <li>JavaScript для дополнительной функциональности</li>
+                            </ol>
+                        </div>
+                    </div>
+
+                    <div class="info-block">
+                        <h4>Важно помнить</h4>
+                        <p>Разделение задач - это не просто техническое решение, а философия разработки, которая помогает создавать более качественные, поддерживаемые и масштабируемые веб-приложения.</p>
+                    </div>
+                </div>
+            </section>
+
+            <section class="practice">
+                <h2>Практика</h2>
+                <div class="task">
+                    <h3>Задание</h3>
+                    <p>Создайте простую веб-страницу с карточкой товара, применяя принцип разделения задач. Разделите структуру (HTML) и стили (CSS).</p>
+                    
+                    <div class="code-editor">
+                        <div class="editor-tabs">
+                            <button class="tab active">HTML</button>
+                            <button class="tab">CSS</button>
+                        </div>
+                        <textarea class="code-input html-input">
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Карточка товара</title>
+</head>
+<body>
+    <!-- Создайте структуру карточки товара -->
+    <div class="product-card">
+        <h2>Название товара</h2>
+        <p class="price">1000 ₽</p>
+        <p class="description">Описание товара</p>
+        <button class="buy-button">Купить</button>
+    </div>
+</body>
+</html></textarea>
+                        <textarea class="code-input css-input" style="display: none;">
+/* Стилизуйте карточку товара */
+.product-card {
+    /* Добавьте стили для карточки */
+}
+
+.price {
+    /* Добавьте стили для цены */
+}
+
+.description {
+    /* Добавьте стили для описания */
+}
+
+.buy-button {
+    /* Добавьте стили для кнопки */
+}</textarea>
+                    </div>
+
+                    <button class="run-button">Запустить</button>
+
+                    <div class="result-preview">
+                        <h3>Результат</h3>
+                        <div class="preview-frame"></div>
+                    </div>
+                </div>
+            </section>
+        </article>
+    </main>
+
+    <footer class="main-footer">
+        <p>&copy; 2024 CSS Курс. Все права защищены.</p>
+    </footer>
+
+    <script src="/scripts/lesson.js"></script>
+</body>
+</html> 

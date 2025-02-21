@@ -1,0 +1,147 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Урок 12.4 - Адаптивный дизайн | CSS Курс</title>
+    <link rel="stylesheet" href="../styles/main.css">
+    <link rel="stylesheet" href="../styles/lesson.css">
+    <style>
+        .demo-section {
+            margin-bottom: 40px;
+            background: #fff;
+            padding: 20px;
+            border-radius: 8px;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+        }
+
+        /* Стили для адаптивного дизайна */
+        .responsive-container {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            margin: 20px 0;
+        }
+
+        .responsive-item {
+            background: #f7f5e8;
+            padding: 20px;
+            border-radius: 8px;
+            text-align: center;
+            width: 100%;
+            max-width: 400px;
+            margin: 10px 0;
+        }
+
+        /* Код с пояснениями */
+        .code-block {
+            background: #1E1E1E;
+            color: #ffffff;
+            padding: 15px;
+            border-radius: 8px;
+            margin: 20px 0;
+            font-family: monospace;
+            line-height: 1.5;
+        }
+
+        .code-block .selector { color: #89DDFF; }
+        .code-block .property { color: #A6E22E; }
+        .code-block .value { color: #FFD700; }
+        .code-block .comment { color: #75715E; }
+    </style>
+</head>
+<body>
+    <header class="main-header">
+        <nav class="main-nav">
+            <a href="../index.html" class="logo">CSS Курс</a>
+            <ul class="nav-links">
+                <li><a href="../index.html">На главную</a></li>
+                <li><a href="../chapters.html">Главы</a></li>
+            </ul>
+        </nav>
+    </header>
+
+    <main class="lesson-content">
+        <nav class="lesson-nav">
+            <a href="12-3.html" class="prev-lesson">← Урок 12.3: Flexbox</a>
+            <a href="12-5.html" class="next-lesson">Урок 12.5: Анимация элементов →</a>
+        </nav>
+
+        <article class="lesson">
+            <h1>Урок 12.4 - Адаптивный дизайн</h1>
+
+            <div class="theory-block">
+                <h2>Что такое адаптивный дизайн?</h2>
+                <p>Адаптивный дизайн - это подход к веб-дизайну, который позволяет веб-страницам адаптироваться к различным размерам экранов и устройствам.</p>
+
+                <div class="theory-explanation">
+                    <h3>Основные принципы адаптивного дизайна:</h3>
+                    <ul>
+                        <li><strong>Гибкость</strong> - использование гибких сеток и изображений, которые могут изменять свои размеры.</li>
+                        <li><strong>Медиа-запросы</strong> - применение различных стилей в зависимости от характеристик устройства (ширина, высота, разрешение).</li>
+                        <li><strong>Удобство использования</strong> - создание интерфейсов, которые легко использовать на мобильных устройствах.</li>
+                    </ul>
+                </div>
+            </div>
+
+            <div class="theory-block">
+                <h2>Медиа-запросы</h2>
+                <p>Медиа-запросы позволяют применять разные стили в зависимости от характеристик устройства:</p>
+
+                <div class="code-block">
+                    <pre><code><span class="comment">/* Пример Media Query для мобильных устройств */</span>
+<span class="selector">@media (max-width: 600px)</span> {
+    <span class="selector">.responsive-item</span> {
+        <span class="property">font-size</span>: <span class="value">14px</span>;
+    }
+}</code></pre>
+                </div>
+
+                <div class="demo-section">
+                    <div class="responsive-container">
+                        <div class="responsive-item">Элемент 1</div>
+                        <div class="responsive-item">Элемент 2</div>
+                        <div class="responsive-item">Элемент 3</div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="theory-block">
+                <h2>Гибкие изображения</h2>
+                <p>Гибкие изображения автоматически подстраиваются под размеры контейнера:</p>
+
+                <div class="code-block">
+                    <pre><code><span class="comment">/* Гибкие изображения */</span>
+<span class="selector">img</span> {
+    <span class="property">max-width</span>: <span class="value">100%</span>;
+    <span class="property">height</span>: <span class="value">auto</span>;
+}</code></pre>
+                </div>
+            </div>
+
+            <div class="theory-block">
+                <h2>Примеры адаптивного дизайна</h2>
+                <p>Рассмотрим несколько примеров, как можно использовать адаптивный дизайн для создания различных макетов:</p>
+
+                <div class="demo-section">
+                    <div class="responsive-container">
+                        <div class="responsive-item">Заголовок</div>
+                        <div class="responsive-item">Содержимое</div>
+                        <div class="responsive-item">Боковая панель</div>
+                        <div class="responsive-item">Подвал</div>
+                    </div>
+                </div>
+
+                <div class="code-block">
+                    <pre><code><span class="comment">/* Пример адаптивного макета */</span>
+<span class="selector">.responsive-container</span> {
+    <span class="property">display</span>: <span class="value">flex</span>;
+    <span class="property">flex-direction</span>: <span class="value">column</span>;
+    <span class="property">align-items</span>: <span class="value">center</span>;
+}</code></pre>
+                </div>
+            </div>
+        </article>
+    </main>
+</body>
+</html> 

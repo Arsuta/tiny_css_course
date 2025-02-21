@@ -1,0 +1,260 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Урок 1.5: Каскад CSS | CSS Курс</title>
+    <link rel="stylesheet" href="/styles/main.css">
+    <link rel="stylesheet" href="/styles/lesson.css">
+</head>
+<body>
+    <header class="main-header">
+        <nav class="main-nav">
+            <div class="logo">CSS Курс</div>
+            <ul class="nav-links">
+                <li><a href="/">На главную</a></li>
+                <li><a href="#chapters">Главы</a></li>
+            </ul>
+        </nav>
+    </header>
+
+    <main class="lesson-content">
+        <nav class="lesson-nav">
+            <a href="/lessons/1-4" class="prev-lesson">← Урок 1.4: Добавление CSS в HTML</a>
+            <a href="/lessons/1-6" class="next-lesson">Урок 1.6: Специфичность в CSS →</a>
+        </nav>
+
+        <article class="lesson">
+            <header class="lesson-header">
+                <h1>Урок 1.5: Каскад CSS</h1>
+            </header>
+
+            <section class="theory">
+                <h2>Теория</h2>
+                <div class="theory-content">
+                    <h3>Что такое каскад в CSS?</h3>
+                    <p>Каскад - это фундаментальный механизм CSS, определяющий, как комбинируются и применяются стили из разных источников. Это "C" в "CSS" (Cascading Style Sheets).</p>
+
+                    <div class="cascade-sources">
+                        <h4>Источники стилей (по возрастанию приоритета)</h4>
+                        <div class="timeline">
+                            <div class="timeline-item">
+                                <h5>1. Стили браузера</h5>
+                                <p>Базовые стили, применяемые браузером по умолчанию</p>
+                                <div class="example">
+                                    <pre><code>/* Chrome default styles */
+h1 { display: block; font-size: 2em; margin: 0.67em 0; }</code></pre>
+                                </div>
+                            </div>
+
+                            <div class="timeline-item">
+                                <h5>2. Пользовательские стили</h5>
+                                <p>Стили, установленные пользователем в настройках браузера</p>
+                            </div>
+
+                            <div class="timeline-item">
+                                <h5>3. Авторские стили</h5>
+                                <p>Стили, определенные разработчиком сайта</p>
+                                <div class="example">
+                                    <pre><code>/* Внешний CSS файл */
+h1 { color: blue; }</code></pre>
+                                </div>
+                            </div>
+
+                            <div class="timeline-item">
+                                <h5>4. Важные авторские стили</h5>
+                                <p>Стили с !important</p>
+                                <div class="example">
+                                    <pre><code>h1 { color: red !important; }</code></pre>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <h3>Правила каскада</h3>
+                    <div class="cascade-rules">
+                        <div class="rule-card">
+                            <h4>1. Специфичность</h4>
+                            <p>Более специфичные селекторы имеют приоритет</p>
+                            <div class="example">
+                                <pre><code>/* Специфичность: 1 */
+p { color: blue; }
+
+/* Специфичность: 10 */
+.text { color: red; }  /* Победит */
+
+/* Специфичность: 100 */
+#unique { color: green; }  /* Победит над всеми */</code></pre>
+                            </div>
+                        </div>
+
+                        <div class="rule-card">
+                            <h4>2. Порядок объявления</h4>
+                            <p>При равной специфичности побеждает последнее объявление</p>
+                            <div class="example">
+                                <pre><code>.text { color: blue; }
+.text { color: red; }  /* Этот стиль применится */</code></pre>
+                            </div>
+                        </div>
+
+                        <div class="rule-card">
+                            <h4>3. Наследование</h4>
+                            <p>Некоторые свойства наследуются дочерними элементами</p>
+                            <div class="example">
+                                <pre><code>body {
+    font-family: Arial;  /* Наследуется */
+    margin: 0;          /* Не наследуется */
+}</code></pre>
+                            </div>
+                        </div>
+                    </div>
+
+                    <h3>Наследуемые и ненаследуемые свойства</h3>
+                    <div class="properties-grid">
+                        <div class="properties-card">
+                            <h4>Наследуемые свойства</h4>
+                            <ul class="styled-list">
+                                <li>color</li>
+                                <li>font-family</li>
+                                <li>font-size</li>
+                                <li>font-weight</li>
+                                <li>line-height</li>
+                                <li>text-align</li>
+                                <li>visibility</li>
+                            </ul>
+                        </div>
+
+                        <div class="properties-card">
+                            <h4>Ненаследуемые свойства</h4>
+                            <ul class="styled-list">
+                                <li>margin</li>
+                                <li>padding</li>
+                                <li>border</li>
+                                <li>background</li>
+                                <li>width</li>
+                                <li>height</li>
+                                <li>position</li>
+                            </ul>
+                        </div>
+                    </div>
+
+                    <h3>Управление наследованием</h3>
+                    <div class="inheritance-controls">
+                        <div class="control-card">
+                            <h4>Ключевые слова наследования</h4>
+                            <div class="example">
+                                <pre><code>/* Принудительное наследование */
+.child { color: inherit; }
+
+/* Начальное значение свойства */
+.reset { color: initial; }
+
+/* Значение по умолчанию браузера */
+.default { color: unset; }
+
+/* Принудительное наследование или initial */
+.revert { color: revert; }</code></pre>
+                            </div>
+                        </div>
+                    </div>
+
+                    <h3>Лучшие практики</h3>
+                    <div class="best-practices">
+                        <div class="practice-card">
+                            <h4>Избегайте !important</h4>
+                            <div class="example">
+                                <pre><code>/* Плохо */
+.element { color: red !important; }
+
+/* Хорошо */
+.specific-element { color: red; }</code></pre>
+                            </div>
+                        </div>
+
+                        <div class="practice-card">
+                            <h4>Используйте специфичность разумно</h4>
+                            <div class="example">
+                                <pre><code>/* Слишком специфично */
+.header .nav ul li a { color: blue; }
+
+/* Лучше */
+.nav-link { color: blue; }</code></pre>
+                            </div>
+                        </div>
+
+                        <div class="practice-card">
+                            <h4>Организуйте CSS правильно</h4>
+                            <p>Располагайте стили в порядке возрастания специфичности:</p>
+                            <ol class="styled-list">
+                                <li>Сброс стилей</li>
+                                <li>Элементы</li>
+                                <li>Классы</li>
+                                <li>Модификаторы</li>
+                            </ol>
+                        </div>
+                    </div>
+
+                    <div class="info-block">
+                        <h4>Важно помнить</h4>
+                        <ul class="styled-list">
+                            <li>Каскад - это не баг, а фича CSS</li>
+                            <li>Понимание каскада помогает писать более предсказуемый код</li>
+                            <li>Избегайте излишней специфичности</li>
+                            <li>Используйте наследование для уменьшения дублирования кода</li>
+                        </ul>
+                    </div>
+                </div>
+            </section>
+
+            <section class="practice">
+                <h2>Практика</h2>
+                <div class="task">
+                    <h3>Задание</h3>
+                    <p>Создайте страницу с несколькими элементами и поэкспериментируйте с каскадом CSS. Попробуйте применить стили из разных источников и посмотрите, какие из них имеют приоритет.</p>
+                    
+                    <div class="code-editor">
+                        <div class="editor-tabs">
+                            <button class="tab active">HTML</button>
+                            <button class="tab">CSS</button>
+                        </div>
+                        <textarea class="code-input html-input">
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Каскад CSS</title>
+    <style>
+        /* Добавьте внутренние стили */
+        p { color: blue; }
+        .text { color: red; }
+        #unique { color: green; }
+    </style>
+</head>
+<body>
+    <p style="color: purple;">Этот текст имеет встроенный стиль</p>
+    <p class="text">Этот текст имеет класс</p>
+    <p id="unique">Этот текст имеет ID</p>
+    <p>Этот текст использует стиль по умолчанию</p>
+</body>
+</html></textarea>
+                        <textarea class="code-input css-input" style="display: none;">
+/* Добавьте дополнительные стили здесь */</textarea>
+                    </div>
+
+                    <button class="run-button">Запустить</button>
+
+                    <div class="result-preview">
+                        <h3>Результат</h3>
+                        <div class="preview-frame"></div>
+                    </div>
+                </div>
+            </section>
+        </article>
+    </main>
+
+    <footer class="main-footer">
+        <p>&copy; 2024 CSS Курс. Все права защищены.</p>
+    </footer>
+
+    <script src="/scripts/lesson.js"></script>
+</body>
+</html> 

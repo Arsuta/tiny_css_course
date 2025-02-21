@@ -1,0 +1,282 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Урок 11.2 - Настройка проекта | CSS Курс</title>
+    <link rel="stylesheet" href="../styles/main.css">
+    <link rel="stylesheet" href="../styles/lesson.css">
+    <style>
+        .demo-section {
+            margin-bottom: 40px;
+            background: #fff;
+            padding: 20px;
+            border-radius: 8px;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+        }
+
+        /* Структура проекта */
+        .project-structure {
+            font-family: monospace;
+            padding: 20px;
+            background: #f7f5e8;
+            border-radius: 8px;
+            line-height: 1.5;
+        }
+
+        .project-structure .folder {
+            color: #466A85;
+            font-weight: bold;
+        }
+
+        .project-structure .file {
+            color: #333;
+            margin-left: 20px;
+        }
+
+        /* Код с пояснениями */
+        .code-block {
+            background: #1E1E1E;
+            color: #ffffff;
+            padding: 15px;
+            border-radius: 8px;
+            margin: 20px 0;
+            font-family: monospace;
+            line-height: 1.5;
+        }
+
+        /* Демонстрация компонента */
+        .demo-component {
+            padding: 40px;
+            background: #f7f5e8;
+            border-radius: 8px;
+            text-align: center;
+        }
+
+        /* Стили для демонстрации */
+        .social-share {
+            position: relative;
+            display: inline-block;
+        }
+
+        .social-share__button {
+            width: 48px;
+            height: 48px;
+            border-radius: 50%;
+            border: none;
+            cursor: pointer;
+            background: #466A85;
+            color: white;
+            transition: 0.3s;
+        }
+
+        .social-share__button:hover {
+            background: #385674;
+            transform: scale(1.1);
+        }
+
+        .social-share__menu {
+            position: absolute;
+            top: 100%;
+            left: 50%;
+            transform: translateX(-50%);
+            margin-top: 10px;
+            padding: 8px;
+            background: white;
+            border-radius: 8px;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.2);
+            display: none;
+        }
+
+        .social-share__menu.is-open {
+            display: block;
+        }
+
+        .social-share__link {
+            display: block;
+            padding: 8px 16px;
+            color: #333;
+            text-decoration: none;
+            border-radius: 4px;
+            transition: 0.3s;
+        }
+
+        .social-share__link:hover {
+            background: #f5f5f5;
+        }
+
+        .code-block .selector { color: #89DDFF; }
+        .code-block .property { color: #A6E22E; }
+        .code-block .value { color: #FFD700; }
+        .code-block .comment { color: #75715E; }
+    </style>
+</head>
+<body>
+    <header class="main-header">
+        <nav class="main-nav">
+            <a href="../index.html" class="logo">CSS Курс</a>
+            <ul class="nav-links">
+                <li><a href="../index.html">На главную</a></li>
+                <li><a href="../chapters.html">Главы</a></li>
+            </ul>
+        </nav>
+    </header>
+
+    <main class="lesson-content">
+        <nav class="lesson-nav">
+            <a href="11-1.html" class="prev-lesson">← Урок 11.1: Работа с CSS архитектурой</a>
+            <a href="11-3.html" class="next-lesson">Урок 11.3: Работа с иконками →</a>
+        </nav>
+
+        <article class="lesson">
+            <h1>Урок 11.2 - Настройка проекта</h1>
+
+            <div class="theory-block">
+                <h2>Структура проекта</h2>
+                <p>При создании компонента важно правильно организовать структуру проекта. Это поможет в дальнейшем поддерживать и масштабировать код.</p>
+
+                <div class="theory-explanation">
+                    <h3>Принципы организации:</h3>
+                    <ul>
+                        <li><strong>Модульность</strong> - разделение кода на независимые модули</li>
+                        <li><strong>Переиспользуемость</strong> - возможность использовать компоненты в разных местах</li>
+                        <li><strong>Масштабируемость</strong> - легкость добавления новых функций</li>
+                        <li><strong>Поддерживаемость</strong> - простота внесения изменений</li>
+                    </ul>
+                </div>
+
+                <div class="project-structure">
+                    <div class="folder">project/</div>
+                    <div class="file">├── index.html</div>
+                    <div class="folder">├── css/</div>
+                    <div class="file">│   ├── main.css</div>
+                    <div class="file">│   ├── social-share.css</div>
+                    <div class="file">│   └── variables.css</div>
+                    <div class="folder">├── js/</div>
+                    <div class="file">│   └── social-share.js</div>
+                    <div class="folder">└── images/</div>
+                    <div class="file">    └── icons/</div>
+                </div>
+
+                <div class="theory-explanation">
+                    <h3>Описание файлов:</h3>
+                    <ul>
+                        <li><strong>index.html</strong> - основной HTML файл</li>
+                        <li><strong>main.css</strong> - основные стили</li>
+                        <li><strong>social-share.css</strong> - стили компонента</li>
+                        <li><strong>variables.css</strong> - CSS переменные</li>
+                        <li><strong>social-share.js</strong> - JavaScript для интерактивности</li>
+                    </ul>
+                </div>
+            </div>
+
+            <div class="theory-block">
+                <h2>HTML структура</h2>
+                <p>Компонент социальных кнопок состоит из нескольких ключевых элементов:</p>
+                
+                <div class="theory-explanation">
+                    <h3>Элементы компонента:</h3>
+                    <ul>
+                        <li><strong>Контейнер (.social-share)</strong> - обертка всего компонента</li>
+                        <li><strong>Кнопка (.social-share__button)</strong> - триггер для открытия меню</li>
+                        <li><strong>Меню (.social-share__menu)</strong> - выпадающий список с соцсетями</li>
+                        <li><strong>Ссылки (.social-share__link)</strong> - кнопки для шаринга</li>
+                    </ul>
+                </div>
+
+                <div class="demo-component">
+                    <div class="social-share">
+                        <button class="social-share__button" onclick="toggleMenu(this)">
+                            Share
+                        </button>
+                        <div class="social-share__menu">
+                            <a href="#" class="social-share__link">Facebook</a>
+                            <a href="#" class="social-share__link">Twitter</a>
+                            <a href="#" class="social-share__link">LinkedIn</a>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="code-block">
+                    <pre><code><span class="comment"><!-- Компонент социальных кнопок --></span>
+<span class="selector">&lt;div class="social-share"&gt;</span>
+    <span class="selector">&lt;button class="social-share__button"&gt;</span>
+        Поделиться
+    <span class="selector">&lt;/button&gt;</span>
+    
+    <span class="selector">&lt;div class="social-share__menu"&gt;</span>
+        <span class="selector">&lt;a href="#" class="social-share__link social-share__link--facebook"&gt;</span>
+            Facebook
+        <span class="selector">&lt;/a&gt;</span>
+        <span class="selector">&lt;a href="#" class="social-share__link social-share__link--twitter"&gt;</span>
+            Twitter
+        <span class="selector">&lt;/a&gt;</span>
+        <span class="selector">&lt;a href="#" class="social-share__link social-share__link--linkedin"&gt;</span>
+            LinkedIn
+        <span class="selector">&lt;/a&gt;</span>
+    <span class="selector">&lt;/div&gt;</span>
+<span class="selector">&lt;/div&gt;</span></code></pre>
+                </div>
+            </div>
+
+            <div class="theory-block">
+                <h2>CSS переменные</h2>
+                <p>Определим основные переменные для компонента:</p>
+
+                <div class="code-block">
+                    <pre><code><span class="comment">/* variables.css */</span>
+<span class="selector">:root</span> {
+    <span class="comment">/* Цвета */</span>
+    <span class="property">--color-facebook</span>: <span class="value">#1877f2</span>;
+    <span class="property">--color-twitter</span>: <span class="value">#1da1f2</span>;
+    <span class="property">--color-linkedin</span>: <span class="value">#0077b5</span>;
+    
+    <span class="comment">/* Размеры */</span>
+    <span class="property">--button-size</span>: <span class="value">48px</span>;
+    <span class="property">--icon-size</span>: <span class="value">24px</span>;
+    
+    <span class="comment">/* Анимации */</span>
+    <span class="property">--transition-speed</span>: <span class="value">0.3s</span>;
+}</code></pre>
+                </div>
+            </div>
+
+            <div class="theory-block">
+                <h2>Базовые стили</h2>
+                <p>Добавим начальные стили для компонента:</p>
+
+                <div class="code-block">
+                    <pre><code><span class="comment">/* social-share.css */</span>
+<span class="selector">.social-share</span> {
+    <span class="property">position</span>: <span class="value">relative</span>;
+    <span class="property">display</span>: <span class="value">inline-block</span>;
+}
+
+<span class="selector">.social-share__button</span> {
+    <span class="property">width</span>: <span class="value">var(--button-size)</span>;
+    <span class="property">height</span>: <span class="value">var(--button-size)</span>;
+    <span class="property">border-radius</span>: <span class="value">50%</span>;
+    <span class="property">border</span>: <span class="value">none</span>;
+    <span class="property">cursor</span>: <span class="value">pointer</span>;
+}
+
+<span class="selector">.social-share__menu</span> {
+    <span class="property">position</span>: <span class="value">absolute</span>;
+    <span class="property">display</span>: <span class="value">none</span>;
+    <span class="property">padding</span>: <span class="value">8px</span>;
+    <span class="property">background</span>: <span class="value">white</span>;
+    <span class="property">box-shadow</span>: <span class="value">0 2px 8px rgba(0,0,0,0.2)</span>;
+}</code></pre>
+                </div>
+            </div>
+        </article>
+    </main>
+
+    <script>
+        function toggleMenu(button) {
+            const menu = button.nextElementSibling;
+            menu.classList.toggle('is-open');
+        }
+    </script>
+</body>
+</html> 

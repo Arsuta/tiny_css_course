@@ -1,0 +1,263 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Урок 10.4 - Стилизация выпадающих меню | CSS Курс</title>
+    <link rel="stylesheet" href="../styles/main.css">
+    <link rel="stylesheet" href="../styles/lesson.css">
+    <style>
+        .demo-section {
+            margin-bottom: 40px;
+            background: #fff;
+            padding: 20px;
+            border-radius: 8px;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+        }
+
+        /* Стили для выпадающих меню */
+        .select-wrapper {
+            position: relative;
+            max-width: 300px;
+            margin: 0 auto;
+        }
+
+        .custom-select {
+            width: 100%;
+            padding: 10px 35px 10px 12px;
+            border: 2px solid #ddd;
+            border-radius: 4px;
+            background: #fff;
+            font-size: 16px;
+            cursor: pointer;
+            appearance: none;
+            transition: all 0.3s ease;
+        }
+
+        .select-arrow {
+            position: absolute;
+            right: 12px;
+            top: 50%;
+            transform: translateY(-50%);
+            width: 0;
+            height: 0;
+            border-left: 5px solid transparent;
+            border-right: 5px solid transparent;
+            border-top: 5px solid #466A85;
+            pointer-events: none;
+        }
+
+        /* Стилизация option */
+        .custom-select option {
+            padding: 10px;
+            background: #fff;
+            color: #333;
+        }
+
+        /* Стили для нативного select */
+        .native-select {
+            margin-bottom: 20px;
+        }
+
+        /* Стили для кастомного селекта */
+        .custom-dropdown {
+            position: relative;
+            margin-bottom: 20px;
+        }
+
+        .dropdown-selected {
+            padding: 10px 12px;
+            border: 2px solid #ddd;
+            border-radius: 4px;
+            background: #fff;
+            cursor: pointer;
+        }
+
+        .dropdown-options {
+            position: absolute;
+            top: 100%;
+            left: 0;
+            right: 0;
+            background: #fff;
+            border: 2px solid #ddd;
+            border-radius: 4px;
+            margin-top: 5px;
+            max-height: 200px;
+            overflow-y: auto;
+            display: none;
+            z-index: 100;
+            box-shadow: 0 4px 8px rgba(0,0,0,0.1);
+        }
+
+        .dropdown-option {
+            padding: 10px 12px;
+            cursor: pointer;
+            transition: background 0.2s ease;
+        }
+
+        .dropdown-option:hover {
+            background: #f5f5f5;
+        }
+
+        /* Код с пояснениями */
+        .code-block {
+            background: #1E1E1E;
+            color: #D4D4D4;
+            padding: 15px;
+            border-radius: 8px;
+            margin: 20px 0;
+            font-family: monospace;
+            line-height: 1.5;
+        }
+
+        .code-block .selector { color: #569CD6; }
+        .code-block .property { color: #9CDCFE; }
+        .code-block .value { color: #CE9178; }
+        .code-block .comment { color: #6A9955; }
+
+        /* Теория */
+        .theory-block {
+            margin-bottom: 30px;
+        }
+
+        .theory-explanation {
+            background: #f7f5e8;
+            padding: 20px;
+            border-radius: 8px;
+            margin: 15px 0;
+        }
+    </style>
+</head>
+<body>
+    <header class="main-header">
+        <nav class="main-nav">
+            <a href="../index.html" class="logo">CSS Курс</a>
+            <ul class="nav-links">
+                <li><a href="../index.html">На главную</a></li>
+                <li><a href="../chapters.html">Главы</a></li>
+            </ul>
+        </nav>
+    </header>
+
+    <main class="lesson-content">
+        <nav class="lesson-nav">
+            <a href="10-3.html" class="prev-lesson">← Урок 10.3: Стилизация полей ввода</a>
+            <a href="10-5.html" class="next-lesson">Урок 10.5: Стилизация меток и легенд →</a>
+        </nav>
+
+        <article class="lesson">
+            <h1>Урок 10.4 - Стилизация выпадающих меню</h1>
+
+            <div class="theory-block">
+                <h2>Нативный select</h2>
+                <p>Рассмотрим базовую стилизацию нативного select элемента:</p>
+
+                <div class="theory-explanation">
+                    <h3>Особенности нативного select:</h3>
+                    <ul>
+                        <li><strong>Ограниченная стилизация</strong> - не все свойства работают</li>
+                        <li><strong>Разный вид</strong> - в разных браузерах и ОС</li>
+                        <li><strong>Доступность</strong> - встроенная поддержка клавиатуры</li>
+                    </ul>
+                </div>
+
+                <div class="demo-section">
+                    <div class="select-wrapper">
+                        <select class="custom-select">
+                            <option>Выберите опцию</option>
+                            <option>Опция 1</option>
+                            <option>Опция 2</option>
+                            <option>Опция 3</option>
+                        </select>
+                        <div class="select-arrow"></div>
+                    </div>
+                </div>
+
+                <div class="code-block">
+                    <pre><code><span class="comment">/* Стилизация select */</span>
+<span class="selector">.custom-select</span> {
+    <span class="property">appearance</span>: <span class="value">none</span>;
+    <span class="property">padding</span>: <span class="value">10px 35px 10px 12px</span>;
+    <span class="property">border</span>: <span class="value">2px solid #ddd</span>;
+    <span class="property">border-radius</span>: <span class="value">4px</span>;
+    <span class="property">background</span>: <span class="value">#fff</span>;
+    <span class="property">cursor</span>: <span class="value">pointer</span>;
+}
+
+<span class="comment">/* Кастомная стрелка */</span>
+<span class="selector">.select-arrow</span> {
+    <span class="property">position</span>: <span class="value">absolute</span>;
+    <span class="property">pointer-events</span>: <span class="value">none</span>;
+}</code></pre>
+                </div>
+            </div>
+
+            <div class="theory-block">
+                <h2>Кастомное выпадающее меню</h2>
+                <p>Создание полностью кастомного выпадающего меню с помощью HTML и CSS:</p>
+
+                <div class="theory-explanation">
+                    <h3>Преимущества кастомного меню:</h3>
+                    <ul>
+                        <li><strong>Полный контроль</strong> над внешним видом</li>
+                        <li><strong>Гибкая структура</strong> - можно добавлять любые элементы</li>
+                        <li><strong>Анимации</strong> - возможность добавления эффектов</li>
+                    </ul>
+                </div>
+
+                <div class="demo-section">
+                    <div class="custom-dropdown">
+                        <div class="dropdown-selected">Выберите опцию</div>
+                        <div class="dropdown-options">
+                            <div class="dropdown-option">Опция 1</div>
+                            <div class="dropdown-option">Опция 2</div>
+                            <div class="dropdown-option">Опция 3</div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="code-block">
+                    <pre><code><span class="comment">/* Стили для кастомного выпадающего меню */</span>
+<span class="selector">.dropdown-options</span> {
+    <span class="property">position</span>: <span class="value">absolute</span>;
+    <span class="property">top</span>: <span class="value">100%</span>;
+    <span class="property">left</span>: <span class="value">0</span>;
+    <span class="property">background</span>: <span class="value">#fff</span>;
+    <span class="property">border</span>: <span class="value">2px solid #ddd</span>;
+    <span class="property">border-radius</span>: <span class="value">4px</span>;
+    <span class="property">max-height</span>: <span class="value">200px</span>;
+    <span class="property">overflow-y</span>: <span class="value">auto</span>;
+}</code></pre>
+                </div>
+            </div>
+        </article>
+    </main>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            // Обработка клика для кастомного дропдауна
+            const dropdown = document.querySelector('.custom-dropdown');
+            const selected = dropdown.querySelector('.dropdown-selected');
+            const options = dropdown.querySelector('.dropdown-options');
+
+            selected.addEventListener('click', function() {
+                options.style.display = options.style.display === 'block' ? 'none' : 'block';
+            });
+
+            document.querySelectorAll('.dropdown-option').forEach(option => {
+                option.addEventListener('click', function() {
+                    selected.textContent = this.textContent;
+                    options.style.display = 'none';
+                });
+            });
+
+            // Закрытие при клике вне дропдауна
+            document.addEventListener('click', function(e) {
+                if (!dropdown.contains(e.target)) {
+                    options.style.display = 'none';
+                }
+            });
+        });
+    </script>
+</body>
+</html> 

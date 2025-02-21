@@ -1,0 +1,388 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Урок 5.2: Вёрстка на Grid | CSS Курс</title>
+    <link rel="stylesheet" href="../styles/main.css">
+    <link rel="stylesheet" href="../styles/lesson.css">
+    <style>
+        /* Стили для демонстраций */
+        .demo-section {
+            margin-bottom: 40px;
+        }
+
+        /* Стили для блоков с кодом */
+        .code-block {
+            background: #1E1E1E;
+            color: #D4D4D4;
+            padding: 15px;
+            border-radius: 8px;
+            margin: 20px 0;
+            font-family: monospace;
+        }
+
+        .code-block pre {
+            margin: 0;
+        }
+
+        .code-block code {
+            color: #D4D4D4;
+            font-family: monospace;
+        }
+
+        /* Подсветка синтаксиса */
+        .code-block .keyword { color: #569CD6; }
+        .code-block .property { color: #9CDCFE; }
+        .code-block .value { color: #CE9178; }
+        .code-block .punctuation { color: #D4D4D4; }
+        .code-block .comment { color: #6A9955; }
+        .code-block .selector { color: #D7BA7D; }
+
+        /* Демонстрация Grid */
+        .grid-demo {
+            background: white;
+            padding: 20px;
+            border-radius: 8px;
+            margin: 20px 0;
+        }
+
+        .basic-grid {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 20px;
+            padding: 20px;
+        }
+
+        .grid-item {
+            background: #f8f9fa;
+            padding: 20px;
+            border-radius: 8px;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+            min-height: 100px;
+        }
+
+        /* Адаптивная сетка */
+        .responsive-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 20px;
+            padding: 20px;
+        }
+
+        /* Демонстрация медиа-запросов */
+        .media-query-demo {
+            margin: 20px 0;
+        }
+
+        .breakpoint-indicator {
+            padding: 10px;
+            background: #466A85;
+            color: white;
+            text-align: center;
+            border-radius: 4px;
+            margin-bottom: 10px;
+        }
+
+        @media (max-width: 768px) {
+            .basic-grid {
+                grid-template-columns: repeat(2, 1fr);
+            }
+        }
+
+        @media (max-width: 480px) {
+            .basic-grid {
+                grid-template-columns: 1fr;
+            }
+        }
+
+        /* Интерактивные контролы */
+        .grid-controls {
+            display: flex;
+            gap: 10px;
+            margin-bottom: 20px;
+        }
+
+        .grid-controls button {
+            padding: 8px 16px;
+            background: #466A85;
+            color: white;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+        }
+
+        .grid-controls button:hover {
+            background: #7be6e8;
+        }
+
+        /* Стили для практического задания */
+        .task-description {
+            background: #f8f9fa;
+            padding: 20px;
+            border-radius: 8px;
+            margin: 20px 0;
+        }
+
+        .task-solution {
+            background: #e9ecef;
+            padding: 20px;
+            border-radius: 8px;
+            margin-top: 20px;
+        }
+
+        .task-solution code {
+            background: #dee2e6;
+            padding: 2px 6px;
+            border-radius: 4px;
+            font-family: monospace;
+        }
+    </style>
+</head>
+<body>
+    <header class="main-header">
+        <nav class="main-nav">
+            <a href="../index.html" class="logo">CSS Курс</a>
+            <ul class="nav-links">
+                <li><a href="../index.html">На главную</a></li>
+                <li><a href="../chapters.html">Главы</a></li>
+            </ul>
+        </nav>
+    </header>
+
+    <main class="lesson-content">
+        <nav class="lesson-nav">
+            <a href="5-1.html" class="prev-lesson">← Урок 5.1: Введение в проект</a>
+            <a href="5-3.html" class="next-lesson">Урок 5.3: Стилизация заголовка с background-clip →</a>
+        </nav>
+
+        <div class="chapter-navigation">
+            <h3>Навигация по главе 5:</h3>
+            <ul>
+                <li><a href="5-1.html">5.1 Введение в проект</a></li>
+                <li><a href="5-2.html" class="current">5.2 Вёрстка на Grid</a></li>
+                <li><a href="5-3.html">5.3 Стилизация заголовка с background-clip</a></li>
+                <li><a href="5-4.html">5.4 Стилизация карточек</a></li>
+                <li><a href="5-5.html">5.5 Анимация при наведении и focus-within</a></li>
+            </ul>
+        </div>
+
+        <article class="lesson">
+            <header class="lesson-header">
+                <h1>Урок 5.2: Вёрстка на Grid</h1>
+            </header>
+
+            <section class="theory">
+                <h2>Теория</h2>
+                
+                <div class="demo-section">
+                    <h3>Создание базовой сетки</h3>
+                    <p>Для создания сетки карточек мы будем использовать CSS Grid Layout. Начнем с базовой структуры:</p>
+
+                    <div class="code-block">
+                        <pre><code><span class="selector">.cards-container</span> {
+    <span class="property">display</span>: <span class="value">grid</span>;
+    <span class="property">grid-template-columns</span>: <span class="value">repeat(3, 1fr)</span>;
+    <span class="property">gap</span>: <span class="value">20px</span>;
+}</code></pre>
+                    </div>
+
+                    <div class="grid-demo">
+                        <div class="basic-grid">
+                            <div class="grid-item">Карточка 1</div>
+                            <div class="grid-item">Карточка 2</div>
+                            <div class="grid-item">Карточка 3</div>
+                        </div>
+                    </div>
+
+                    <p class="note">Свойство grid-template-columns: repeat(3, 1fr) создает три равные колонки.</p>
+                </div>
+
+                <div class="demo-section">
+                    <h3>Адаптивная сетка</h3>
+                    <p>Для создания адаптивной сетки используем auto-fit и minmax:</p>
+
+                    <div class="code-block">
+                        <pre><code><span class="selector">.responsive-grid</span> {
+    <span class="property">display</span>: <span class="value">grid</span>;
+    <span class="property">grid-template-columns</span>: <span class="value">repeat(auto-fit, minmax(300px, 1fr))</span>;
+    <span class="property">gap</span>: <span class="value">20px</span>;
+}</code></pre>
+                    </div>
+
+                    <div class="grid-demo">
+                        <div class="responsive-grid">
+                            <div class="grid-item">Адаптивная карточка 1</div>
+                            <div class="grid-item">Адаптивная карточка 2</div>
+                            <div class="grid-item">Адаптивная карточка 3</div>
+                            <div class="grid-item">Адаптивная карточка 4</div>
+                        </div>
+                    </div>
+
+                    <div class="info-block">
+                        <h4>Пояснение свойств:</h4>
+                        <ul>
+                            <li><code>auto-fit</code> - автоматически определяет количество колонок</li>
+                            <li><code>minmax(300px, 1fr)</code> - задает минимальную и максимальную ширину колонки</li>
+                            <li><code>gap</code> - устанавливает отступы между элементами сетки</li>
+                        </ul>
+                    </div>
+                </div>
+
+                <div class="demo-section">
+                    <h3>Медиа-запросы</h3>
+                    <p>Для адаптации сетки под разные устройства используем медиа-запросы:</p>
+
+                    <div class="code-block">
+                        <pre><code><span class="comment">/* Планшеты */</span>
+<span class="selector">@media (max-width: 768px)</span> {
+    <span class="selector">.cards-grid</span> {
+        <span class="property">grid-template-columns</span>: <span class="value">repeat(2, 1fr)</span>;
+    }
+}
+
+<span class="comment">/* Мобильные устройства */</span>
+<span class="selector">@media (max-width: 480px)</span> {
+    <span class="selector">.cards-grid</span> {
+        <span class="property">grid-template-columns</span>: <span class="value">1fr</span>;
+    }
+}</code></pre>
+                    </div>
+
+                    <div class="media-query-demo">
+                        <div class="breakpoint-indicator">
+                            Измените размер окна браузера, чтобы увидеть адаптивность
+                        </div>
+                        <div class="basic-grid">
+                            <div class="grid-item">Карточка 1</div>
+                            <div class="grid-item">Карточка 2</div>
+                            <div class="grid-item">Карточка 3</div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="demo-section">
+                    <h3>Интерактивная демонстрация</h3>
+                    <div class="grid-controls">
+                        <button onclick="changeColumns(3)">3 колонки</button>
+                        <button onclick="changeColumns(2)">2 колонки</button>
+                        <button onclick="changeColumns(1)">1 колонка</button>
+                        <button onclick="changeGap('20px')">Маленький отступ</button>
+                        <button onclick="changeGap('40px')">Большой отступ</button>
+                    </div>
+                    <div class="grid-demo">
+                        <div id="interactive-grid" class="basic-grid">
+                            <div class="grid-item">Интерактивная карточка 1</div>
+                            <div class="grid-item">Интерактивная карточка 2</div>
+                            <div class="grid-item">Интерактивная карточка 3</div>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <section class="practice">
+                <h2>Практика</h2>
+                <div class="task">
+                    <h3>Задание: Создание адаптивной сетки карточек</h3>
+                    <p>Создайте адаптивную сетку карточек, которая будет автоматически перестраиваться под разные размеры экрана.</p>
+
+                    <div class="task-description">
+                        <h4>Требования:</h4>
+                        <ul>
+                            <li>Используйте CSS Grid для создания сетки</li>
+                            <li>Карточки должны быть шириной минимум 300px</li>
+                            <li>Добавьте отступы между карточками 20px</li>
+                            <li>Сделайте адаптивную версию с помощью медиа-запросов</li>
+                        </ul>
+                    </div>
+                    
+                    <div class="code-editor">
+                        <div class="editor-tabs">
+                            <button class="tab active">HTML</button>
+                            <button class="tab">CSS</button>
+                        </div>
+                        <textarea class="code-input html-input">
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <title>Адаптивная сетка карточек</title>
+    <style>
+        /* Добавьте базовые стили */
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 20px;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="cards-grid">
+            <div class="card">
+                <h2>Карточка 1</h2>
+                <p>Содержимое первой карточки</p>
+            </div>
+            <div class="card">
+                <h2>Карточка 2</h2>
+                <p>Содержимое второй карточки</p>
+            </div>
+            <div class="card">
+                <h2>Карточка 3</h2>
+                <p>Содержимое третьей карточки</p>
+            </div>
+            <div class="card">
+                <h2>Карточка 4</h2>
+                <p>Содержимое четвертой карточки</p>
+            </div>
+        </div>
+    </div>
+</body>
+</html></textarea>
+                        <textarea class="code-input css-input" style="display: none;">
+/* Стили для сетки */
+.cards-grid {
+    /* Добавьте свойства grid */
+}
+
+/* Стили для карточек */
+.card {
+    /* Добавьте стили карточек */
+}
+
+/* Медиа-запросы */
+@media (max-width: 768px) {
+    /* Стили для планшетов */
+}
+
+@media (max-width: 480px) {
+    /* Стили для мобильных */
+}</textarea>
+                    </div>
+
+                    <div class="task-solution">
+                        <h4>Подсказки:</h4>
+                        <ul>
+                            <li>Используйте <code>display: grid</code> для создания сетки</li>
+                            <li>Примените <code>repeat(auto-fit, minmax(300px, 1fr))</code> для адаптивных колонок</li>
+                            <li>Добавьте <code>gap</code> для отступов между карточками</li>
+                            <li>Не забудьте про <code>box-shadow</code> и <code>border-radius</code> для карточек</li>
+                        </ul>
+                    </div>
+                </div>
+            </section>
+        </article>
+    </main>
+
+    <script>
+        function changeColumns(count) {
+            const grid = document.getElementById('interactive-grid');
+            grid.style.gridTemplateColumns = `repeat(${count}, 1fr)`;
+        }
+
+        function changeGap(gap) {
+            const grid = document.getElementById('interactive-grid');
+            grid.style.gap = gap;
+        }
+    </script>
+</body>
+</html> 

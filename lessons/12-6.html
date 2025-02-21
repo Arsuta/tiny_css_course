@@ -1,0 +1,140 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Урок 12.6 - Псевдоэлементы | CSS Курс</title>
+    <link rel="stylesheet" href="../styles/main.css">
+    <link rel="stylesheet" href="../styles/lesson.css">
+    <style>
+        .demo-section {
+            margin-bottom: 40px;
+            background: #fff;
+            padding: 20px;
+            border-radius: 8px;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+        }
+
+        /* Стили для псевдоэлементов */
+        .pseudo-element {
+            position: relative;
+            padding: 20px;
+            background: #f7f5e8;
+            border-radius: 8px;
+            text-align: center;
+            margin: 20px 0;
+        }
+
+        .pseudo-element::before {
+            content: "Перед";
+            position: absolute;
+            top: -10px;
+            left: 10px;
+            background: #466A85;
+            color: white;
+            padding: 5px;
+            border-radius: 4px;
+        }
+
+        .pseudo-element::after {
+            content: "После";
+            position: absolute;
+            bottom: -10px;
+            right: 10px;
+            background: #466A85;
+            color: white;
+            padding: 5px;
+            border-radius: 4px;
+        }
+
+        /* Код с пояснениями */
+        .code-block {
+            background: #1E1E1E;
+            color: #ffffff;
+            padding: 15px;
+            border-radius: 8px;
+            margin: 20px 0;
+            font-family: monospace;
+            line-height: 1.5;
+        }
+
+        .code-block .selector { color: #89DDFF; }
+        .code-block .property { color: #A6E22E; }
+        .code-block .value { color: #FFD700; }
+        .code-block .comment { color: #75715E; }
+    </style>
+</head>
+<body>
+    <header class="main-header">
+        <nav class="main-nav">
+            <a href="../index.html" class="logo">CSS Курс</a>
+            <ul class="nav-links">
+                <li><a href="../index.html">На главную</a></li>
+                <li><a href="../chapters.html">Главы</a></li>
+            </ul>
+        </nav>
+    </header>
+
+    <main class="lesson-content">
+        <nav class="lesson-nav">
+            <a href="12-5.html" class="prev-lesson">← Урок 12.5: Анимация элементов</a>
+            <a href="12-7.html" class="next-lesson">Урок 12.7: Псевдоклассы →</a>
+        </nav>
+
+        <article class="lesson">
+            <h1>Урок 12.6 - Псевдоэлементы</h1>
+
+            <div class="theory-block">
+                <h2>Что такое псевдоэлементы?</h2>
+                <p>Псевдоэлементы позволяют стилизовать определенные части элемента, не добавляя дополнительных HTML-тегов. Они начинаются с двойного двоеточия (::) и могут использоваться для создания различных эффектов.</p>
+
+                <div class="theory-explanation">
+                    <h3>Основные псевдоэлементы:</h3>
+                    <ul>
+                        <li><strong>::before</strong> - добавляет контент перед содержимым элемента.</li>
+                        <li><strong>::after</strong> - добавляет контент после содержимого элемента.</li>
+                        <li><strong>::first-line</strong> - стилизует первую строку текста элемента.</li>
+                        <li><strong>::first-letter</strong> - стилизует первую букву текста элемента.</li>
+                    </ul>
+                </div>
+            </div>
+
+            <div class="theory-block">
+                <h2>Пример использования псевдоэлементов</h2>
+                <p>Рассмотрим пример, как использовать псевдоэлементы для добавления контента:</p>
+
+                <div class="demo-section">
+                    <div class="pseudo-element">
+                        Пример с псевдоэлементами
+                    </div>
+                </div>
+
+                <div class="code-block">
+                    <pre><code><span class="comment">/* Пример использования псевдоэлементов */</span>
+<span class="selector">.pseudo-element::before</span> {
+    <span class="property">content</span>: <span class="value>"Перед"</span>;
+    <span class="property">position</span>: <span class="value">absolute</span>;
+    <span class="property">top</span>: <span class="value">-10px</span>;
+    <span class="property">left</span>: <span class="value">10px</span>;
+    <span class="property">background</span>: <span class="value">#466A85</span>;
+    <span class="property">color</span>: <span class="value">white</span>;
+    <span class="property">padding</span>: <span class="value">5px</span>;
+    <span class="property">border-radius</span>: <span class="value">4px</span>;
+}
+
+<span class="selector">.pseudo-element::after</span> {
+    <span class="property">content</span>: <span class="value>"После"</span>;
+    <span class="property">position</span>: <span class="value">absolute</span>;
+    <span class="property">bottom</span>: <span class="value">-10px</span>;
+    <span class="property">right</span>: <span class="value">10px</span>;
+    <span class="property">background</span>: <span class="value">#466A85</span>;
+    <span class="property">color</span>: <span class="value">white</span>;
+    <span class="property">padding</span>: <span class="value">5px</span>;
+    <span class="property">border-radius</span>: <span class="value">4px</span>;
+}</code></pre>
+                </div>
+            </div>
+        </article>
+    </main>
+</body>
+</html> 

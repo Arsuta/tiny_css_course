@@ -1,0 +1,377 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Урок 6.5: Позиционирование изображения профиля | CSS Курс</title>
+    <link rel="stylesheet" href="../styles/main.css">
+    <link rel="stylesheet" href="../styles/lesson.css">
+    <style>
+        /* Стили для демонстраций */
+        .demo-section {
+            margin-bottom: 40px;
+        }
+
+        /* Стили для блоков с кодом */
+        .code-block {
+            background: #1E1E1E;
+            color: #D4D4D4;
+            padding: 15px;
+            border-radius: 8px;
+            margin: 20px 0;
+            font-family: monospace;
+        }
+
+        .code-block pre {
+            margin: 0;
+        }
+
+        .code-block code {
+            color: #D4D4D4;
+            font-family: monospace;
+        }
+
+        /* Подсветка синтаксиса */
+        .code-block .keyword { color: #569CD6; }
+        .code-block .property { color: #9CDCFE; }
+        .code-block .value { color: #CE9178; }
+        .code-block .punctuation { color: #D4D4D4; }
+        .code-block .comment { color: #6A9955; }
+        .code-block .selector { color: #D7BA7D; }
+
+        /* Демонстрация object-fit */
+        .object-fit-demo {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 20px;
+            margin: 20px 0;
+        }
+
+        .fit-example {
+            background: white;
+            padding: 15px;
+            border-radius: 8px;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+            text-align: center;
+        }
+
+        .fit-example img {
+            width: 150px;
+            height: 150px;
+            border: 2px solid #466A85;
+            margin-bottom: 10px;
+        }
+
+        .cover-fit { object-fit: cover; }
+        .contain-fit { object-fit: contain; }
+        .fill-fit { object-fit: fill; }
+        .scale-down-fit { object-fit: scale-down; }
+
+        /* Демонстрация карточки */
+        .profile-card {
+            width: 300px;
+            margin: 50px auto;
+            background: white;
+            border-radius: 8px;
+            overflow: hidden;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+        }
+
+        .card-header {
+            height: 120px;
+            background: radial-gradient(circle at top right, var(--primary-color), var(--secondary-color));
+            position: relative;
+        }
+
+        .profile-image {
+            width: 100px;
+            height: 100px;
+            border-radius: 50%;
+            border: 4px solid white;
+            position: absolute;
+            bottom: -50px;
+            left: 50%;
+            transform: translateX(-50%);
+            object-fit: cover;
+        }
+
+        /* Интерактивные контролы */
+        .controls {
+            display: flex;
+            gap: 10px;
+            margin: 20px 0;
+            flex-wrap: wrap;
+        }
+
+        .controls button {
+            padding: 8px 16px;
+            background: #466A85;
+            color: white;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+        }
+
+        .controls button:hover {
+            background: #7be6e8;
+        }
+    </style>
+</head>
+<body>
+    <header class="main-header">
+        <nav class="main-nav">
+            <a href="../index.html" class="logo">CSS Курс</a>
+            <ul class="nav-links">
+                <li><a href="../index.html">На главную</a></li>
+                <li><a href="../chapters.html">Главы</a></li>
+            </ul>
+        </nav>
+    </header>
+
+    <main class="lesson-content">
+        <nav class="lesson-nav">
+            <a href="6-4.html" class="prev-lesson">← Урок 6.4: Стилизация и центрирование карточки</a>
+            <a href="6-6.html" class="next-lesson">Урок 6.6: Настройка размера и позиции фона →</a>
+        </nav>
+
+        <div class="chapter-navigation">
+            <h3>Навигация по главе 6:</h3>
+            <ul>
+                <li><a href="6-1.html">6.1 Введение в проект</a></li>
+                <li><a href="6-2.html">6.2 CSS Custom Properties</a></li>
+                <li><a href="6-3.html">6.3 Создание фона</a></li>
+                <li><a href="6-4.html">6.4 Стилизация и центрирование карточки</a></li>
+                <li><a href="6-5.html" class="current">6.5 Позиционирование изображения профиля</a></li>
+                <li><a href="6-6.html">6.6 Настройка размера и позиции фона</a></li>
+                <li><a href="6-7.html">6.7 Стилизация контента</a></li>
+                <li><a href="6-8.html">6.8 Стилизация действий</a></li>
+            </ul>
+        </div>
+
+        <article class="lesson">
+            <header class="lesson-header">
+                <h1>Урок 6.5: Позиционирование изображения профиля</h1>
+            </header>
+
+            <section class="theory">
+                <h2>Теория</h2>
+                
+                <div class="demo-section">
+                    <h3>Свойство object-fit</h3>
+                    <p>Свойство object-fit определяет, как изображение должно заполнять свой контейнер при заданных размерах:</p>
+
+                    <div class="code-block">
+                        <pre><code><span class="selector">img</span> {
+    <span class="property">width</span>: <span class="value">150px</span>;
+    <span class="property">height</span>: <span class="value">150px</span>;
+    <span class="property">object-fit</span>: <span class="value">cover | contain | fill | scale-down</span>;
+}</code></pre>
+                    </div>
+
+                    <div class="object-fit-demo">
+                        <div class="fit-example">
+                            <img src="../images/demo/landscape.jpg" alt="Cover" class="cover-fit">
+                            <p>object-fit: cover</p>
+                        </div>
+                        <div class="fit-example">
+                            <img src="../images/demo/landscape.jpg" alt="Contain" class="contain-fit">
+                            <p>object-fit: contain</p>
+                        </div>
+                        <div class="fit-example">
+                            <img src="../images/demo/landscape.jpg" alt="Fill" class="fill-fit">
+                            <p>object-fit: fill</p>
+                        </div>
+                        <div class="fit-example">
+                            <img src="../images/demo/landscape.jpg" alt="Scale-down" class="scale-down-fit">
+                            <p>object-fit: scale-down</p>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="demo-section">
+                    <h3>Отрицательные отступы</h3>
+                    <p>Отрицательные отступы позволяют сдвигать элементы за пределы их обычного положения:</p>
+
+                    <div class="code-block">
+                        <pre><code><span class="selector">.profile-image</span> {
+    <span class="property">margin-top</span>: <span class="value">-50px</span>;  <span class="comment">/* Сдвиг вверх */</span>
+    <span class="property">margin-bottom</span>: <span class="value">20px</span>;
+}</code></pre>
+                    </div>
+
+                    <div class="info-block">
+                        <h4>Важно помнить:</h4>
+                        <ul>
+                            <li>Отрицательные отступы могут создавать наложение элементов</li>
+                            <li>Требуется учитывать z-index при наложении</li>
+                            <li>Следует использовать осторожно для избежания конфликтов</li>
+                        </ul>
+                    </div>
+                </div>
+
+                <div class="demo-section">
+                    <h3>Позиционирование изображения</h3>
+                    <p>Для размещения изображения профиля поверх header используем абсолютное позиционирование:</p>
+
+                    <div class="code-block">
+                        <pre><code><span class="selector">.card-header</span> {
+    <span class="property">position</span>: <span class="value">relative</span>;  <span class="comment">/* Создаем контекст позиционирования */</span>
+}
+
+<span class="selector">.profile-image</span> {
+    <span class="property">position</span>: <span class="value">absolute</span>;
+    <span class="property">bottom</span>: <span class="value">-50px</span>;
+    <span class="property">left</span>: <span class="value">50%</span>;
+    <span class="property">transform</span>: <span class="value">translateX(-50%)</span>;
+}</code></pre>
+                    </div>
+
+                </div>
+            </section>
+
+            <section class="practice">
+                <h2>Практика</h2>
+                <div class="task">
+                    <h3>Задание: Позиционирование изображения профиля</h3>
+                    <p>Создайте карточку с изображением профиля, наложенным на header.</p>
+
+                    <div class="task-description">
+                        <h4>Требования:</h4>
+                        <ul>
+                            <li>Используйте object-fit для правильного отображения изображения</li>
+                            <li>Примените абсолютное позиционирование</li>
+                            <li>Добавьте белую рамку вокруг изображения</li>
+                            <li>Сделайте изображение круглым</li>
+                        </ul>
+                    </div>
+                    
+                    <div class="code-editor">
+                        <div class="editor-tabs">
+                            <button class="tab active">HTML</button>
+                            <button class="tab">CSS</button>
+                        </div>
+                        <textarea class="code-input html-input">
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <title>Изображение профиля</title>
+    <style>
+        :root {
+            --image-size: 100px;
+            --border-radius: 8px;
+        }
+
+        body {
+            margin: 0;
+            min-height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            background: #f0f2f5;
+        }
+    </style>
+</head>
+<body>
+    <div class="profile-card">
+        <div class="card-header">
+            <img src="../images/demo/profile.jpg" alt="Profile" class="profile-image">
+        </div>
+        <div class="card-content">
+            <h2>Имя пользователя</h2>
+            <p>Должность</p>
+        </div>
+    </div>
+</body>
+</html></textarea>
+                        <textarea class="code-input css-input" style="display: none;">
+/* Стили для карточки */
+.profile-card {
+    width: 300px;
+    background: white;
+    border-radius: var(--border-radius);
+    overflow: hidden;
+    box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+}
+
+/* Стили для header */
+.card-header {
+    height: 120px;
+    background: radial-gradient(circle at top right, #466A85, #7be6e8);
+    /* Добавьте позиционирование */
+}
+
+/* Стили для изображения */
+.profile-image {
+    /* Добавьте размеры */
+    
+    /* Добавьте позиционирование */
+    
+    /* Добавьте стили для круглой формы */
+    
+    /* Добавьте object-fit */
+}
+
+/* Стили для контента */
+.card-content {
+    padding: 60px 20px 20px;
+    text-align: center;
+}</textarea>
+                    </div>
+
+                    <div class="task-solution">
+                        <h4>Подсказки:</h4>
+                        <ul>
+                            <li>Используйте <code>position: relative</code> для header</li>
+                            <li>Примените <code>position: absolute</code> для изображения</li>
+                            <li>Задайте <code>border-radius: 50%</code> для круглой формы</li>
+                            <li>Используйте <code>object-fit: cover</code> для изображения</li>
+                        </ul>
+                    </div>
+                </div>
+            </section>
+        </article>
+    </main>
+
+    <script>
+        // Функция для изменения позиции изображения
+        function changeImagePosition(position) {
+            const image = document.querySelector('.profile-image');
+            switch(position) {
+                case 'top':
+                    image.style.bottom = 'auto';
+                    image.style.top = '-50px';
+                    break;
+                case 'center':
+                    image.style.bottom = '50%';
+                    image.style.top = 'auto';
+                    image.style.transform = 'translate(-50%, 50%)';
+                    break;
+                case 'bottom':
+                    image.style.bottom = '-50px';
+                    image.style.top = 'auto';
+                    image.style.transform = 'translateX(-50%)';
+                    break;
+            }
+        }
+
+        // Инициализация редактора кода
+        document.addEventListener('DOMContentLoaded', function() {
+            const tabs = document.querySelectorAll('.tab');
+            const editors = document.querySelectorAll('.code-input');
+            
+            tabs.forEach(tab => {
+                tab.addEventListener('click', function() {
+                    tabs.forEach(t => t.classList.remove('active'));
+                    editors.forEach(e => e.style.display = 'none');
+                    this.classList.add('active');
+                    if (this.textContent === 'HTML') {
+                        document.querySelector('.html-input').style.display = 'block';
+                    } else {
+                        document.querySelector('.css-input').style.display = 'block';
+                    }
+                });
+            });
+        });
+    </script>
+</body>
+</html> 

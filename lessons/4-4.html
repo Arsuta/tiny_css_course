@@ -1,0 +1,352 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Урок 4.4: Многоколоночная верстка | CSS Курс</title>
+    <link rel="stylesheet" href="../styles/main.css">
+    <link rel="stylesheet" href="../styles/lesson.css">
+    <style>
+        /* Стили для демонстраций */
+        .demo-section {
+            margin-bottom: 40px;
+        }
+
+        .demo-section h3 {
+            color: #466A85;
+            margin-bottom: 20px;
+        }
+
+        /* Стили для блоков с кодом */
+        .code-block {
+            background: #1E1E1E;
+            color: #D4D4D4;
+            padding: 15px;
+            border-radius: 8px;
+            margin: 20px 0;
+            font-family: monospace;
+            width: 100%;
+            box-sizing: border-box;
+        }
+
+        .code-block pre {
+            margin: 0;
+        }
+
+        .code-block code {
+            color: #D4D4D4;
+            font-family: monospace;
+        }
+
+        /* Подсветка синтаксиса */
+        .code-block .keyword { color: #569CD6; }
+        .code-block .property { color: #9CDCFE; }
+        .code-block .value { color: #CE9178; }
+        .code-block .punctuation { color: #D4D4D4; }
+        .code-block .comment { color: #6A9955; }
+        .code-block .selector { color: #D7BA7D; }
+
+        /* Демонстрация колонок */
+        .multi-column-demo {
+            background: white;
+            padding: 20px;
+            border-radius: 8px;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+            margin: 20px 0;
+        }
+
+        .column-example {
+            column-count: 3;
+            column-gap: 2em;
+            column-rule: 1px solid #466A85;
+        }
+
+        .column-example h2 {
+            column-span: all;
+            color: #466A85;
+            margin-bottom: 1em;
+        }
+
+        .column-example p {
+            margin-bottom: 1em;
+        }
+
+        .column-example img {
+            width: 100%;
+            height: auto;
+            margin-bottom: 1em;
+        }
+
+        /* Медиа-запросы для демонстрации */
+        @media (max-width: 768px) {
+            .column-example {
+                column-count: 2;
+            }
+        }
+
+        @media (max-width: 480px) {
+            .column-example {
+                column-count: 1;
+            }
+        }
+
+        /* Демонстрация разрывов */
+        .break-control {
+            break-inside: avoid;
+            page-break-inside: avoid;
+            margin-bottom: 1em;
+        }
+
+        /* Интерактивные контролы */
+        .column-controls {
+            display: flex;
+            gap: 10px;
+            margin: 10px 0;
+            flex-wrap: wrap;
+        }
+
+        .column-controls button {
+            padding: 5px 10px;
+            background: #466A85;
+            color: white;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+
+        .column-controls button:hover {
+            background: #7be6e8;
+            transform: translateY(-2px);
+        }
+    </style>
+</head>
+<body>
+    <header class="main-header">
+        <nav class="main-nav">
+            <a href="../index.html" class="logo">CSS Курс</a>
+            <ul class="nav-links">
+                <li><a href="../index.html">На главную</a></li>
+                <li><a href="../chapters.html">Главы</a></li>
+            </ul>
+        </nav>
+    </header>
+
+    <main class="lesson-content">
+        <nav class="lesson-nav">
+            <a href="4-3.html" class="prev-lesson">← Урок 4.3: Стилизация изображений</a>
+            <a href="4-5.html" class="next-lesson">Урок 4.5: Финальные штрихи →</a>
+        </nav>
+
+        <div class="chapter-navigation">
+            <h3>Навигация по главе 4:</h3>
+            <ul>
+                <li><a href="4-1.html">4.1 Настройка темы</a></li>
+                <li><a href="4-2.html">4.2 Использование CSS счетчиков</a></li>
+                <li><a href="4-3.html">4.3 Стилизация изображений</a></li>
+                <li><a href="4-4.html" class="current">4.4 Многоколоночная верстка</a></li>
+                <li><a href="4-5.html">4.5 Финальные штрихи</a></li>
+            </ul>
+        </div>
+
+        <article class="lesson">
+            <header class="lesson-header">
+                <h1>Урок 4.4: Многоколоночная верстка</h1>
+            </header>
+
+            <section class="theory">
+                <h2>Теория</h2>
+                
+                <div class="demo-section">
+                    <h3>CSS Multi-column Layout Module</h3>
+                    <p>Модуль многоколоночной верстки CSS позволяет разделить контент на несколько колонок, подобно газетному макету.</p>
+
+                    <div class="multi-column-demo">
+                        <div class="column-example">
+                            <h2>Пример многоколоночной верстки</h2>
+                            <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.</p>
+                            <p>Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.</p>
+                            <p>Sed ut perspiciatis unde omnis iste natus error sit voluptatem accusantium doloremque laudantium, totam rem aperiam.</p>
+                        </div>
+                    </div>
+
+                    <div class="code-block">
+                        <pre><code><span class="selector">.column-example</span> {
+    <span class="property">column-count</span>: <span class="value">3</span>;
+    <span class="property">column-gap</span>: <span class="value">2em</span>;
+    <span class="property">column-rule</span>: <span class="value">1px solid #466A85</span>;
+}</code></pre>
+                    </div>
+                </div>
+
+                <div class="demo-section">
+                    <h3>Медиа-запросы для адаптивности</h3>
+                    <p>Для создания адаптивного макета используются медиа-запросы, которые изменяют количество колонок в зависимости от ширины экрана.</p>
+
+                    <div class="code-block">
+                        <pre><code><span class="comment">/* Для средних экранов */</span>
+<span class="selector">@media (max-width: 768px)</span> {
+    <span class="selector">.column-example</span> {
+        <span class="property">column-count</span>: <span class="value">2</span>;
+    }
+}
+
+<span class="comment">/* Для маленьких экранов */</span>
+<span class="selector">@media (max-width: 480px)</span> {
+    <span class="selector">.column-example</span> {
+        <span class="property">column-count</span>: <span class="value">1</span>;
+    }
+}</code></pre>
+                    </div>
+                </div>
+
+                <div class="demo-section">
+                    <h3>Разделители колонок</h3>
+                    <p>Свойство column-rule позволяет добавить разделительную линию между колонками.</p>
+
+                    <div class="multi-column-demo">
+                        <div class="column-example">
+                            <p>Пример текста с разделителями между колонками. Обратите внимание на вертикальные линии.</p>
+                            <p>Разделители помогают визуально отделить колонки друг от друга, улучшая читаемость.</p>
+                        </div>
+                    </div>
+
+                    <div class="code-block">
+                        <pre><code><span class="selector">.column-example</span> {
+    <span class="property">column-rule</span>: <span class="value">1px solid #466A85</span>;
+    <span class="property">column-rule-width</span>: <span class="value">1px</span>;
+    <span class="property">column-rule-style</span>: <span class="value">solid</span>;
+    <span class="property">column-rule-color</span>: <span class="value">#466A85</span>;
+}</code></pre>
+                    </div>
+                </div>
+
+                <div class="demo-section">
+                    <h3>Контроль разрывов контента</h3>
+                    <p>CSS предоставляет свойства для контроля того, как контент разбивается между колонками.</p>
+
+                    <div class="multi-column-demo">
+                        <div class="column-example">
+                            <div class="break-control">
+                                <h4>Неразрывный блок</h4>
+                                <p>Этот блок не будет разбиваться между колонками.</p>
+                            </div>
+                            <p>А этот текст может быть разбит между колонками как обычно.</p>
+                        </div>
+                    </div>
+
+                    <div class="code-block">
+                        <pre><code><span class="selector">.break-control</span> {
+    <span class="property">break-inside</span>: <span class="value">avoid</span>;
+    <span class="property">page-break-inside</span>: <span class="value">avoid</span>;
+}</code></pre>
+                    </div>
+                </div>
+
+                <div class="demo-section">
+                    <h3>Элементы на всю ширину</h3>
+                    <p>Свойство column-span позволяет элементу занимать всю ширину, игнорируя колонки.</p>
+
+                    <div class="multi-column-demo">
+                        <div class="column-example">
+                            <h2>Заголовок на всю ширину</h2>
+                            <p>Текст в колонках...</p>
+                            <p>Еще текст в колонках...</p>
+                        </div>
+                    </div>
+
+                    <div class="code-block">
+                        <pre><code><span class="selector">.column-example h2</span> {
+    <span class="property">column-span</span>: <span class="value">all</span>;
+}</code></pre>
+                    </div>
+                </div>
+            </section>
+
+            <section class="practice">
+                <h2>Практика</h2>
+                <div class="task">
+                    <h3>Задание: Создание газетного макета</h3>
+                    <p>Создайте адаптивный макет газетной статьи с использованием многоколоночной верстки.</p>
+                    
+                    <div class="code-editor">
+                        <div class="editor-tabs">
+                            <button class="tab active">HTML</button>
+                            <button class="tab">CSS</button>
+                        </div>
+                        <textarea class="code-input html-input">
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Газетная статья</title>
+</head>
+<body>
+    <article class="newspaper">
+        <header class="article-header">
+            <h1>Заголовок статьи</h1>
+            <p class="subtitle">Подзаголовок статьи</p>
+        </header>
+        
+        <div class="article-content">
+            <p class="lead">Вводный параграф статьи, который должен быть на всю ширину...</p>
+            
+            <div class="main-text">
+                <p>Основной текст статьи, который должен быть разбит на колонки...</p>
+                <p>Дополнительные параграфы текста для демонстрации работы колонок...</p>
+                
+                <blockquote class="pull-quote">
+                    Важная цитата, которая должна занять несколько колонок
+                </blockquote>
+                
+                <p>Продолжение текста статьи...</p>
+            </div>
+        </div>
+    </article>
+</body>
+</html></textarea>
+                        <textarea class="code-input css-input" style="display: none;">
+/* Стили для газетного макета */
+.newspaper {
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 20px;
+}
+
+/* Добавьте стили для:
+ * 1. Многоколоночной верстки основного текста
+ * 2. Адаптивного поведения колонок
+ * 3. Оформления разделителей между колонками
+ * 4. Контроля разрывов контента
+ * 5. Элементов, занимающих несколько колонок
+ */</textarea>
+                    </div>
+
+                    <button class="run-button">Запустить</button>
+
+                    <div class="result-preview">
+                        <h3>Результат</h3>
+                        <div class="preview-frame"></div>
+                    </div>
+                </div>
+            </section>
+        </article>
+    </main>
+
+    <footer class="main-footer">
+        <p>&copy; 2024 CSS Курс. Все права защищены.</p>
+    </footer>
+
+    <script src="../scripts/lesson.js"></script>
+    <script>
+        function changeColumns(count) {
+            const columns = document.getElementById('interactive-columns');
+            columns.style.columnCount = count;
+        }
+
+        function changeGap(gap) {
+            const columns = document.getElementById('interactive-columns');
+            columns.style.columnGap = gap;
+        }
+    </script>
+</body>
+</html> 

@@ -1,0 +1,561 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Урок 3.2: Основы SVG | CSS Курс</title>
+    <link rel="stylesheet" href="/styles/main.css">
+    <link rel="stylesheet" href="/styles/lesson.css">
+    <style>
+        /* Общие изменения для всех уроков */
+
+        /* Стили для демонстраций */
+        .demo-area {
+            height: 200px;
+            background: #f8f9fa;
+            border-radius: 8px;
+            padding: 20px;
+            margin: 20px 0;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            position: relative;
+        }
+
+        /* Стили для теоретических блоков */
+        .theory-block {
+            background: white;
+            padding: 1.5rem;
+            border-radius: 8px;
+            margin: 1rem 0;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+        }
+
+        /* Стили для блоков с кодом */
+        .code-block {
+            background: #1E1E1E;
+            color: #1E1E1E;
+            padding: 15px;
+            border-radius: 8px;
+            margin: 10px 0;
+            font-family: monospace;
+        }
+
+        /* Стили для блоков с советами */
+        .tips-block {
+            background: #fff3cd;
+            border-left: 4px solid #ffc107;
+            padding: 15px;
+            margin: 15px 0;
+        }
+
+        /* Стили для практического задания */
+        .practice-demo {
+            border: 2px solid #466A85;
+            padding: 20px;
+            margin: 20px 0;
+            border-radius: 8px;
+        }
+
+        /* Стили для редактора кода */
+        .code-editor {
+            background: #f8f9fa;
+            border-radius: 8px;
+            margin: 20px 0;
+            overflow: hidden;
+        }
+
+        .editor-tabs {
+            background: #e9ecef;
+            padding: 10px;
+            border-bottom: 1px solid #dee2e6;
+        }
+
+        .tab {
+            background: none;
+            border: none;
+            padding: 5px 15px;
+            cursor: pointer;
+            color: #495057;
+        }
+
+        .tab.active {
+            background: #fff;
+            border-radius: 4px;
+            color: #466A85;
+        }
+
+        .code-input {
+            width: 100%;
+            min-height: 200px;
+            padding: 15px;
+            border: none;
+            font-family: monospace;
+            resize: vertical;
+        }
+
+        .run-button {
+            background: #466A85;
+            color: white;
+            border: none;
+            padding: 10px 20px;
+            border-radius: 4px;
+            cursor: pointer;
+            margin: 10px 0;
+        }
+
+        .result-preview {
+            background: white;
+            padding: 20px;
+            border-radius: 8px;
+            margin-top: 20px;
+            border: 1px solid #dee2e6;
+        }
+
+        /* Стили для демонстраций */
+        .demo-container {
+            padding: 2rem;
+            background: #f8f9fa;
+            border-radius: 8px;
+            margin: 1rem 0;
+        }
+
+        /* SVG демонстрации */
+        .svg-demo {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 2rem;
+            margin: 2rem 0;
+        }
+
+        .svg-example {
+            background: white;
+            padding: 1.5rem;
+            border-radius: 8px;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+        }
+
+        /* Viewport демонстрация */
+        .viewport-demo {
+            border: 2px dashed #ccc;
+            padding: 1rem;
+            margin: 1rem 0;
+            position: relative;
+        }
+
+        .viewport-demo svg {
+            border: 1px solid #466A85;
+        }
+
+        /* Интерактивные элементы */
+        .interactive-svg {
+            cursor: pointer;
+            transition: transform 0.3s ease;
+        }
+
+        .interactive-svg:hover {
+            transform: scale(1.1);
+        }
+
+        /* Демонстрация форм SVG */
+        .shapes-demo {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+            gap: 1rem;
+            margin: 1rem 0;
+        }
+
+        .shape-example {
+            text-align: center;
+            padding: 1rem;
+        }
+
+        .shape-example svg {
+            max-width: 100px;
+            height: auto;
+        }
+    </style>
+</head>
+<body>
+    <header class="main-header">
+        <nav class="main-nav">
+            <div class="logo">CSS Курс</div>
+            <ul class="nav-links">
+                <li><a href="/">На главную</a></li>
+                <li><a href="#chapters">Главы</a></li>
+            </ul>
+        </nav>
+    </header>
+
+    <main class="lesson-content">
+        <nav class="lesson-nav">
+            <a href="/lessons/3-1" class="prev-lesson">← Урок 3.1: Setup</a>
+            <a href="/lessons/3-3" class="next-lesson">Урок 3.3: Применение стилей к SVG →</a>
+        </nav>
+
+        <article class="lesson">
+            <header class="lesson-header">
+                <h1>Урок 3.2: Основы SVG</h1>
+            </header>
+
+            <section class="theory">
+                <h2>Теория</h2>
+                <div class="theory-content">
+                    <h3>Что такое SVG?</h3>
+                    <p>SVG (Scalable Vector Graphics) - это формат векторной графики, основанный на XML. 
+                    В отличие от растровых изображений, SVG масштабируется без потери качества.</p>
+
+                    <div class="svg-demo">
+                        <div class="svg-example">
+                            <h4>Базовый SVG</h4>
+                            <div class="example">
+                                <pre><code>&lt;svg width="100" height="100" viewBox="0 0 100 100"&gt;
+    &lt;circle cx="50" cy="50" r="40" fill="#466A85"/&gt;
+&lt;/svg&gt;</code></pre>
+                            </div>
+                            <div class="demo-result">
+                                <svg width="100" height="100" viewBox="0 0 100 100">
+                                    <circle cx="50" cy="50" r="40" fill="#466A85"/>
+                                </svg>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="parameters-explanation">
+                        <h4>Параметры SVG элемента</h4>
+                        <ul class="params-list">
+                            <li>
+                                <code>width</code> и <code>height</code>
+                                <p>Определяют физические размеры SVG на странице в пикселях</p>
+                            </li>
+                            <li>
+                                <code>viewBox="0 0 100 100"</code>
+                                <p>Задает координатную систему SVG:</p>
+                                <ul>
+                                    <li>Первые два числа (0 0) - начальные координаты (x, y)</li>
+                                    <li>Вторые два числа (100 100) - ширина и высота области просмотра</li>
+                                </ul>
+                            </li>
+                        </ul>
+                    </div>
+
+                    <h3>Позиционирование элементов SVG</h3>
+                    <div class="svg-demo">
+                        <div class="svg-example">
+                            <h4>Координатная система SVG</h4>
+                            <div class="example">
+                                <pre><code>&lt;svg width="200" height="200" viewBox="0 0 200 200"&gt;
+    &lt;!-- Координаты начинаются с левого верхнего угла (0,0) --&gt;
+    &lt;rect x="10" y="10" width="50" height="50" fill="#466A85"/&gt;
+    &lt;circle cx="120" cy="35" r="25" fill="#e74c3c"/&gt;
+&lt;/svg&gt;</code></pre>
+                            </div>
+                            <div class="demo-result">
+                                <svg width="200" height="200" viewBox="0 0 200 200">
+                                    <rect x="10" y="10" width="50" height="50" fill="#466A85"/>
+                                    <circle cx="120" cy="35" r="25" fill="#e74c3c"/>
+                                </svg>
+                            </div>
+                            <div class="parameters-explanation">
+                                <h4>Параметры позиционирования</h4>
+                                <ul class="params-list">
+                                    <li>
+                                        <code>x</code>, <code>y</code> (для rect)
+                                        <p>Определяют положение верхнего левого угла прямоугольника</p>
+                                    </li>
+                                    <li>
+                                        <code>cx</code>, <code>cy</code> (для circle)
+                                        <p>Определяют положение центра круга:</p>
+                                        <ul>
+                                            <li><code>cx</code> - расстояние от левого края</li>
+                                            <li><code>cy</code> - расстояние от верхнего края</li>
+                                        </ul>
+                                    </li>
+                                    <li>
+                                        <code>r</code> (для circle)
+                                        <p>Задает радиус круга</p>
+                                    </li>
+                                </ul>
+                            </div>
+                        </div>
+                    </div>
+
+                    <h3>Viewport и Viewbox</h3>
+                    <div class="svg-demo">
+                        <div class="svg-example">
+                            <h4>Viewport</h4>
+                            <p>Viewport определяет видимую область SVG на странице.</p>
+                            <div class="example">
+                                <pre><code>&lt;svg width="300" height="150"&gt;
+    &lt;rect width="100%" height="100%" fill="#f1f1f1"/&gt;
+    &lt;circle cx="150" cy="75" r="50" fill="#466A85"/&gt;
+&lt;/svg&gt;</code></pre>
+                            </div>
+                            <div class="demo-result">
+                                <svg width="300" height="150">
+                                    <rect width="100%" height="100%" fill="#f1f1f1"/>
+                                    <circle cx="150" cy="75" r="50" fill="#466A85"/>
+                                </svg>
+                            </div>
+                        </div>
+
+                        <div class="svg-example">
+                            <h4>Viewbox</h4>
+                            <p>Viewbox определяет, какая часть SVG будет видна в viewport.</p>
+                            <div class="example">
+                                <pre><code>&lt;svg width="300" height="150" viewBox="0 0 150 75"&gt;
+    &lt;rect width="100%" height="100%" fill="#f1f1f1"/&gt;
+    &lt;circle cx="75" cy="37.5" r="25" fill="#466A85"/&gt;
+&lt;/svg&gt;</code></pre>
+                            </div>
+                            <div class="demo-result">
+                                <svg width="300" height="150" viewBox="0 0 150 75">
+                                    <rect width="100%" height="100%" fill="#f1f1f1"/>
+                                    <circle cx="75" cy="37.5" r="25" fill="#466A85"/>
+                                </svg>
+                            </div>
+                            <p class="explanation">
+                                viewBox="0 0 150 75" означает, что мы показываем область от (0,0) до (150,75), 
+                                растянутую на весь viewport размером 300x150.
+                            </p>
+                        </div>
+                    </div>
+
+                    <h3>Основные формы SVG</h3>
+                    <div class="shapes-demo">
+                        <div class="shape-example">
+                            <h4>Прямоугольник</h4>
+                            <svg width="100" height="100">
+                                <rect x="10" y="10" width="80" height="80" fill="#466A85"/>
+                            </svg>
+                            <pre><code>&lt;rect x="10" y="10" 
+    width="80" height="80" 
+    fill="#466A85"/&gt;</code></pre>
+                        </div>
+
+                        <div class="shape-example">
+                            <h4>Круг</h4>
+                            <svg width="100" height="100">
+                                <circle cx="50" cy="50" r="40" fill="#e74c3c"/>
+                            </svg>
+                            <pre><code>&lt;circle cx="50" cy="50" 
+    r="40" 
+    fill="#e74c3c"/&gt;</code></pre>
+                        </div>
+
+                        <div class="shape-example">
+                            <h4>Эллипс</h4>
+                            <svg width="100" height="100">
+                                <ellipse cx="50" cy="50" rx="40" ry="25" fill="#2ecc71"/>
+                            </svg>
+                            <pre><code>&lt;ellipse cx="50" cy="50" 
+    rx="40" ry="25" 
+    fill="#2ecc71"/&gt;</code></pre>
+                        </div>
+
+                        <div class="shape-example">
+                            <h4>Линия</h4>
+                            <svg width="100" height="100">
+                                <line x1="10" y1="10" x2="90" y2="90" 
+                                    stroke="#9b59b6" stroke-width="4"/>
+                            </svg>
+                            <pre><code>&lt;line x1="10" y1="10" 
+    x2="90" y2="90" 
+    stroke="#9b59b6" 
+    stroke-width="4"/&gt;</code></pre>
+                        </div>
+                    </div>
+
+                    <div class="parameters-explanation">
+                        <h4>Параметры стилизации</h4>
+                        <ul class="params-list">
+                            <li>
+                                <code>fill</code>
+                                <p>Определяет цвет заливки фигуры</p>
+                            </li>
+                            <li>
+                                <code>stroke</code>
+                                <p>Задает цвет обводки</p>
+                            </li>
+                            <li>
+                                <code>stroke-width</code>
+                                <p>Определяет толщину обводки</p>
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+            </section>
+
+            <section class="practice">
+                <h2>Практика</h2>
+                <div class="task">
+                    <h3>Задание: Создание структуры загрузчика</h3>
+                    <p>Создайте базовую структуру загрузчика с контейнером и элементом загрузки.</p>
+                    
+                    <div class="code-editor">
+                        <div class="editor-tabs">
+                            <button class="tab active">HTML</button>
+                            <button class="tab">CSS</button>
+                        </div>
+                        <textarea class="code-input html-input">
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Структура загрузчика</title>
+</head>
+<body>
+    <!-- Создайте структуру загрузчика -->
+    <div class="loader-container">
+        <!-- Добавьте элемент загрузки -->
+    </div>
+</body>
+</html></textarea>
+                        <textarea class="code-input css-input" style="display: none;">
+/* Стили для контейнера */
+.loader-container {
+    /* Добавьте позиционирование и размеры */
+}
+
+/* Стили для элемента загрузки */
+.loader-element {
+    /* Добавьте базовые стили */
+}</textarea>
+                    </div>
+
+                    <button class="run-button">Запустить</button>
+
+                    <div class="result-preview">
+                        <h3>Результат</h3>
+                        <div class="preview-frame"></div>
+                    </div>
+                </div>
+            </section>
+        </article>
+    </main>
+
+    <footer class="main-footer">
+        <p>&copy; 2024 CSS Курс. Все права защищены.</p>
+    </footer>
+
+    <script src="/scripts/lesson.js"></script>
+    <script>
+    // Интерактивные демонстрации для структур загрузчиков
+    document.addEventListener('DOMContentLoaded', () => {
+        // Простой загрузчик - показ структуры при наведении
+        const simpleLoader = document.querySelector('.simple-loader');
+        if (simpleLoader) {
+            simpleLoader.addEventListener('mouseover', () => {
+                simpleLoader.style.border = '4px dashed #466A85';
+            });
+            simpleLoader.addEventListener('mouseout', () => {
+                simpleLoader.style.border = '4px solid #f3f3f3';
+                simpleLoader.style.borderTopColor = '#466A85';
+            });
+        }
+
+        // Составной загрузчик - подсветка частей
+        const compositeParts = document.querySelectorAll('.composite-loader .loader-part');
+        compositeParts.forEach((part, index) => {
+            part.addEventListener('mouseover', () => {
+                part.style.borderWidth = '4px';
+                part.style.borderStyle = 'dashed';
+            });
+            part.addEventListener('mouseout', () => {
+                part.style.borderWidth = '3px';
+                part.style.borderStyle = 'solid';
+            });
+        });
+
+        // Прогресс загрузчик - демонстрация прогресса
+        const progressBar = document.querySelector('.progress-loader .progress-bar');
+        if (progressBar) {
+            let progress = 30;
+            progressBar.addEventListener('click', () => {
+                progress = (progress + 20) % 100;
+                progressBar.style.width = `${progress}%`;
+                progressBar.style.transition = 'width 0.3s ease';
+            });
+        }
+
+        // Интерактивная структурная диаграмма
+        const structureElements = document.querySelectorAll('.structure-element');
+        structureElements.forEach(element => {
+            element.addEventListener('click', () => {
+                // Убираем активный класс у всех элементов
+                structureElements.forEach(el => el.classList.remove('active'));
+                // Добавляем активный класс текущему элементу
+                element.classList.add('active');
+            });
+        });
+    });
+
+    // Добавим стили для интерактивности
+    const style = document.createElement('style');
+    style.textContent = `
+        .structure-element {
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+
+        .structure-element:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 2px 8px rgba(52, 152, 219, 0.2);
+        }
+
+        .structure-element.active {
+            background: rgba(52, 152, 219, 0.2);
+            border-color: #2980b9;
+        }
+
+        .simple-loader,
+        .composite-loader .loader-part,
+        .progress-loader {
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+
+        .progress-loader {
+            position: relative;
+        }
+
+        .progress-loader::after {
+            content: 'Нажмите для изменения прогресса';
+            position: absolute;
+            bottom: -20px;
+            left: 0;
+            right: 0;
+            text-align: center;
+            font-size: 12px;
+            color: #666;
+            opacity: 0;
+            transition: opacity 0.3s;
+        }
+
+        .progress-loader:hover::after {
+            opacity: 1;
+        }
+
+        .type-card {
+            transition: transform 0.3s ease;
+        }
+
+        .type-card:hover {
+            transform: translateY(-4px);
+            box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+        }
+
+        .example:hover {
+            border-left: 3px solid #466A85;
+        }
+
+        .code-explanation li:hover code {
+            color: #466A85;
+            background: rgba(52, 152, 219, 0.1);
+            padding: 2px 4px;
+            border-radius: 2px;
+        }
+    `;
+    document.head.appendChild(style);
+    </script>
+</body>
+</html> 

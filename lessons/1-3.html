@@ -1,0 +1,243 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Урок 1.3: Что такое CSS | CSS Курс</title>
+    <link rel="stylesheet" href="/styles/main.css">
+    <link rel="stylesheet" href="/styles/lesson.css">
+</head>
+<body>
+    <header class="main-header">
+        <nav class="main-nav">
+            <div class="logo">CSS Курс</div>
+            <ul class="nav-links">
+                <li><a href="/">На главную</a></li>
+                <li><a href="#chapters">Главы</a></li>
+            </ul>
+        </nav>
+    </header>
+
+    <main class="lesson-content">
+        <nav class="lesson-nav">
+            <a href="/lessons/1-2" class="prev-lesson">← Урок 1.2: Разделение задач (SoC)</a>
+            <a href="/lessons/1-4" class="next-lesson">Урок 1.4: Добавление CSS в HTML →</a>
+        </nav>
+
+        <article class="lesson">
+            <header class="lesson-header">
+                <h1>Урок 1.3: Что такое CSS</h1>
+            </header>
+
+            <section class="theory">
+                <h2>Теория</h2>
+                <div class="theory-content">
+                    <h3>CSS: История и эволюция</h3>
+                    <div class="timeline">
+                        <div class="timeline-item">
+                            <h4>1994: Зарождение CSS</h4>
+                            <p>Хокон Виум Ли предложил CSS как решение проблемы стилизации веб-страниц, когда HTML становился перегруженным презентационными элементами.</p>
+                        </div>
+                        <div class="timeline-item">
+                            <h4>1996: CSS1</h4>
+                            <p>Первая спецификация CSS включала базовые возможности: шрифты, цвета, отступы, границы.</p>
+                        </div>
+                        <div class="timeline-item">
+                            <h4>1998: CSS2</h4>
+                            <p>Добавлены позиционирование, z-index, медиа-типы и поддержка различных устройств.</p>
+                        </div>
+                        <div class="timeline-item">
+                            <h4>2011: CSS3</h4>
+                            <p>Модульный подход, анимации, градиенты, flexbox и многое другое.</p>
+                        </div>
+                    </div>
+
+                    <h3>Основные концепции CSS</h3>
+                    <div class="concepts-grid">
+                        <div class="concept-card">
+                            <h4>Селекторы</h4>
+                            <p>Определяют, к каким элементам применяются стили</p>
+                            <div class="example">
+                                <pre><code>/* Селектор элемента */
+p { color: blue; }
+
+/* Селектор класса */
+.highlight { background: yellow; }
+
+/* Селектор ID */
+#header { font-size: 24px; }</code></pre>
+                            </div>
+                        </div>
+
+                        <div class="concept-card">
+                            <h4>Свойства</h4>
+                            <p>Определяют, какие аспекты элемента изменяются</p>
+                            <div class="example">
+                                <pre><code>/* Типографика */
+font-size: 16px;
+font-weight: bold;
+
+/* Цвета и фоны */
+color: #333;
+background-color: white;
+
+/* Размеры и отступы */
+width: 100%;
+padding: 20px;</code></pre>
+                            </div>
+                        </div>
+
+                        <div class="concept-card">
+                            <h4>Значения</h4>
+                            <p>Определяют конкретные параметры свойств</p>
+                            <div class="example">
+                                <pre><code>/* Абсолютные единицы */
+width: 100px;
+
+/* Относительные единицы */
+font-size: 1.5em;
+
+/* Проценты */
+width: 50%;
+
+/* Ключевые слова */
+display: flex;</code></pre>
+                            </div>
+                        </div>
+                    </div>
+
+                    <h3>Способы подключения CSS</h3>
+                    <div class="methods-grid">
+                        <div class="method-card">
+                            <h4>1. Внешний файл CSS</h4>
+                            <div class="example">
+                                <pre><code>&lt;link rel="stylesheet" href="styles.css"></code></pre>
+                            </div>
+                            <div class="pros-cons">
+                                <div class="pros">
+                                    <h5>Преимущества:</h5>
+                                    <ul>
+                                        <li>Разделение контента и стилей</li>
+                                        <li>Кэширование браузером</li>
+                                        <li>Легкое обслуживание</li>
+                                    </ul>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="method-card">
+                            <h4>2. Внутренние стили</h4>
+                            <div class="example">
+                                <pre><code>&lt;style>
+    body { background: #fff; }
+&lt;/style></code></pre>
+                            </div>
+                            <div class="pros-cons">
+                                <div class="cons">
+                                    <h5>Недостатки:</h5>
+                                    <ul>
+                                        <li>Смешивание HTML и CSS</li>
+                                        <li>Нет кэширования</li>
+                                        <li>Сложно поддерживать</li>
+                                    </ul>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="method-card">
+                            <h4>3. Инлайн стили</h4>
+                            <div class="example">
+                                <pre><code>&lt;div style="color: blue;">&lt;/div></code></pre>
+                            </div>
+                            <div class="pros-cons">
+                                <div class="warning">
+                                    <h5>Не рекомендуется:</h5>
+                                    <ul>
+                                        <li>Нарушает SoC</li>
+                                        <li>Сложно поддерживать</li>
+                                        <li>Высокая специфичность</li>
+                                    </ul>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <h3>Базовый синтаксис CSS</h3>
+                    <div class="syntax-explanation">
+                        <div class="example">
+                            <pre><code>selector {
+    property: value;
+    /* Комментарий */
+    property2: value2;
+}</code></pre>
+                        </div>
+                        <div class="syntax-breakdown">
+                            <ul class="styled-list">
+                                <li><strong>selector</strong> - определяет целевые элементы</li>
+                                <li><strong>property</strong> - что именно мы хотим изменить</li>
+                                <li><strong>value</strong> - новое значение свойства</li>
+                                <li><strong>;</strong> - разделитель между декларациями</li>
+                                <li><strong>{}</strong> - обрамляют блок деклараций</li>
+                            </ul>
+                        </div>
+                    </div>
+
+                    <div class="info-block">
+                        <h4>Важные концепции</h4>
+                        <ul class="styled-list">
+                            <li>CSS работает каскадно - стили могут наследоваться и перезаписываться</li>
+                            <li>Специфичность определяет приоритет правил</li>
+                            <li>CSS является декларативным языком</li>
+                            <li>Современный CSS поддерживает вычисления и переменные</li>
+                        </ul>
+                    </div>
+                </div>
+            </section>
+
+            <section class="practice">
+                <h2>Практика</h2>
+                <div class="task">
+                    <h3>Задание</h3>
+                    <p>Создайте несколько CSS правил для стилизации текста. Попрактикуйтесь в написании правильного синтаксиса CSS.</p>
+                    
+                    <div class="code-editor">
+                        <div class="editor-tabs">
+                            <button class="tab active">HTML</button>
+                            <button class="tab">CSS</button>
+                        </div>
+                        <textarea class="code-input html-input">
+<!DOCTYPE html>
+<html>
+<head>
+    <title>CSS Правила</title>
+</head>
+<body>
+    <h1>Главный заголовок</h1>
+    <p class="intro">Вводный текст</p>
+    <p>Обычный параграф</p>
+    <div class="important">Важный блок текста</div>
+</body>
+</html></textarea>
+                        <textarea class="code-input css-input" style="display: none;">
+/* Добавьте стили для разных элементов
+   Используйте различные селекторы и свойства */</textarea>
+                    </div>
+
+                    <button class="run-button">Запустить</button>
+
+                    <div class="result-preview">
+                        <h3>Результат</h3>
+                        <div class="preview-frame"></div>
+                    </div>
+                </div>
+            </section>
+        </article>
+    </main>
+
+    <footer class="main-footer">
+        <p>&copy; 2024 CSS Курс. Все права защищены.</p>
+    </footer>
+
+    <script src="/scripts/lesson.js"></script>
+</body>
+</html> 

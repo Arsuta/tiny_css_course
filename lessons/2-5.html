@@ -1,0 +1,314 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Урок 2.5: Медиа-запросы | CSS Курс</title>
+    <link rel="stylesheet" href="/styles/main.css">
+    <link rel="stylesheet" href="/styles/lesson.css">
+</head>
+<body>
+    <header class="main-header">
+        <nav class="main-nav">
+            <div class="logo">CSS Курс</div>
+            <ul class="nav-links">
+                <li><a href="/">На главную</a></li>
+                <li><a href="#chapters">Главы</a></li>
+            </ul>
+        </nav>
+    </header>
+
+    <main class="lesson-content">
+        <nav class="lesson-nav">
+            <a href="/lessons/2-4" class="prev-lesson">← Урок 2.4: Grid template areas</a>
+            <a href="/lessons/2-6" class="next-lesson">Урок 2.6: Доступность →</a>
+        </nav>
+
+        <article class="lesson">
+            <header class="lesson-header">
+                <h1>Урок 2.5: Медиа-запросы в Grid Layout</h1>
+            </header>
+
+            <section class="theory">
+                <h2>Теория</h2>
+                <div class="theory-content">
+                    <h3>Адаптивные сетки с медиа-запросами</h3>
+                    <p>Медиа-запросы позволяют изменять структуру сетки в зависимости от размера экрана, ориентации устройства и других параметров.</p>
+
+                    <div class="media-queries-basics">
+                        <div class="query-card">
+                            <h4>Базовый синтаксис медиа-запросов</h4>
+                            <div class="example">
+                                <pre><code>@media (max-width: 768px) {
+    .grid-container {
+        grid-template-columns: 1fr;  /* Одна колонка на мобильных */
+        gap: 10px;
+    }
+}</code></pre>
+                            </div>
+                            <p class="explanation">
+                                В этом примере при ширине экрана меньше 768px сетка перестраивается в одну колонку. 
+                                Это базовый паттерн для создания мобильной версии макета. Обратите внимание, что мы 
+                                также уменьшили отступы между элементами для экономии пространства на малых экранах.
+                            </p>
+                        </div>
+
+                        <div class="query-card">
+                            <h4>Изменение количества колонок</h4>
+                            <div class="example">
+                                <pre><code>/* Десктоп: 4 колонки */
+.grid {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+}
+
+/* Планшет: 2 колонки */
+@media (max-width: 1024px) {
+    .grid {
+        grid-template-columns: repeat(2, 1fr);
+    }
+}
+
+/* Мобильный: 1 колонка */
+@media (max-width: 480px) {
+    .grid {
+        grid-template-columns: 1fr;
+    }
+}</code></pre>
+                            </div>
+                            <p class="explanation">
+                                Здесь мы видим пошаговую адаптацию сетки под разные устройства. На десктопе контент 
+                                распределяется на 4 колонки, на планшетах - на 2, а на мобильных устройствах 
+                                выстраивается в одну колонку. Такой подход обеспечивает оптимальное использование 
+                                пространства на каждом типе устройств.
+                            </p>
+                        </div>
+                    </div>
+
+                    <h3>Адаптивные области Grid</h3>
+                    <div class="adaptive-areas">
+                        <div class="area-card">
+                            <h4>Изменение grid-template-areas</h4>
+                            <div class="example">
+                                <pre><code>.layout {
+    display: grid;
+    grid-template-areas:
+        "header header header"
+        "sidebar content content"
+        "footer footer footer";
+}
+
+@media (max-width: 768px) {
+    .layout {
+        grid-template-areas:
+            "header"
+            "content"
+            "sidebar"
+            "footer";
+        grid-template-columns: 1fr;
+    }
+}</code></pre>
+                            </div>
+                            <p class="explanation">
+                                В этом примере мы меняем не только расположение областей, но и их порядок. 
+                                На мобильных устройствах сайдбар перемещается под основной контент, так как 
+                                на узких экранах боковая панель обычно менее важна, чем основное содержимое. 
+                                Обратите внимание, что при изменении grid-template-areas необходимо также 
+                                обновить grid-template-columns.
+                            </p>
+                        </div>
+
+                        <div class="area-card">
+                            <h4>Адаптивные размеры треков</h4>
+                            <div class="example">
+                                <pre><code>.grid {
+    display: grid;
+    grid-template-columns: minmax(200px, 300px) 1fr;
+    gap: 20px;
+}
+
+@media (max-width: 768px) {
+    .grid {
+        grid-template-columns: minmax(100%, 1fr);
+        gap: 10px;
+    }
+}</code></pre>
+                            </div>
+                            <p class="explanation">
+                                Функция minmax() особенно полезна в адаптивном дизайне. На больших экранах 
+                                боковая панель имеет фиксированный диапазон ширины, а на мобильных занимает 
+                                всю доступную ширину. Уменьшение gap на мобильных устройствах - частая практика 
+                                для экономии пространства.
+                            </p>
+                        </div>
+                    </div>
+
+                    <h3>Продвинутые техники</h3>
+                    <div class="advanced-techniques">
+                        <div class="technique-card">
+                            <h4>Auto-fit и auto-fill</h4>
+                            <div class="example">
+                                <pre><code>.responsive-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+    gap: 20px;
+}</code></pre>
+                            </div>
+                            <p class="explanation">
+                                Это одна из самых мощных техник для создания адаптивных сеток. Комбинация 
+                                auto-fit и minmax автоматически определяет оптимальное количество колонок 
+                                в зависимости от доступного пространства. При этом не требуются дополнительные 
+                                медиа-запросы, сетка адаптируется автоматически.
+                            </p>
+                        </div>
+
+                        <div class="technique-card">
+                            <h4>Условное отображение элементов</h4>
+                            <div class="example">
+                                <pre><code>@media (max-width: 768px) {
+    .grid-item {
+        grid-column: 1 / -1;  /* Растягиваем на всю ширину */
+    }
+    
+    .optional-content {
+        display: none;  /* Скрываем необязательный контент */
+    }
+}</code></pre>
+                            </div>
+                            <p class="explanation">
+                                Иногда на мобильных устройствах требуется не только перестроить сетку, 
+                                но и скрыть некоторые элементы или изменить их размер. Свойство grid-column: 1 / -1 
+                                часто используется для растягивания элементов на всю ширину на мобильных устройствах.
+                            </p>
+                        </div>
+                    </div>
+
+                    <div class="info-block">
+                        <h4>Лучшие практики</h4>
+                        <ul class="styled-list">
+                            <li>Начинайте с мобильной версии (Mobile First)</li>
+                            <li>Используйте логические точки перелома (breakpoints)</li>
+                            <li>Тестируйте на реальных устройствах</li>
+                            <li>Учитывайте не только ширину, но и высоту экрана</li>
+                            <li>Помните о производительности при сложных перестроениях сетки</li>
+                        </ul>
+                    </div>
+                </div>
+            </section>
+
+            <section class="practice">
+                <h2>Практика</h2>
+                <div class="task">
+                    <h3>Задание 1: Адаптивная навигация</h3>
+                    <p>Создайте навигационное меню, которое преобразуется в "бургер-меню" на мобильных устройствах.</p>
+                    
+                    <div class="code-editor">
+                        <div class="editor-tabs">
+                            <button class="tab active">HTML</button>
+                            <button class="tab">CSS</button>
+                        </div>
+                        <textarea class="code-input html-input">
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Адаптивная навигация</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+</head>
+<body>
+    <nav class="main-nav">
+        <div class="logo">Лого</div>
+        <button class="menu-toggle">☰</button>
+        <ul class="nav-links">
+            <li><a href="#">Главная</a></li>
+            <li><a href="#">О нас</a></li>
+            <li><a href="#">Услуги</a></li>
+            <li><a href="#">Контакты</a></li>
+        </ul>
+    </nav>
+</body>
+</html></textarea>
+                        <textarea class="code-input css-input" style="display: none;">
+/* Добавьте стили для адаптивной навигации */
+.main-nav {
+    /* Базовые стили */
+}
+
+.menu-toggle {
+    display: none;
+}
+
+/* Добавьте медиа-запросы */
+@media (max-width: 768px) {
+    /* Стили для мобильной версии */
+}</textarea>
+                    </div>
+
+                    <button class="run-button">Запустить</button>
+
+                    <div class="result-preview">
+                        <h3>Результат</h3>
+                        <div class="preview-frame"></div>
+                    </div>
+                </div>
+
+                <div class="task">
+                    <h3>Задание 2: Адаптивная сетка карточек</h3>
+                    <p>Создайте сетку карточек, которая адаптируется под разные размеры экрана.</p>
+                    
+                    <div class="code-editor">
+                        <div class="editor-tabs">
+                            <button class="tab active">HTML</button>
+                            <button class="tab">CSS</button>
+                        </div>
+                        <textarea class="code-input html-input">
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Адаптивная сетка</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+</head>
+<body>
+    <div class="cards-grid">
+        <div class="card">Карточка 1</div>
+        <div class="card">Карточка 2</div>
+        <div class="card">Карточка 3</div>
+        <div class="card">Карточка 4</div>
+        <div class="card">Карточка 5</div>
+        <div class="card">Карточка 6</div>
+    </div>
+</body>
+</html></textarea>
+                        <textarea class="code-input css-input" style="display: none;">
+.cards-grid {
+    display: grid;
+    gap: 20px;
+    padding: 20px;
+}
+
+.card {
+    background: #f0f0f0;
+    padding: 20px;
+    border-radius: 8px;
+}
+
+/* Добавьте медиа-запросы для разных размеров экрана */</textarea>
+                    </div>
+
+                    <button class="run-button">Запустить</button>
+
+                    <div class="result-preview">
+                        <h3>Результат</h3>
+                        <div class="preview-frame"></div>
+                    </div>
+                </div>
+            </section>
+        </article>
+    </main>
+
+    <footer class="main-footer">
+        <p>&copy; 2024 CSS Курс. Все права защищены.</p>
+    </footer>
+
+    <script src="/scripts/lesson.js"></script>
+</body>
+</html> 

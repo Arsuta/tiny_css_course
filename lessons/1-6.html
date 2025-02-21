@@ -1,0 +1,239 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Урок 1.6: Специфичность в CSS | CSS Курс</title>
+    <link rel="stylesheet" href="/styles/main.css">
+    <link rel="stylesheet" href="/styles/lesson.css">
+</head>
+<body>
+    <header class="main-header">
+        <nav class="main-nav">
+            <div class="logo">CSS Курс</div>
+            <ul class="nav-links">
+                <li><a href="/">На главную</a></li>
+                <li><a href="#chapters">Главы</a></li>
+            </ul>
+        </nav>
+    </header>
+
+    <main class="lesson-content">
+        <nav class="lesson-nav">
+            <a href="/lessons/1-5" class="prev-lesson">← Урок 1.5: Каскад CSS</a>
+            <a href="/lessons/1-7" class="next-lesson">Урок 1.7: Способы написания CSS →</a>
+        </nav>
+
+        <article class="lesson">
+            <header class="lesson-header">
+                <h1>Урок 1.6: Специфичность в CSS</h1>
+            </header>
+
+            <section class="theory">
+                <h2>Теория</h2>
+                <div class="theory-content">
+                    <h3>Что такое специфичность в CSS?</h3>
+                    <p>Специфичность - это механизм, который браузер использует для определения, какие CSS-свойства наиболее релевантны для элемента и должны быть применены. Это один из ключевых аспектов каскадности CSS.</p>
+
+                    <div class="specificity-calculator">
+                        <h4>Как рассчитывается специфичность</h4>
+                        <p>Представьте специфичность как четырёхзначное число (a,b,c,d), где:</p>
+                        <div class="calculator-grid">
+                            <div class="calc-item">
+                                <span class="weight">a</span>
+                                <h5>Стили inline</h5>
+                                <div class="example">
+                                    <pre><code>&lt;div style="color: red;">
+    Текст
+&lt;/div></code></pre>
+                                </div>
+                                <p>1000 очков</p>
+                            </div>
+                            <div class="calc-item">
+                                <span class="weight">b</span>
+                                <h5>ID селекторы</h5>
+                                <div class="example">
+                                    <pre><code>#header {
+    color: blue;
+}</code></pre>
+                                </div>
+                                <p>100 очков за каждый ID</p>
+                            </div>
+                            <div class="calc-item">
+                                <span class="weight">c</span>
+                                <h5>Классы, атрибуты, псевдоклассы</h5>
+                                <div class="example">
+                                    <pre><code>.button,
+[type="submit"],
+:hover {
+    color: green;
+}</code></pre>
+                                </div>
+                                <p>10 очков за каждый</p>
+                            </div>
+                            <div class="calc-item">
+                                <span class="weight">d</span>
+                                <h5>Элементы и псевдоэлементы</h5>
+                                <div class="example">
+                                    <pre><code>div, p, ::before {
+    color: black;
+}</code></pre>
+                                </div>
+                                <p>1 очко за каждый</p>
+                            </div>
+                        </div>
+                    </div>
+
+                    <h3>Примеры расчета специфичности</h3>
+                    <div class="examples-grid">
+                        <div class="example-card">
+                            <h4>Простые селекторы</h4>
+                            <div class="example">
+                                <pre><code>/* Специфичность: 0,0,0,1 = 1 */
+p { color: black; }
+
+/* Специфичность: 0,0,1,0 = 10 */
+.text { color: blue; }
+
+/* Специфичность: 0,1,0,0 = 100 */
+#unique { color: red; }</code></pre>
+                            </div>
+                            <p>В этом примере стиль с ID (#unique) перекроет все остальные стили.</p>
+                        </div>
+
+                        <div class="example-card">
+                            <h4>Составные селекторы</h4>
+                            <div class="example">
+                                <pre><code>/* Специфичность: 0,0,2,2 = 22 */
+.header .nav li.active { color: blue; }
+
+/* Специфичность: 0,1,1,1 = 111 */
+#nav li.active { color: red; }</code></pre>
+                            </div>
+                            <p>Несмотря на то, что первый селектор длиннее, второй имеет больший вес из-за ID.</p>
+                        </div>
+                    </div>
+
+                    <h3>Распространенные ошибки</h3>
+                    <div class="common-mistakes">
+                        <div class="mistake-card">
+                            <h4>❌ Злоупотребление !important</h4>
+                            <div class="example">
+                                <pre><code>/* Плохо */
+.button { color: red !important; }
+
+/* Лучше */
+.specific-button { color: red; }</code></pre>
+                            </div>
+                            <p>!important нарушает естественный каскад и затрудняет поддержку.</p>
+                        </div>
+
+                        <div class="mistake-card">
+                            <h4>❌ Излишне специфичные селекторы</h4>
+                            <div class="example">
+                                <pre><code>/* Плохо */
+.header .nav ul li a.link { color: blue; }
+
+/* Лучше */
+.nav-link { color: blue; }</code></pre>
+                            </div>
+                            <p>Длинные цепочки селекторов сложно поддерживать и переопределять.</p>
+                        </div>
+                    </div>
+
+                    <h3>Лучшие практики</h3>
+                    <div class="best-practices">
+                        <div class="practice-card">
+                            <h4>Используйте BEM методологию</h4>
+                            <div class="example">
+                                <pre><code>/* Блок */
+.button { }
+
+/* Элемент */
+.button__icon { }
+
+/* Модификатор */
+.button--primary { }</code></pre>
+                            </div>
+                            <p>BEM помогает избежать проблем со специфичностью через плоскую структуру классов.</p>
+                        </div>
+
+                        <div class="practice-card">
+                            <h4>Минимальная необходимая специфичность</h4>
+                            <div class="example">
+                                <pre><code>/* Избегайте */
+div.container .sidebar > ul > li { }
+
+/* Предпочтительно */
+.sidebar-item { }</code></pre>
+                            </div>
+                            <p>Используйте наименьшую возможную специфичность для достижения цели.</p>
+                        </div>
+                    </div>
+
+                    <div class="info-block">
+                        <h4>Важные моменты</h4>
+                        <ul class="styled-list">
+                            <li>Специфичность - это не "вес" селектора, а система приоритетов</li>
+                            <li>!important следует использовать только в крайних случаях</li>
+                            <li>Чем ниже специфичность, тем легче поддерживать код</li>
+                            <li>Используйте инструменты для расчета специфичности при сомнениях</li>
+                        </ul>
+                    </div>
+                </div>
+            </section>
+
+            <section class="practice">
+                <h2>Практика</h2>
+                <div class="task">
+                    <h3>Задание</h3>
+                    <p>Создайте HTML-структуру и примените различные селекторы с разной специфичностью. Попробуйте предсказать, какие стили будут применены.</p>
+                    
+                    <div class="code-editor">
+                        <div class="editor-tabs">
+                            <button class="tab active">HTML</button>
+                            <button class="tab">CSS</button>
+                        </div>
+                        <textarea class="code-input html-input">
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Специфичность CSS</title>
+</head>
+<body>
+    <div id="container" class="wrapper">
+        <p class="text">Обычный параграф</p>
+        <p id="special" class="text highlight">Специальный параграф</p>
+        <div class="text">
+            <p>Вложенный параграф</p>
+        </div>
+    </div>
+</body>
+</html></textarea>
+                        <textarea class="code-input css-input" style="display: none;">
+/* Добавьте селекторы разной специфичности */
+p { color: black; }
+.text { color: blue; }
+#special { color: red; }
+.wrapper .text p { color: green; }
+/* Добавьте свои селекторы */</textarea>
+                    </div>
+
+                    <button class="run-button">Запустить</button>
+
+                    <div class="result-preview">
+                        <h3>Результат</h3>
+                        <div class="preview-frame"></div>
+                    </div>
+                </div>
+            </section>
+        </article>
+    </main>
+
+    <footer class="main-footer">
+        <p>&copy; 2024 CSS Курс. Все права защищены.</p>
+    </footer>
+
+    <script src="/scripts/lesson.js"></script>
+</body>
+</html> 

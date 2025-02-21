@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Урок {{номер}} - {{название}} | CSS Курс</title>
+    <link rel="stylesheet" href="/styles/main.css">
+    <link rel="stylesheet" href="/styles/lesson.css">
+</head>
+<body>
+    <header class="main-header">
+        <!-- Навигация такая же, как на главной -->
+    </header>
+
+    <main class="lesson-content">
+        <nav class="lesson-nav">
+            <a href="#" class="prev-lesson">← Предыдущий урок</a>
+            <a href="#" class="next-lesson">Следующий урок →</a>
+        </nav>
+
+        <article class="lesson">
+            <header class="lesson-header">
+                <h1>{{название_урока}}</h1>
+            </header>
+
+            <section class="theory">
+                <h2>Теория</h2>
+                <div class="theory-content">
+                    <!-- Контент урока -->
+                </div>
+            </section>
+
+            <section class="practice">
+                <h2>Практика</h2>
+                <div class="task">
+                    <h3>Задание</h3>
+                    <p>{{описание_задания}}</p>
+                    
+                    <div class="code-editor">
+                        <div class="editor-tabs">
+                            <button class="tab active">HTML</button>
+                            <button class="tab">CSS</button>
+                        </div>
+                        <textarea class="code-input"></textarea>
+                    </div>
+
+                    <button class="run-button">Запустить</button>
+
+                    <div class="result-preview">
+                        <h3>Результат</h3>
+                        <div class="preview-frame"></div>
+                    </div>
+                </div>
+            </section>
+        </article>
+    </main>
+
+    <footer class="main-footer">
+        <!-- Футер такой же, как на главной -->
+    </footer>
+</body>
+</html> 

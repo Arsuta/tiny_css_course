@@ -1,0 +1,449 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Урок 3.6: Стилизация HTML progress bar | CSS Курс</title>
+    <link rel="stylesheet" href="../styles/main.css">
+    <link rel="stylesheet" href="../styles/lesson.css">
+    <style>
+        /* Стили для демонстраций */
+        .demo-box {
+            width: 50px;
+            height: 50px;
+            background: #466A85;
+            border-radius: 4px;
+        }
+
+        .demo-area {
+            height: 200px;
+            background: #f8f9fa;
+            border-radius: 8px;
+            padding: 20px;
+            margin: 20px 0;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            position: relative;
+        }
+
+        /* Демонстрации progress bar */
+        .progress-demo {
+            width: 100%;
+            max-width: 600px;
+            margin: 0 auto;
+            position: relative;
+        }
+
+        /* Улучшенные стили для демонстраций */
+        .demo-section {
+            background: white;
+            border-radius: 12px;
+            padding: 20px;
+            margin: 20px 0;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+        }
+
+        .demo-section h3 {
+            color: #466A85;
+            margin-bottom: 15px;
+        }
+
+        /* Интерактивный базовый прогресс-бар */
+        .basic-progress {
+            width: 100%;
+            height: 20px;
+            margin: 1rem 0;
+            cursor: pointer;
+            transition: transform 0.2s;
+        }
+
+        .basic-progress:hover {
+            transform: scale(1.02);
+        }
+
+        /* Стилизованный прогресс-бар */
+        .styled-progress {
+            width: 100%;
+            height: 20px;
+            margin: 1rem 0;
+            -webkit-appearance: none;
+            appearance: none;
+            border: none;
+            border-radius: 10px;
+            background: #f0f0f0;
+            color: #466A85;
+            position: relative;
+            overflow: visible;
+        }
+
+        .styled-progress::-webkit-progress-bar {
+            background: #f0f0f0;
+            border-radius: 10px;
+        }
+
+        .styled-progress::-webkit-progress-value {
+            background: #466A85;
+            border-radius: 10px;
+        }
+
+        .styled-progress::-moz-progress-bar {
+            background: #466A85;
+            border-radius: 10px;
+            transition: width 0.3s ease;
+        }
+
+        /* Добавляем подсказку с процентами */
+        .progress-tooltip {
+            position: absolute;
+            top: -25px;
+            background: #466A85;
+            color: white;
+            padding: 2px 6px;
+            border-radius: 4px;
+            font-size: 12px;
+            opacity: 0;
+            transition: opacity 0.3s;
+            pointer-events: none;
+        }
+
+        .progress-demo:hover .progress-tooltip {
+            opacity: 1;
+        }
+
+        /* Анимированный прогресс-бар */
+        .animated-progress {
+            width: 100%;
+            height: 20px;
+            margin: 1rem 0;
+            -webkit-appearance: none;
+            appearance: none;
+            border: none;
+            border-radius: 10px;
+            background: #f0f0f0;
+            overflow: hidden;
+            box-shadow: 0 2px 4px rgba(70,106,133,0.2);
+        }
+
+        .animated-progress::-webkit-progress-bar {
+            background: #f0f0f0;
+            border-radius: 10px;
+        }
+
+        .animated-progress::-webkit-progress-value {
+            background: linear-gradient(45deg, #466A85, #7be6e8, #466A85);
+            border-radius: 10px;
+            background-size: 200% 100%;
+            animation: move 2s linear infinite;
+        }
+
+        .animated-progress::-moz-progress-bar {
+            background: linear-gradient(45deg, #466A85, #7be6e8);
+            border-radius: 10px;
+            background-size: 20px 20px;
+            animation: move 1s linear infinite;
+        }
+
+        @keyframes move {
+            0% { background-position: 0 0; }
+            100% { background-position: 200% 0; }
+        }
+
+        /* Улучшенные контролы */
+        .progress-controls {
+            margin-top: 1rem;
+            display: flex;
+            gap: 1rem;
+            justify-content: center;
+            flex-wrap: wrap;
+        }
+
+        .progress-controls button {
+            padding: 0.5rem 1rem;
+            border: none;
+            border-radius: 4px;
+            background: #466A85;
+            color: white;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            min-width: 80px;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .progress-controls button:hover {
+            background: #7be6e8;
+            transform: translateY(-2px);
+            box-shadow: 0 4px 8px rgba(70,106,133,0.3);
+        }
+
+        .progress-controls button:active {
+            transform: translateY(0);
+        }
+
+        /* Добавляем эффект пульсации при клике */
+        .progress-controls button::after {
+            content: '';
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            width: 0;
+            height: 0;
+            background: rgba(255,255,255,0.3);
+            border-radius: 50%;
+            transform: translate(-50%, -50%);
+            transition: width 0.3s, height 0.3s;
+        }
+
+        .progress-controls button:active::after {
+            width: 100px;
+            height: 100px;
+            opacity: 0;
+        }
+
+        /* Стили для блоков с кодом */
+        .code-block {
+            background: #1E1E1E;
+            color: #D4D4D4;
+            padding: 15px;
+            border-radius: 8px;
+            margin: 10px 0;
+            font-family: monospace;
+        }
+
+        .code-block pre {
+            margin: 0;
+        }
+
+        .code-block code {
+            color: #D4D4D4;
+            font-family: monospace;
+        }
+    </style>
+</head>
+<body>
+    <header class="main-header">
+        <nav class="main-nav">
+            <div class="logo">CSS Курс</div>
+            <ul class="nav-links">
+                <li><a href="/">На главную</a></li>
+                <li><a href="#chapters">Главы</a></li>
+            </ul>
+        </nav>
+    </header>
+
+    <main class="lesson-content">
+        <nav class="lesson-nav">
+            <a href="3-5.html" class="prev-lesson">← Урок 3.5: Анимация элементов</a>
+            <a href="3-7.html" class="next-lesson">Урок 3.7: Следующий урок →</a>
+        </nav>
+
+        <article class="lesson">
+            <header class="lesson-header">
+                <h1>Урок 3.6: Стилизация HTML progress bar</h1>
+            </header>
+
+            <section class="theory">
+                <h2>Теория</h2>
+
+                <!-- Первая демонстрация -->
+                <div class="demo-section">
+                    <h3>Базовый progress bar</h3>
+                    <p>HTML элемент &lt;progress> позволяет отображать прогресс выполнения задачи. По умолчанию его внешний вид зависит от браузера.</p>
+                    
+                    <div class="demo-area">
+                        <div class="progress-demo">
+                            <progress class="basic-progress" value="70" max="100"></progress>
+                        </div>
+                    </div>
+
+                    <div class="code-block">
+                        <pre><code>&lt;progress value="70" max="100">&lt;/progress></code></pre>
+                    </div>
+                </div>
+
+                <!-- Вторая демонстрация -->
+                <div class="demo-section">
+                    <h3>Стилизация для WebKit браузеров</h3>
+                    <p>Для WebKit браузеров (Chrome, Safari) мы можем использовать специальные псевдоэлементы.</p>
+                    
+                    <div class="demo-area">
+                        <div class="progress-demo">
+                            <progress class="styled-progress" value="70" max="100"></progress>
+                        </div>
+                    </div>
+
+                    <div class="code-block">
+                        <pre><code>.styled-progress {
+    -webkit-appearance: none;
+    width: 100%;
+    height: 20px;
+    border: none;
+    border-radius: 10px;
+}
+
+.styled-progress::-webkit-progress-bar {
+    background: #f0f0f0;
+    border-radius: 10px;
+}
+
+.styled-progress::-webkit-progress-value {
+    background: #466A85;
+    border-radius: 10px;
+}</code></pre>
+                    </div>
+                </div>
+
+                <!-- Третья демонстрация -->
+                <div class="demo-section">
+                    <h3>Стилизация для Mozilla Firefox</h3>
+                    <p>Firefox использует свой собственный псевдоэлемент для стилизации progress bar.</p>
+                    
+                    <div class="demo-area">
+                        <div class="progress-demo">
+                            <progress class="styled-progress" value="70" max="100"></progress>
+                        </div>
+                    </div>
+
+                    <div class="code-block">
+                        <pre><code>.styled-progress::-moz-progress-bar {
+    background: #466A85;
+    border-radius: 10px;
+}</code></pre>
+                    </div>
+                </div>
+
+                <!-- Четвертая демонстрация -->
+                <div class="demo-section">
+                    <h3>Анимированный progress bar</h3>
+                    <p>Добавим анимацию и интерактивность в наш progress bar.</p>
+                    
+                    <div class="demo-area">
+                        <div class="progress-demo">
+                            <progress class="animated-progress" value="70" max="100"></progress>
+                            <div class="progress-controls">
+                                <button onclick="updateProgress(-10)">-10%</button>
+                                <button onclick="updateProgress(10)">+10%</button>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="code-block">
+                        <pre><code>.animated-progress::-webkit-progress-value {
+    background: linear-gradient(45deg, #466A85, #7be6e8);
+    background-size: 20px 20px;
+    animation: move 1s linear infinite;
+}
+
+@keyframes move {
+    0% { background-position: 0 0; }
+    100% { background-position: 20px 0; }
+}</code></pre>
+                    </div>
+                </div>
+            </section>
+
+            <section class="practice">
+                <h2>Практика</h2>
+                <div class="task">
+                    <h3>Задание: Создание кастомного progress bar</h3>
+                    <p>Создайте стилизованный progress bar с градиентом и анимацией, который будет работать во всех современных браузерах.</p>
+                    
+                    <div class="code-editor">
+                        <div class="editor-tabs">
+                            <button class="tab active">HTML</button>
+                            <button class="tab">CSS</button>
+                        </div>
+                        <textarea class="code-input html-input">
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Кастомный Progress Bar</title>
+</head>
+<body>
+    <progress class="custom-progress" value="70" max="100"></progress>
+</body>
+</html></textarea>
+                        <textarea class="code-input css-input" style="display: none;">
+/* Стилизуйте progress bar:
+ * - Измените внешний вид для webkit и mozilla
+ * - Добавьте градиент
+ * - Добавьте анимацию
+ */
+.custom-progress {
+    /* Добавьте базовые стили */
+}
+
+.custom-progress::-webkit-progress-bar {
+    /* Стили для фона */
+}
+
+.custom-progress::-webkit-progress-value {
+    /* Стили для индикатора прогресса */
+}
+
+.custom-progress::-moz-progress-bar {
+    /* Стили для Firefox */
+}</textarea>
+                    </div>
+
+                    <button class="run-button">Запустить</button>
+
+                    <div class="result-preview">
+                        <h3>Результат</h3>
+                        <div class="preview-frame"></div>
+                    </div>
+                </div>
+            </section>
+        </article>
+    </main>
+
+    <footer class="main-footer">
+        <p>&copy; 2024 CSS Курс. Все права защищены.</p>
+    </footer>
+
+    <script src="../scripts/lesson.js"></script>
+    <script>
+        // Обновление прогресс-бара и подсказки
+        function updateProgress(change) {
+            const progress = document.querySelector('.animated-progress');
+            const tooltip = progress.parentElement.querySelector('.progress-tooltip');
+            let newValue = parseInt(progress.value) + change;
+            newValue = Math.max(0, Math.min(100, newValue));
+            progress.value = newValue;
+            tooltip.textContent = `${newValue}%`;
+            
+            // Анимация кнопки
+            const button = event.target;
+            button.style.transform = 'scale(0.95)';
+            setTimeout(() => button.style.transform = '', 200);
+        }
+
+        // Добавляем подсказки ко всем прогресс-барам
+        document.querySelectorAll('.progress-demo').forEach(demo => {
+            const progress = demo.querySelector('progress');
+            const tooltip = document.createElement('div');
+            tooltip.className = 'progress-tooltip';
+            
+            function updateTooltip(e) {
+                const rect = progress.getBoundingClientRect();
+                const value = Math.round((progress.value / progress.max) * 100);
+                tooltip.textContent = `${value}%`;
+                tooltip.style.left = `${e.clientX - rect.left}px`;
+            }
+            
+            progress.addEventListener('mousemove', updateTooltip);
+            demo.appendChild(tooltip);
+        });
+
+        // Добавляем интерактивность к базовому прогресс-бару
+        const basicProgress = document.querySelector('.basic-progress');
+        basicProgress.addEventListener('click', function(e) {
+            const rect = this.getBoundingClientRect();
+            const x = e.clientX - rect.left;
+            const newValue = Math.round((x / rect.width) * 100);
+            this.value = newValue;
+        });
+    </script>
+</body>
+</html> 

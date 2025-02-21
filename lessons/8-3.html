@@ -1,0 +1,741 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Урок 8.3 - Мобильная версия корзины | CSS Курс</title>
+    <link rel="stylesheet" href="../styles/main.css">
+    <link rel="stylesheet" href="../styles/lesson.css">
+    <style>
+        /* Базовые стили */
+        .demo-section {
+            margin-bottom: 40px;
+            background: #fff;
+            padding: 20px;
+            border-radius: 8px;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+        }
+
+        /* Стили для теории */
+        .theory-block {
+            background: #fff;
+            padding: 25px;
+            border-radius: 8px;
+            margin-bottom: 30px;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+        }
+
+        .theory-block h2 {
+            color: #466A85;
+            margin-bottom: 20px;
+            font-size: 1.4em;
+            border-bottom: 2px solid #f0f0f0;
+            padding-bottom: 10px;
+        }
+
+        .theory-block p {
+            line-height: 1.6;
+            color: #333;
+            margin-bottom: 15px;
+        }
+
+        /* Стили для блоков с кодом */
+        .code-block {
+            background: #1E1E1E;
+            color: #D4D4D4;
+            padding: 15px;
+            border-radius: 8px;
+            margin: 20px 0;
+            font-family: monospace;
+        }
+
+        /* Демонстрация мобильной таблицы */
+        .mobile-table-demo {
+            max-width: 400px;
+            margin: 20px auto;
+            padding: 15px;
+            background: #fff;
+            border-radius: 8px;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+            transition: all 0.3s ease;
+        }
+
+        .mobile-table-demo:hover {
+            box-shadow: 0 4px 8px rgba(0,0,0,0.2);
+        }
+
+        .mobile-table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-bottom: 20px;
+        }
+
+        .mobile-table th {
+            background: #466A85;
+            color: white;
+            padding: 12px;
+            text-align: left;
+            font-weight: bold;
+        }
+
+        .mobile-table td {
+            padding: 12px;
+            border-bottom: 1px solid #eee;
+        }
+
+        .mobile-table tr:hover {
+            background: #f7f5e8;
+        }
+
+        @media (max-width: 768px) {
+            .mobile-table {
+                display: block;
+                width: 100%;
+            }
+
+            .mobile-table thead {
+                display: none;
+            }
+
+            .mobile-table tbody {
+                display: block;
+            }
+
+            .mobile-table tr {
+                display: block;
+                margin-bottom: 15px;
+                border: 1px solid #ddd;
+                border-radius: 8px;
+                padding: 10px;
+            }
+
+            .mobile-table td {
+                display: grid;
+                grid-template-columns: 120px 1fr;
+                padding: 8px;
+                border: none;
+            }
+
+            .mobile-table td::before {
+                content: attr(data-label);
+                font-weight: bold;
+                color: #466A85;
+            }
+        }
+
+        /* Демонстрация адаптивных кнопок */
+        .mobile-buttons-demo {
+            max-width: 400px;
+            margin: 20px auto;
+            padding: 20px;
+            background: #fff;
+            border-radius: 8px;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+        }
+
+        .mobile-button {
+            padding: 12px 24px;
+            border: none;
+            border-radius: 4px;
+            font-size: 16px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            width: 100%;
+            margin-bottom: 10px;
+        }
+
+        .mobile-button.primary-button {
+            background: #466A85;
+            color: white;
+        }
+
+        .mobile-button.secondary-button {
+            background: #f7f5e8;
+            color: #466A85;
+            border: 1px solid #466A85;
+        }
+
+        .mobile-button:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 2px 4px rgba(0,0,0,0.2);
+        }
+
+        .mobile-button:active {
+            transform: translateY(0);
+        }
+
+        /* Демонстрация мобильных форм */
+        .mobile-form-demo {
+            max-width: 400px;
+            margin: 20px auto;
+            padding: 15px;
+            background: #fff;
+            border-radius: 8px;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+        }
+
+        .mobile-form {
+            display: flex;
+            flex-direction: column;
+            gap: 20px;
+        }
+
+        .mobile-form-group {
+            margin-bottom: 15px;
+        }
+
+        .mobile-form-label {
+            display: block;
+            margin-bottom: 8px;
+            color: #466A85;
+            font-weight: bold;
+        }
+
+        .mobile-form-input {
+            width: 100%;
+            padding: 12px;
+            border: 1px solid #ddd;
+            border-radius: 4px;
+            font-size: 16px;
+            transition: all 0.3s ease;
+        }
+
+        .mobile-form-input:focus {
+            border-color: #466A85;
+            outline: none;
+            box-shadow: 0 0 0 2px rgba(70, 106, 133, 0.1);
+        }
+
+        /* Демонстрация отступов */
+        .spacing-demo {
+            background: #fff;
+            padding: 20px;
+            border-radius: 8px;
+            margin: 20px 0;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+        }
+
+        .spacing-example {
+            border: 1px solid #ddd;
+            padding: 15px;
+            margin: 15px;
+            position: relative;
+            background: #f7f5e8;
+            border-radius: 4px;
+            transition: all 0.3s ease;
+        }
+
+        .spacing-example:hover {
+            transform: scale(1.02);
+            box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+        }
+
+        /* Добавляем интерактивную демонстрацию viewport */
+        .viewport-simulator {
+            max-width: 400px;
+            margin: 20px auto;
+            padding: 20px;
+            background: #fff;
+            border-radius: 8px;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+        }
+
+        .viewport-controls {
+            display: flex;
+            gap: 10px;
+            margin-bottom: 15px;
+        }
+
+        .viewport-button {
+            padding: 8px 16px;
+            background: #466A85;
+            color: white;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+
+        .viewport-button:hover {
+            background: #557a95;
+        }
+
+        .viewport-button.active {
+            background: #7be6e8;
+            color: #333;
+        }
+
+        /* Стили для демонстрации отступов */
+        .spacing-examples {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 20px;
+            margin: 20px 0;
+            position: relative;
+        }
+
+        .spacing-item {
+            background: #fff;
+            padding: 20px;
+            border-radius: 8px;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+            transition: all 0.3s ease;
+            overflow: hidden;
+        }
+
+        .spacing-item:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 4px 8px rgba(0,0,0,0.2);
+        }
+
+        .margin-demo, .padding-demo, .combined-demo {
+            background: #f7f5e8;
+            border-radius: 4px;
+            padding: 20px;
+            position: relative;
+            overflow: visible;
+        }
+
+        .margin-box {
+            background: #fff;
+            padding: 15px;
+            margin: 20px;
+            border: 1px solid #ddd;
+            border-radius: 4px;
+            position: relative;
+            transition: all 0.3s ease;
+        }
+
+        /* Визуализация отступов */
+        .spacing-visualizer {
+            position: absolute;
+            pointer-events: none;
+            z-index: 1;
+            transition: all 0.3s ease;
+        }
+
+        .margin-visualizer {
+            background: rgba(70, 106, 133, 0.1);
+            border: 1px dashed #466A85;
+            animation: pulse 2s infinite;
+        }
+
+        .padding-visualizer {
+            background: rgba(123, 230, 232, 0.1);
+            border: 1px dashed #7be6e8;
+            animation: pulse 2s infinite;
+        }
+
+        @keyframes pulse {
+            0% { opacity: 0.3; }
+            50% { opacity: 0.8; }
+            100% { opacity: 0.3; }
+        }
+
+        /* Улучшенные стили для демонстрации */
+        .spacing-item {
+            position: relative;
+            overflow: visible;
+        }
+
+        .spacing-label {
+            position: absolute;
+            background: #466A85;
+            color: white;
+            padding: 2px 8px;
+            border-radius: 4px;
+            font-size: 12px;
+            z-index: 2;
+        }
+
+        .spacing-value-display {
+            position: absolute;
+            background: #f7f5e8;
+            padding: 4px 8px;
+            border-radius: 4px;
+            font-size: 12px;
+            color: #466A85;
+            border: 1px solid #466A85;
+            z-index: 2;
+        }
+
+        /* Улучшенные контролы */
+        .spacing-controls {
+            background: #f7f5e8;
+            padding: 15px;
+            border-radius: 8px;
+            margin-bottom: 20px;
+        }
+
+        .spacing-slider {
+            -webkit-appearance: none;
+            height: 4px;
+            background: #ddd;
+            border-radius: 2px;
+            outline: none;
+        }
+
+        .spacing-slider::-webkit-slider-thumb {
+            -webkit-appearance: none;
+            width: 16px;
+            height: 16px;
+            background: #466A85;
+            border-radius: 50%;
+            cursor: pointer;
+            transition: all 0.2s ease;
+        }
+
+        .spacing-slider::-webkit-slider-thumb:hover {
+            transform: scale(1.2);
+        }
+    </style>
+</head>
+<body>
+    <header class="main-header">
+        <nav class="main-nav">
+            <a href="../index.html" class="logo">CSS Курс</a>
+            <ul class="nav-links">
+                <li><a href="../index.html">На главную</a></li>
+                <li><a href="../chapters.html">Главы</a></li>
+            </ul>
+        </nav>
+    </header>
+
+    <main class="lesson-content">
+        <nav class="lesson-nav">
+            <a href="8-2.html" class="prev-lesson">← Урок 8.2: Оформление</a>
+            <a href="8-4.html" class="next-lesson">Урок 8.4: Средние экраны →</a>
+        </nav>
+
+        <div class="chapter-navigation">
+            <h3>Навигация по главе 8:</h3>
+            <ul>
+                <li><a href="8-1.html">8.1 Начало работы</a></li>
+                <li><a href="8-2.html">8.2 Оформление</a></li>
+                <li><a href="8-3.html" class="current">8.3 Мобильная версия</a></li>
+                <li><a href="8-4.html">8.4 Средние экраны</a></li>
+                <li><a href="8-5.html">8.5 Широкие экраны</a></li>
+            </ul>
+        </div>
+
+        <article class="lesson">
+            <h1>Урок 8.3 - Мобильная версия корзины</h1>
+
+            <div class="theory-block">
+                <h2>1. Адаптация таблицы для мобильных устройств</h2>
+                <p>На мобильных устройствах таблицы требуют особого подхода к отображению. Рассмотрим основные техники адаптации:</p>
+
+                <div class="code-block">
+                    <pre><code><span class="comment">/* 1. Скрытие заголовков таблицы */</span>
+<span class="selector">.mobile-table thead</span> {
+    <span class="property">display</span>: <span class="value">none</span>;    <span class="comment">/* Скрываем заголовки на мобильных */</span>
+}
+
+<span class="comment">/* 2. Преобразование строк в блоки */</span>
+<span class="selector">.mobile-table tr</span> {
+    <span class="property">display</span>: <span class="value">block</span>;    <span class="comment">/* Каждая строка становится блоком */</span>
+    <span class="property">margin-bottom</span>: <span class="value">15px</span>;
+    <span class="property">border</span>: <span class="value">1px solid #ddd</span>;
+    <span class="property">border-radius</span>: <span class="value">8px</span>;
+}
+
+<span class="comment">/* 3. Преобразование ячеек в grid */</span>
+<span class="selector">.mobile-table td</span> {
+    <span class="property">display</span>: <span class="value">grid</span>;
+    <span class="property">grid-template-columns</span>: <span class="value">120px 1fr</span>;  <span class="comment">/* Метка + значение */</span>
+    <span class="property">padding</span>: <span class="value">8px</span>;
+}</code></pre>
+                </div>
+
+                <p>Важные моменты при адаптации таблиц:</p>
+                <ul>
+                    <li>Используйте атрибут data-label для меток в мобильной версии</li>
+                    <li>Обеспечьте достаточные отступы для удобства нажатия</li>
+                    <li>Добавьте визуальное разделение между элементами</li>
+                </ul>
+
+                <div class="mobile-table-demo">
+                    <table class="mobile-table">
+                        <thead>
+                            <tr>
+                                <th>Товар</th>
+                                <th>Цена</th>
+                                <th>Количество</th>
+                                <th>Всего</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td data-label="Товар">Товар 1</td>
+                                <td data-label="Цена">1000₽</td>
+                                <td data-label="Количество">2</td>
+                                <td data-label="Всего">2000₽</td>
+                            </tr>
+                            <tr>
+                                <td data-label="Товар">Товар 2</td>
+                                <td data-label="Цена">500₽</td>
+                                <td data-label="Количество">1</td>
+                                <td data-label="Всего">500₽</td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+
+            <div class="theory-block">
+                <h2>2. Адаптивные кнопки действий</h2>
+                <p>На мобильных устройствах кнопки должны соответствовать рекомендациям по размерам касания:</p>
+
+                <div class="code-block">
+                    <pre><code><span class="comment">/* Базовые стили для мобильных кнопок */</span>
+<span class="selector">.mobile-button</span> {
+    <span class="property">min-height</span>: <span class="value">44px</span>;      <span class="comment">/* Минимальная высота по рекомендациям */</span>
+    <span class="property">padding</span>: <span class="value">12px 24px</span>;    <span class="comment">/* Достаточные отступы */</span>
+    <span class="property">width</span>: <span class="value">100%</span>;           <span class="comment">/* Кнопка на всю ширину */</span>
+    <span class="property">font-size</span>: <span class="value">16px</span>;       <span class="comment">/* Читаемый размер шрифта */</span>
+    <span class="property">margin-bottom</span>: <span class="value">10px</span>;   <span class="comment">/* Отступ между кнопками */</span>
+}
+
+<span class="comment">/* Состояния кнопок */</span>
+<span class="selector">.mobile-button:active</span> {
+    <span class="property">transform</span>: <span class="value">scale(0.98)</span>;  <span class="comment">/* Эффект нажатия */</span>
+}
+
+<span class="comment">/* Улучшение доступности */</span>
+<span class="selector">.mobile-button:focus</span> {
+    <span class="property">outline</span>: <span class="value">2px solid #466A85</span>;
+    <span class="property">outline-offset</span>: <span class="value">2px</span>;
+}</code></pre>
+                </div>
+
+                <div class="mobile-buttons-demo">
+                    <div class="mobile-buttons">
+                        <button class="mobile-button primary-button">Оформить заказ</button>
+                        <button class="mobile-button secondary-button">Продолжить покупки</button>
+                    </div>
+                </div>
+            </div>
+
+            <div class="theory-block">
+                <h2>3. Мобильные формы</h2>
+                <p>Формы на мобильных устройствах должны быть удобны для заполнения и соответствовать следующим принципам:</p>
+
+                <div class="code-block">
+                    <pre><code><span class="comment">/* Оптимизация форм для мобильных */</span>
+<span class="selector">.mobile-form-input</span> {
+    <span class="property">height</span>: <span class="value">44px</span>;          <span class="comment">/* Оптимальная высота для тач-интерфейса */</span>
+    <span class="property">font-size</span>: <span class="value">16px</span>;       <span class="comment">/* Предотвращает автоматическое масштабирование на iOS */</span>
+    <span class="property">padding</span>: <span class="value">12px</span>;         <span class="comment">/* Удобные отступы */</span>
+}
+
+<span class="comment">/* Группировка элементов формы */</span>
+<span class="selector">.mobile-form-group</span> {
+    <span class="property">margin-bottom</span>: <span class="value">20px</span>;   <span class="comment">/* Отступ между группами */</span>
+}
+
+<span class="comment">/* Стилизация меток */</span>
+<span class="selector">.mobile-form-label</span> {
+    <span class="property">font-size</span>: <span class="value">14px</span>;       <span class="comment">/* Компактный размер */</span>
+    <span class="property">margin-bottom</span>: <span class="value">8px</span>;    <span class="comment">/* Отступ до поля ввода */</span>
+}</code></pre>
+                </div>
+
+                <div class="mobile-form-demo">
+                    <form class="mobile-form">
+                        <div class="mobile-form-group">
+                            <label class="mobile-form-label">Имя</label>
+                            <input type="text" class="mobile-form-input" placeholder="Введите имя">
+                        </div>
+                        <div class="mobile-form-group">
+                            <label class="mobile-form-label">Email</label>
+                            <input type="email" class="mobile-form-input" placeholder="email@example.com">
+                        </div>
+                    </form>
+                </div>
+            </div>
+
+            <div class="theory-block">
+                <h2>4. Отступы и поля</h2>
+                <p>Правильное использование отступов (margin) и полей (padding) критично для мобильного интерфейса. Рассмотрим основные принципы:</p>
+
+                <div class="code-block">
+                    <pre><code><span class="comment">/* Базовые правила отступов для мобильных */</span>
+<span class="selector">.mobile-element</span> {
+    <span class="property">padding</span>: <span class="value">16px</span>;         <span class="comment">/* Минимальный отступ для тач-интерфейса */</span>
+    <span class="property">margin-bottom</span>: <span class="value">24px</span>;   <span class="comment">/* Отступ между элементами */</span>
+}
+
+<span class="comment">/* Предотвращение схлопывания отступов */</span>
+<span class="selector">.mobile-container</span> {
+    <span class="property">padding</span>: <span class="value">1px</span>;          <span class="comment">/* Создаёт новый контекст форматирования */</span>
+    <span class="property">margin</span>: <span class="value">-1px</span>;          <span class="comment">/* Компенсация padding */</span>
+}
+
+<span class="comment">/* Безопасная зона для устройств с вырезами */</span>
+<span class="selector">.safe-area</span> {
+    <span class="property">padding</span>: <span class="value">env(safe-area-inset-top) env(safe-area-inset-right) 
+             env(safe-area-inset-bottom) env(safe-area-inset-left)</span>;
+}</code></pre>
+                </div>
+
+                <h3>Демонстрация отступов:</h3>
+                <div class="spacing-examples">
+                    <div class="spacing-item">
+                        <h4>1. Внешние отступы (margin)</h4>
+                        <div class="spacing-controls">
+                            <label>
+                                <span class="control-label">Внешний отступ (margin):</span>
+                                <input type="range" 
+                                       class="spacing-slider" 
+                                       min="0" 
+                                       max="40" 
+                                       value="20" 
+                                       data-type="margin">
+                                <span class="spacing-value" id="marginValue">20px</span>
+                            </label>
+                        </div>
+                        <div class="margin-demo">
+                            <span class="spacing-label">margin</span>
+                            <div class="margin-box">
+                                <p>Элемент с margin</p>
+                                <div class="spacing-visualizer margin-visualizer"></div>
+                                <span class="spacing-value-display" id="marginDisplay">20px</span>
+                            </div>
+                            <div class="margin-box">
+                                <p>Второй элемент</p>
+                                <div class="spacing-visualizer margin-visualizer"></div>
+                            </div>
+                            <div class="spacing-arrow" style="top: 50%; right: -30px;"></div>
+                        </div>
+                    </div>
+
+                    <div class="spacing-item">
+                        <h4>2. Внутренние отступы (padding)</h4>
+                        <div class="spacing-controls">
+                            <label>
+                                <span class="control-label">Внутренний отступ (padding):</span>
+                                <input type="range" 
+                                       class="spacing-slider" 
+                                       min="0" 
+                                       max="40" 
+                                       value="15" 
+                                       data-type="padding">
+                                <span class="spacing-value" id="paddingValue">15px</span>
+                            </label>
+                        </div>
+                        <div class="padding-demo">
+                            <span class="spacing-label">padding</span>
+                            <div class="padding-box">
+                                <p>Элемент с padding</p>
+                                <div class="spacing-visualizer padding-visualizer"></div>
+                                <span class="spacing-value-display" id="paddingDisplay">15px</span>
+                            </div>
+                            <div class="spacing-arrow" style="bottom: -30px; left: 50%;"></div>
+                        </div>
+                    </div>
+
+                    <div class="spacing-item">
+                        <h4>3. Комбинированные отступы</h4>
+                        <div class="combined-demo">
+                            <div class="combined-box">
+                                <p>Элемент с margin и padding</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="spacing-tips">
+                    <h4>Рекомендации по использованию отступов:</h4>
+                    <ul>
+                        <li><strong>Внешние отступы (margin):</strong> Используйте для создания пространства между элементами</li>
+                        <li><strong>Внутренние отступы (padding):</strong> Применяйте для создания пространства внутри элемента</li>
+                        <li><strong>Минимальные размеры:</strong> Для тач-интерфейсов используйте отступы не менее 16px</li>
+                        <li><strong>Консистентность:</strong> Поддерживайте единую систему отступов во всём интерфейсе</li>
+                    </ul>
+                </div>
+            </div>
+        </article>
+    </main>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            // Функция обновления margin
+            window.updateMargin = function(value) {
+                const boxes = document.querySelectorAll('.margin-box');
+                const marginValue = document.getElementById('marginValue');
+                const marginDisplay = document.getElementById('marginDisplay');
+                
+                boxes.forEach(box => {
+                    box.style.margin = `${value}px`;
+                    
+                    // Обновляем визуализатор
+                    const visualizer = box.querySelector('.margin-visualizer');
+                    if (visualizer) {
+                        visualizer.style.top = `-${value}px`;
+                        visualizer.style.left = `-${value}px`;
+                        visualizer.style.right = `-${value}px`;
+                        visualizer.style.bottom = `-${value}px`;
+                    }
+                });
+                
+                if (marginValue) marginValue.textContent = `${value}px`;
+                if (marginDisplay) marginDisplay.textContent = `${value}px`;
+            };
+
+            // Функция обновления padding
+            window.updatePadding = function(value) {
+                const box = document.querySelector('.padding-box');
+                const paddingValue = document.getElementById('paddingValue');
+                const paddingDisplay = document.getElementById('paddingDisplay');
+                
+                if (box) {
+                    box.style.padding = `${value}px`;
+                    
+                    // Обновляем визуализатор
+                    const visualizer = box.querySelector('.padding-visualizer');
+                    if (visualizer) {
+                        visualizer.style.top = `${value}px`;
+                        visualizer.style.left = `${value}px`;
+                        visualizer.style.right = `${value}px`;
+                        visualizer.style.bottom = `${value}px`;
+                    }
+                }
+                
+                if (paddingValue) paddingValue.textContent = `${value}px`;
+                if (paddingDisplay) paddingDisplay.textContent = `${value}px`;
+            };
+
+            // Инициализация начальных значений
+            updateMargin(20);
+            updatePadding(15);
+
+            // Добавляем обработчики событий для слайдеров
+            const marginSlider = document.querySelector('input[type="range"][data-type="margin"]');
+            const paddingSlider = document.querySelector('input[type="range"][data-type="padding"]');
+
+            if (marginSlider) {
+                marginSlider.addEventListener('input', function() {
+                    updateMargin(this.value);
+                });
+            }
+
+            if (paddingSlider) {
+                paddingSlider.addEventListener('input', function() {
+                    updatePadding(this.value);
+                });
+            }
+
+            // Добавляем анимацию при наведении
+            const spacingItems = document.querySelectorAll('.spacing-item');
+            spacingItems.forEach(item => {
+                item.addEventListener('mouseenter', function() {
+                    this.style.transform = 'translateY(-5px)';
+                });
+                item.addEventListener('mouseleave', function() {
+                    this.style.transform = 'translateY(0)';
+                });
+            });
+        });
+    </script>
+</body>
+</html> 

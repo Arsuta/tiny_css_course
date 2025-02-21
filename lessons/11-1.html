@@ -1,0 +1,337 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Урок 11.1 - Работа с CSS архитектурой | CSS Курс</title>
+    <link rel="stylesheet" href="../styles/main.css">
+    <link rel="stylesheet" href="../styles/lesson.css">
+    <style>
+        .demo-section {
+            margin-bottom: 40px;
+            background: #fff;
+            padding: 20px;
+            border-radius: 8px;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+        }
+
+        /* Примеры архитектурных подходов */
+        
+        /* OOCSS пример */
+        .btn {
+            padding: 10px 20px;
+            border-radius: 4px;
+            border: none;
+            cursor: pointer;
+        }
+
+        .btn-primary {
+            background: #466A85;
+            color: white;
+        }
+
+        .btn-large {
+            padding: 15px 30px;
+            font-size: 18px;
+        }
+
+        /* SMACSS пример */
+        .l-header { /* Layout */
+            width: 100%;
+            padding: 20px;
+        }
+
+        .is-active { /* State */
+            background: #e6f3ff;
+        }
+
+        .theme-dark { /* Theme */
+            background: #333;
+            color: #fff;
+        }
+
+        /* BEM пример */
+        .card {
+            padding: 20px;
+            border-radius: 8px;
+            background: #fff;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+        }
+
+        .card__title {
+            font-size: 20px;
+            color: #466A85;
+            margin-bottom: 10px;
+        }
+
+        .card__content {
+            line-height: 1.5;
+        }
+
+        .card--featured {
+            border: 2px solid #466A85;
+        }
+
+        /* Код с пояснениями */
+        .code-block {
+            background: #1E1E1E;
+            color: #ffffff;
+            padding: 15px;
+            border-radius: 8px;
+            margin: 20px 0;
+            font-family: monospace;
+            line-height: 1.5;
+        }
+
+        .code-block .selector { color: #89DDFF; }
+        .code-block .property { color: #A6E22E; }
+        .code-block .value { color: #FFD700; }
+        .code-block .comment { color: #75715E; }
+    </style>
+</head>
+<body>
+    <header class="main-header">
+        <nav class="main-nav">
+            <a href="../index.html" class="logo">CSS Курс</a>
+            <ul class="nav-links">
+                <li><a href="../index.html">На главную</a></li>
+                <li><a href="../chapters.html">Главы</a></li>
+            </ul>
+        </nav>
+    </header>
+
+    <main class="lesson-content">
+        <nav class="lesson-nav">
+            <a href="10-10.html" class="prev-lesson">← Урок 10.10: Режим принудительных цветов</a>
+            <a href="11-2.html" class="next-lesson">Урок 11.2: Настройка проекта →</a>
+        </nav>
+
+        <article class="lesson">
+            <h1>Урок 11.1 - Работа с CSS архитектурой</h1>
+
+            <div class="theory-block">
+                <h2>OOCSS (Object-Oriented CSS)</h2>
+                <p>OOCSS (Object-Oriented CSS) - это методология CSS, разработанная Николь Салливан. Она основана на принципах объектно-ориентированного программирования и направлена на создание многократно используемых компонентов интерфейса.</p>
+
+                <div class="theory-explanation">
+                    <h3>Основные принципы:</h3>
+                    <ul>
+                        <li>
+                            <strong>Разделение структуры и оформления</strong>
+                            <p>Базовая структура (размеры, отступы) отделяется от визуального оформления (цвета, границы). Это позволяет создавать разные темы, не меняя структуру.</p>
+                        </li>
+                        <li>
+                            <strong>Разделение контейнера и содержимого</strong>
+                            <p>Стили не должны зависеть от расположения элемента в DOM. Компонент должен выглядеть одинаково независимо от его местоположения.</p>
+                        </li>
+                        <li>
+                            <strong>Повторное использование стилей</strong>
+                            <p>Создание абстрактных классов, которые можно комбинировать для получения нужного результата.</p>
+                        </li>
+                    </ul>
+                </div>
+
+                <div class="theory-explanation">
+                    <h3>Преимущества OOCSS:</h3>
+                    <ul>
+                        <li><strong>Меньший размер CSS</strong> - за счет переиспользования стилей</li>
+                        <li><strong>Лучшая производительность</strong> - меньше дублирования кода</li>
+                        <li><strong>Проще поддерживать</strong> - изменения вносятся в одном месте</li>
+                        <li><strong>Масштабируемость</strong> - легко добавлять новые компоненты</li>
+                    </ul>
+                </div>
+
+                <div class="demo-section">
+                    <button class="btn btn-primary">Обычная кнопка</button>
+                    <button class="btn btn-primary btn-large">Большая кнопка</button>
+                </div>
+
+                <div class="code-block">
+                    <pre><code><span class="comment">/* OOCSS пример */</span>
+<span class="selector">.btn</span> {  <span class="comment">/* Структура */</span>
+    <span class="property">padding</span>: <span class="value">10px 20px</span>;
+    <span class="property">border-radius</span>: <span class="value">4px</span>;
+    <span class="property">border</span>: <span class="value">none</span>;
+}
+
+<span class="selector">.btn-primary</span> {  <span class="comment">/* Оформление */</span>
+    <span class="property">background</span>: <span class="value">#466A85</span>;
+    <span class="property">color</span>: <span class="value">white</span>;
+}</code></pre>
+                </div>
+            </div>
+
+            <div class="theory-block">
+                <h2>SMACSS (Scalable and Modular Architecture for CSS)</h2>
+                <p>SMACSS - это методология, разработанная Джонатаном Снуком, которая предлагает более гибкий подход к организации CSS. Основная идея заключается в категоризации CSS-правил и создании руководств для каждой категории.</p>
+
+                <div class="theory-explanation">
+                    <h3>Категории SMACSS:</h3>
+                    <ul>
+                        <li>
+                            <strong>Base</strong>
+                            <p>Стили по умолчанию для HTML-элементов (h1-h6, p, a и т.д.). Используются селекторы элементов без классов.</p>
+                        </li>
+                        <li>
+                            <strong>Layout</strong>
+                            <p>Стили для основных структурных компонентов (header, footer, sidebar). Префикс "l-" или "layout-".</p>
+                        </li>
+                        <li>
+                            <strong>Module</strong>
+                            <p>Стили для повторно используемых компонентов интерфейса (кнопки, формы, карточки).</p>
+                        </li>
+                        <li>
+                            <strong>State</strong>
+                            <p>Стили для различных состояний элементов (активный, скрытый). Префикс "is-" или "has-".</p>
+                        </li>
+                        <li>
+                            <strong>Theme</strong>
+                            <p>Переопределение базовых стилей для создания вариаций внешнего вида. Префикс "theme-".</p>
+                        </li>
+                    </ul>
+                </div>
+
+                <div class="theory-explanation">
+                    <h3>Правила именования в SMACSS:</h3>
+                    <ul>
+                        <li><strong>Layout:</strong> .l-header, .l-sidebar, .l-grid</li>
+                        <li><strong>State:</strong> .is-active, .is-hidden, .has-error</li>
+                        <li><strong>Theme:</strong> .theme-dark, .theme-light</li>
+                        <li><strong>Module:</strong> .card, .btn, .nav</li>
+                    </ul>
+                </div>
+
+                <div class="code-block">
+                    <pre><code><span class="comment">/* SMACSS пример */</span>
+<span class="selector">.l-header</span> { <span class="comment">/* Layout */</span>
+    <span class="property">width</span>: <span class="value">100%</span>;
+}
+
+<span class="selector">.is-active</span> { <span class="comment">/* State */</span>
+    <span class="property">background</span>: <span class="value">#e6f3ff</span>;
+}
+
+<span class="selector">.theme-dark</span> { <span class="comment">/* Theme */</span>
+    <span class="property">background</span>: <span class="value">#333</span>;
+    <span class="property">color</span>: <span class="value">#fff</span>;
+}</code></pre>
+                </div>
+            </div>
+
+            <div class="theory-block">
+                <h2>BEM (Block Element Modifier)</h2>
+                <p>BEM - это методология именования CSS-классов, разработанная в Яндексе. Основная идея заключается в разделении интерфейса на независимые блоки и создании понятной и строгой системы именования классов.</p>
+
+                <div class="theory-explanation">
+                    <h3>Структура BEM:</h3>
+                    <ul>
+                        <li>
+                            <strong>Блок (Block)</strong>
+                            <p>Функционально независимый компонент, который можно повторно использовать. Например: .header, .menu, .button</p>
+                        </li>
+                        <li>
+                            <strong>Элемент (Element)</strong>
+                            <p>Составная часть блока, которая не может использоваться отдельно. Обозначается двойным подчеркиванием: .block__element</p>
+                        </li>
+                        <li>
+                            <strong>Модификатор (Modifier)</strong>
+                            <p>Определяет внешний вид, состояние или поведение блока/элемента. Обозначается двойным дефисом: .block--modifier или .block__element--modifier</p>
+                        </li>
+                    </ul>
+                </div>
+
+                <div class="theory-explanation">
+                    <h3>Примеры именования в BEM:</h3>
+                    <ul>
+                        <li><strong>Блок:</strong> .menu</li>
+                        <li><strong>Элемент:</strong> .menu__item</li>
+                        <li><strong>Модификатор блока:</strong> .menu--vertical</li>
+                        <li><strong>Модификатор элемента:</strong> .menu__item--active</li>
+                    </ul>
+                </div>
+
+                <div class="demo-section">
+                    <div class="card card--featured">
+                        <h3 class="card__title">Заголовок карточки</h3>
+                        <div class="card__content">
+                            Содержимое карточки
+                        </div>
+                    </div>
+                </div>
+
+                <div class="code-block">
+                    <pre><code><span class="comment">/* BEM пример */</span>
+<span class="selector">.card</span> {  <span class="comment">/* Блок */</span>
+    <span class="property">padding</span>: <span class="value">20px</span>;
+}
+
+<span class="selector">.card__title</span> {  <span class="comment">/* Элемент */</span>
+    <span class="property">font-size</span>: <span class="value">20px</span>;
+}
+
+<span class="selector">.card--featured</span> {  <span class="comment">/* Модификатор */</span>
+    <span class="property">border</span>: <span class="value">2px solid #466A85</span>;
+}</code></pre>
+                </div>
+            </div>
+
+            <div class="theory-block">
+                <h2>Другие методологии CSS</h2>
+                <p>Помимо OOCSS, SMACSS и BEM существуют и другие подходы к организации CSS:</p>
+
+                <div class="theory-explanation">
+                    <h3>Atomic CSS</h3>
+                    <p>Подход, при котором каждый класс отвечает за одно CSS-свойство. Например:</p>
+                    <ul>
+                        <li><strong>.m-0</strong> - margin: 0</li>
+                        <li><strong>.p-1</strong> - padding: 1rem</li>
+                        <li><strong>.flex</strong> - display: flex</li>
+                        <li><strong>.text-center</strong> - text-align: center</li>
+                    </ul>
+                </div>
+
+                <div class="theory-explanation">
+                    <h3>ITCSS (Inverted Triangle CSS)</h3>
+                    <p>Методология, организующая CSS-файлы по уровням специфичности:</p>
+                    <ul>
+                        <li><strong>Settings</strong> - переменные и конфигурация</li>
+                        <li><strong>Tools</strong> - миксины и функции</li>
+                        <li><strong>Generic</strong> - сброс стилей</li>
+                        <li><strong>Elements</strong> - стили элементов</li>
+                        <li><strong>Objects</strong> - паттерны макета</li>
+                        <li><strong>Components</strong> - компоненты UI</li>
+                        <li><strong>Utilities</strong> - утилиты и перезаписи</li>
+                    </ul>
+                </div>
+
+                <div class="theory-explanation">
+                    <h3>CSS Modules</h3>
+                    <p>Технический подход, при котором стили автоматически получают уникальные имена классов:</p>
+                    <div class="code-block">
+                        <pre><code><span class="comment">/* CSS Module пример */</span>
+<span class="selector">.button</span> {
+    <span class="property">background</span>: <span class="value">#466A85</span>;
+}
+
+<span class="comment">/* Компилируется в */</span>
+<span class="selector">.button_abc123</span> {
+    <span class="property">background</span>: <span class="value">#466A85</span>;
+}</code></pre>
+                    </div>
+                </div>
+
+                <div class="theory-explanation">
+                    <h3>Utility-First CSS</h3>
+                    <p>Подход, популяризированный Tailwind CSS, где весь дизайн строится из утилитарных классов:</p>
+                    <div class="code-block">
+                        <pre><code><span class="comment"><!-- Пример Utility-First CSS --></span>
+<span class="selector">&lt;div class="flex items-center p-4 bg-white rounded-lg shadow-md"&gt;</span>
+    <span class="selector">&lt;h2 class="text-xl font-bold text-gray-800"&gt;</span>Заголовок<span class="selector">&lt;/h2&gt;</span>
+<span class="selector">&lt;/div&gt;</span></code></pre>
+                    </div>
+                </div>
+            </div>
+        </article>
+    </main>
+</body>
+</html> 

@@ -1,0 +1,284 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Урок 11.3 - Работа с иконками | CSS Курс</title>
+    <link rel="stylesheet" href="../styles/main.css">
+    <link rel="stylesheet" href="../styles/lesson.css">
+    <style>
+        .demo-section {
+            margin-bottom: 40px;
+            background: #fff;
+            padding: 20px;
+            border-radius: 8px;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+        }
+
+        /* Демонстрация иконок */
+        .icon-demo {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 20px;
+            margin: 20px 0;
+        }
+
+        .icon-example {
+            padding: 20px;
+            background: #f7f5e8;
+            border-radius: 8px;
+            text-align: center;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 15px;
+            min-height: 200px;
+            justify-content: center;
+            transition: transform 0.3s;
+            cursor: pointer;
+        }
+
+        .icon-example:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 4px 8px rgba(0,0,0,0.1);
+        }
+
+        /* Стили для SVG иконок */
+        .social-icon {
+            width: 48px;
+            height: 48px;
+            fill: currentColor;
+            transition: transform 0.3s;
+            color: #466A85;
+        }
+
+        .social-icon:hover {
+            transform: scale(1.2);
+        }
+
+        /* Стили для спрайтов */
+        .sprite-icon {
+            width: 48px;
+            height: 48px;
+            background-image: url('../images/social-sprite.png');
+            background-repeat: no-repeat;
+            display: inline-block;
+            background-size: 200% auto;
+        }
+
+        .sprite-icon--facebook {
+            background-position: 0 0;
+        }
+
+        .sprite-icon--twitter {
+            background-position: -24px 0;
+        }
+
+        /* Стили для иконочных шрифтов */
+        @font-face {
+            font-family: 'SocialIcons';
+            src: url('../fonts/social-icons.woff2') format('woff2');
+        }
+
+        .icon-font {
+            font-family: 'SocialIcons';
+            font-size: 48px;
+            color: #466A85;
+        }
+
+        /* Код с пояснениями */
+        .code-block {
+            background: #1E1E1E;
+            color: #ffffff;
+            padding: 15px;
+            border-radius: 8px;
+            margin: 20px 0;
+            font-family: monospace;
+            line-height: 1.5;
+        }
+
+        .code-block .selector { color: #89DDFF; }
+        .code-block .property { color: #A6E22E; }
+        .code-block .value { color: #FFD700; }
+        .code-block .comment { color: #75715E; }
+    </style>
+</head>
+<body>
+    <header class="main-header">
+        <nav class="main-nav">
+            <a href="../index.html" class="logo">CSS Курс</a>
+            <ul class="nav-links">
+                <li><a href="../index.html">На главную</a></li>
+                <li><a href="../chapters.html">Главы</a></li>
+            </ul>
+        </nav>
+    </header>
+
+    <main class="lesson-content">
+        <nav class="lesson-nav">
+            <a href="11-2.html" class="prev-lesson">← Урок 11.2: Настройка проекта</a>
+            <a href="11-4.html" class="next-lesson">Урок 11.4: Стилизация блока →</a>
+        </nav>
+
+        <article class="lesson">
+            <h1>Урок 11.3 - Работа с иконками</h1>
+
+            <div class="theory-block">
+                <h2>Способы добавления иконок</h2>
+                <p>При разработке веб-приложений важно выбрать правильный способ добавления иконок. Каждый метод имеет свои особенности и лучше подходит для определенных задач.</p>
+                
+                <div class="theory-explanation">
+                    <h3>Критерии выбора метода:</h3>
+                    <ul>
+                        <li><strong>Производительность</strong> - влияние на скорость загрузки</li>
+                        <li><strong>Масштабируемость</strong> - качество при разных размерах</li>
+                        <li><strong>Поддержка браузеров</strong> - совместимость</li>
+                        <li><strong>Гибкость стилизации</strong> - возможности кастомизации</li>
+                        <li><strong>Удобство обновления</strong> - простота внесения изменений</li>
+                    </ul>
+                </div>
+
+                <div class="icon-demo">
+                    <div class="icon-example">
+                        <h3>SVG иконки</h3>
+                        <svg class="social-icon">
+                            <use xlink:href="#icon-facebook"></use>
+                        </svg>
+                        <p>Векторные, масштабируемые</p>
+                    </div>
+
+                    <div class="icon-example">
+                        <h3>CSS спрайты</h3>
+                        <span class="sprite-icon sprite-icon--facebook"></span>
+                        <p>Одно изображение для всех иконок</p>
+                    </div>
+
+                    <div class="icon-example">
+                        <h3>Иконочные шрифты</h3>
+                        <span class="icon-font">&#xf09a;</span>
+                        <p>Шрифт со специальными символами</p>
+                    </div>
+                </div>
+
+                <div class="theory-explanation">
+                    <h3>Преимущества и недостатки:</h3>
+                    <ul>
+                        <li>
+                            <strong>SVG</strong>
+                            <p>+ Векторные, качественные при любом размере<br>
+                            + Можно стилизовать CSS<br>
+                            - Больше кода для простых иконок</p>
+                        </li>
+                        <li>
+                            <strong>Спрайты</strong>
+                            <p>+ Меньше HTTP запросов<br>
+                            + Хорошая поддержка<br>
+                            - Сложно изменять размер</p>
+                        </li>
+                        <li>
+                            <strong>Иконочные шрифты</strong>
+                            <p>+ Легко стилизовать как текст<br>
+                            + Один файл для всех иконок<br>
+                            - Монохромные</p>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+
+            <div class="theory-block">
+                <h2>Использование SVG</h2>
+                <p>SVG (Scalable Vector Graphics) - это формат векторной графики, который особенно хорошо подходит для иконок:</p>
+                
+                <div class="theory-explanation">
+                    <h3>Способы добавления SVG:</h3>
+                    <ul>
+                        <li><strong>Встраивание</strong> - SVG код прямо в HTML</li>
+                        <li><strong>Внешний файл</strong> - через тег img или background-image</li>
+                        <li><strong>SVG спрайт</strong> - все иконки в одном файле, использование через use</li>
+                        <li><strong>Data URL</strong> - SVG в формате base64 в CSS</li>
+                    </ul>
+                </div>
+                
+                <div class="theory-explanation">
+                    <h3>Оптимизация SVG:</h3>
+                    <ul>
+                        <li><strong>Минификация</strong> - удаление лишних данных</li>
+                        <li><strong>Упрощение путей</strong> - оптимизация path</li>
+                        <li><strong>Удаление метаданных</strong> - очистка от лишней информации</li>
+                        <li><strong>Группировка элементов</strong> - объединение похожих частей</li>
+                    </ul>
+                </div>
+
+                <div class="code-block">
+                    <pre><code><span class="comment"><!-- Встроенный SVG --></span>
+<span class="selector">&lt;svg class="social-icon"&gt;</span>
+    <span class="selector">&lt;path d="M18 2h-3a5 5 0 0 0-5 5v3H7v4h3v8h4v-8h3l1-4h-4V7a1 1 0 0 1 1-1h3z"&gt;</span>
+<span class="selector">&lt;/svg&gt;</span>
+
+<span class="comment"><!-- Внешний SVG через use --></span>
+<span class="selector">&lt;svg class="social-icon"&gt;</span>
+    <span class="selector">&lt;use xlink:href="#icon-facebook"&gt;&lt;/use&gt;</span>
+<span class="selector">&lt;/svg&gt;</span></code></pre>
+                </div>
+            </div>
+
+            <div class="theory-block">
+                <h2>CSS спрайты</h2>
+                <p>CSS спрайты - это техника объединения множества изображений в одно для уменьшения количества HTTP-запросов:</p>
+                
+                <div class="theory-explanation">
+                    <h3>Создание спрайтов:</h3>
+                    <ul>
+                        <li><strong>Организация сетки</strong> - расположение иконок в файле</li>
+                        <li><strong>Расчет позиций</strong> - координаты для background-position</li>
+                        <li><strong>Отступы</strong> - предотвращение наложения при масштабировании</li>
+                        <li><strong>Автоматизация</strong> - использование спрайт-генераторов</li>
+                    </ul>
+                </div>
+
+                <div class="code-block">
+                    <pre><code><span class="comment">/* Стили для спрайтов */</span>
+<span class="selector">.sprite-icon</span> {
+    <span class="property">width</span>: <span class="value">24px</span>;
+    <span class="property">height</span>: <span class="value">24px</span>;
+    <span class="property">background-image</span>: <span class="value">url('sprite.png')</span>;
+}
+
+<span class="selector">.sprite-icon--facebook</span> {
+    <span class="property">background-position</span>: <span class="value">0 0</span>;
+}
+
+<span class="selector">.sprite-icon--twitter</span> {
+    <span class="property">background-position</span>: <span class="value">-24px 0</span>;
+}</code></pre>
+                </div>
+            </div>
+
+            <div class="theory-block">
+                <h2>Иконочные шрифты</h2>
+                <p>Популярные библиотеки иконочных шрифтов:</p>
+
+                <div class="theory-explanation">
+                    <ul>
+                        <li><strong>Font Awesome</strong> - большая коллекция иконок</li>
+                        <li><strong>Material Icons</strong> - иконки в стиле Material Design</li>
+                        <li><strong>Feather Icons</strong> - минималистичные иконки</li>
+                    </ul>
+                </div>
+
+                <div class="code-block">
+                    <pre><code><span class="comment">/* Подключение иконочного шрифта */</span>
+<span class="selector">@font-face</span> {
+    <span class="property">font-family</span>: <span class="value">'SocialIcons'</span>;
+    <span class="property">src</span>: <span class="value">url('social-icons.woff2')</span>;
+}
+
+<span class="selector">.icon</span> {
+    <span class="property">font-family</span>: <span class="value">'SocialIcons'</span>;
+}</code></pre>
+                </div>
+            </div>
+        </article>
+    </main>
+</body>
+</html> 

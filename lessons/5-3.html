@@ -1,0 +1,316 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Урок 5.3: Стилизация заголовка с background-clip | CSS Курс</title>
+    <link rel="stylesheet" href="../styles/main.css">
+    <link rel="stylesheet" href="../styles/lesson.css">
+    <style>
+        /* Стили для демонстраций */
+        .demo-section {
+            margin-bottom: 40px;
+        }
+
+        /* Стили для блоков с кодом */
+        .code-block {
+            background: #1E1E1E;
+            color: #D4D4D4;
+            padding: 15px;
+            border-radius: 8px;
+            margin: 20px 0;
+            font-family: monospace;
+        }
+
+        .code-block pre {
+            margin: 0;
+        }
+
+        .code-block code {
+            color: #D4D4D4;
+            font-family: monospace;
+        }
+
+        /* Подсветка синтаксиса */
+        .code-block .keyword { color: #569CD6; }
+        .code-block .property { color: #9CDCFE; }
+        .code-block .value { color: #CE9178; }
+        .code-block .punctuation { color: #D4D4D4; }
+        .code-block .comment { color: #6A9955; }
+        .code-block .selector { color: #D7BA7D; }
+
+        /* Демонстрация background-clip */
+        .background-clip-demo {
+            background: white;
+            padding: 20px;
+            border-radius: 8px;
+            margin: 20px 0;
+        }
+
+        .gradient-text {
+            font-size: 48px;
+            font-weight: bold;
+            background: linear-gradient(45deg, #466A85, #7be6e8);
+            -webkit-background-clip: text;
+            background-clip: text;
+            color: transparent;
+            text-align: center;
+            margin: 20px 0;
+        }
+
+        /* Демонстрация шрифтов */
+        .font-demo {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 20px;
+            margin: 20px 0;
+        }
+
+        .font-example {
+            background: white;
+            padding: 20px;
+            border-radius: 8px;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+        }
+
+        /* Интерактивные контролы */
+        .controls {
+            display: flex;
+            gap: 10px;
+            margin: 20px 0;
+            flex-wrap: wrap;
+        }
+
+        .controls button {
+            padding: 8px 16px;
+            background: #466A85;
+            color: white;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+        }
+
+        .controls button:hover {
+            background: #7be6e8;
+        }
+
+        /* Стили для практического задания */
+        .task-description {
+            background: #f8f9fa;
+            padding: 20px;
+            border-radius: 8px;
+            margin: 20px 0;
+        }
+
+        .task-solution {
+            background: #e9ecef;
+            padding: 20px;
+            border-radius: 8px;
+            margin-top: 20px;
+        }
+
+        .task-solution code {
+            background: #dee2e6;
+            padding: 2px 6px;
+            border-radius: 4px;
+            font-family: monospace;
+        }
+
+        /* Стили для примера решения */
+        .solution-preview {
+            background: white;
+            padding: 20px;
+            border-radius: 8px;
+            margin-top: 20px;
+            text-align: center;
+        }
+
+        .solution-preview h1 {
+            font-size: 32px;
+            background: linear-gradient(45deg, #466A85, #7be6e8);
+            -webkit-background-clip: text;
+            background-clip: text;
+            color: transparent;
+        }
+    </style>
+</head>
+<body>
+    <header class="main-header">
+        <nav class="main-nav">
+            <a href="../index.html" class="logo">CSS Курс</a>
+            <ul class="nav-links">
+                <li><a href="../index.html">На главную</a></li>
+                <li><a href="../chapters.html">Главы</a></li>
+            </ul>
+        </nav>
+    </header>
+
+    <main class="lesson-content">
+        <nav class="lesson-nav">
+            <a href="5-2.html" class="prev-lesson">← Урок 5.2: Вёрстка на Grid</a>
+            <a href="5-4.html" class="next-lesson">Урок 5.4: Стилизация карточек →</a>
+        </nav>
+
+        <div class="chapter-navigation">
+            <h3>Навигация по главе 5:</h3>
+            <ul>
+                <li><a href="5-1.html">5.1 Введение в проект</a></li>
+                <li><a href="5-2.html">5.2 Вёрстка на Grid</a></li>
+                <li><a href="5-3.html" class="current">5.3 Стилизация заголовка с background-clip</a></li>
+                <li><a href="5-4.html">5.4 Стилизация карточек</a></li>
+                <li><a href="5-5.html">5.5 Анимация при наведении и focus-within</a></li>
+            </ul>
+        </div>
+
+        <article class="lesson">
+            <header class="lesson-header">
+                <h1>Урок 5.3: Стилизация заголовка с background-clip</h1>
+            </header>
+
+            <section class="theory">
+                <h2>Теория</h2>
+                
+                <div class="demo-section">
+                    <h3>Настройка шрифта</h3>
+                    <p>Для создания эффектного заголовка сначала настроим базовые параметры шрифта:</p>
+
+                    <div class="code-block">
+                        <pre><code><span class="selector">.card-title</span> {
+    <span class="property">font-family</span>: <span class="value">'Arial', sans-serif</span>;
+    <span class="property">font-size</span>: <span class="value">2rem</span>;
+    <span class="property">font-weight</span>: <span class="value">bold</span>;
+    <span class="property">text-align</span>: <span class="value">center</span>;
+}</code></pre>
+                    </div>
+
+                    <div class="font-demo">
+                        <div class="font-example">
+                            <h3>Базовый текст</h3>
+                            <p class="basic-text">Пример обычного текста</p>
+                        </div>
+                        <div class="font-example">
+                            <h3>Стилизованный заголовок</h3>
+                            <p class="styled-title">Пример заголовка</p>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="demo-section">
+                    <h3>Использование background-clip</h3>
+                    <p>Свойство background-clip позволяет создать эффект градиентного текста:</p>
+
+                    <div class="code-block">
+                        <pre><code><span class="selector">.gradient-title</span> {
+    <span class="property">background</span>: <span class="value">linear-gradient(45deg, #466A85, #7be6e8)</span>;
+    <span class="property">-webkit-background-clip</span>: <span class="value">text</span>;
+    <span class="property">background-clip</span>: <span class="value">text</span>;
+    <span class="property">color</span>: <span class="value">transparent</span>;
+}</code></pre>
+                    </div>
+
+                    <div class="background-clip-demo">
+                        <h2 class="gradient-text">Градиентный текст</h2>
+                        <p class="note">Обратите внимание, как градиент применяется только к тексту</p>
+                    </div>
+
+                    <div class="info-block">
+                        <h4>Важные моменты:</h4>
+                        <ul>
+                            <li>Свойство <code>background-clip: text</code> обрезает фон по контуру текста</li>
+                            <li>Необходимо использовать префикс <code>-webkit-</code> для поддержки в разных браузерах</li>
+                            <li>Цвет текста должен быть <code>transparent</code>, чтобы был виден градиент</li>
+                        </ul>
+                    </div>
+                </div>
+
+                <div class="demo-section">
+                    <h3>Интерактивная демонстрация</h3>
+                    <p>Попробуйте разные варианты градиентов:</p>
+
+                    <div class="controls">
+                        <button onclick="changeGradient('linear-gradient(45deg, #466A85, #7be6e8)')">Базовый градиент</button>
+                        <button onclick="changeGradient('linear-gradient(45deg, #ff6b6b, #ffd93d)')">Теплый градиент</button>
+                        <button onclick="changeGradient('linear-gradient(45deg, #4834d4, #686de0)')">Холодный градиент</button>
+                    </div>
+
+                    <div class="background-clip-demo">
+                        <h2 id="demo-text" class="gradient-text">Интерактивный текст</h2>
+                    </div>
+                </div>
+            </section>
+
+            <section class="practice">
+                <h2>Практика</h2>
+                <div class="task">
+                    <h3>Задание: Создание градиентного заголовка</h3>
+                    <p>Создайте заголовок с градиентным текстом, используя свойство background-clip.</p>
+
+                    <div class="task-description">
+                        <h4>Требования:</h4>
+                        <ul>
+                            <li>Используйте шрифт Arial или другой sans-serif</li>
+                            <li>Размер текста должен быть не менее 32px</li>
+                            <li>Примените градиент к тексту с помощью background-clip</li>
+                            <li>Добавьте префикс -webkit- для кроссбраузерности</li>
+                        </ul>
+                    </div>
+                    
+                    <div class="code-editor">
+                        <div class="editor-tabs">
+                            <button class="tab active">HTML</button>
+                            <button class="tab">CSS</button>
+                        </div>
+                        <textarea class="code-input html-input">
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <title>Градиентный заголовок</title>
+    <style>
+        /* Добавьте базовые стили */
+        body {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-height: 100vh;
+            margin: 0;
+            background: #f8f9fa;
+        }
+    </style>
+</head>
+<body>
+    <h1 class="gradient-heading">Градиентный заголовок</h1>
+</body>
+</html></textarea>
+                        <textarea class="code-input css-input" style="display: none;">
+/* Стили для градиентного заголовка */
+.gradient-heading {
+    /* Добавьте стили для шрифта */
+    
+    /* Добавьте градиент и background-clip */
+    
+    /* Не забудьте про color: transparent */
+}</textarea>
+                    </div>
+
+                    <div class="task-solution">
+                        <h4>Подсказки:</h4>
+                        <ul>
+                            <li>Используйте <code>font-size</code> и <code>font-weight</code> для настройки шрифта</li>
+                            <li>Создайте градиент с помощью <code>linear-gradient()</code></li>
+                            <li>Примените <code>background-clip: text</code> и <code>-webkit-background-clip: text</code></li>
+                            <li>Установите <code>color: transparent</code> для отображения градиента</li>
+                        </ul>
+                    </div>
+                </div>
+            </section>
+        </article>
+    </main>
+
+    <script>
+        function changeGradient(gradient) {
+            const text = document.getElementById('demo-text');
+            text.style.background = gradient;
+        }
+    </script>
+</body>
+</html> 

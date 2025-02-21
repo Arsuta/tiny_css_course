@@ -1,0 +1,787 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Урок 3.1: Введение в CSS анимации | CSS Курс</title>
+    <link rel="stylesheet" href="/styles/main.css">
+    <link rel="stylesheet" href="/styles/lesson.css">
+    <style>
+        /* Стили для демонстраций */
+        .demo-container {
+            padding: 2rem;
+            background: #f8f9fa;
+            border-radius: 8px;
+            margin: 1rem 0;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-height: 200px;
+        }
+
+        /* Демонстрация трансформаций */
+        .transforms-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 2rem;
+            margin: 2rem 0;
+        }
+
+        .transform-demo {
+            text-align: center;
+        }
+
+        .demo-element {
+            width: 100px;
+            height: 100px;
+            margin: 1rem auto;
+            position: relative;
+            perspective: 600px;
+        }
+
+        .element {
+            width: 100%;
+            height: 100%;
+            background: #3498db;
+            color: white;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            border-radius: 4px;
+            transition: transform 0.3s ease;
+        }
+
+        .translate .element:hover {
+            transform: translate(20px, 20px);
+        }
+
+        .rotate .element:hover {
+            transform: rotate(45deg);
+        }
+
+        .scale .element:hover {
+            transform: scale(1.2);
+        }
+
+        .skew .element:hover {
+            transform: skew(10deg);
+        }
+
+        /* Демонстрация свойств анимации */
+        .animated-box {
+            width: 50px;
+            height: 50px;
+            background: #3498db;
+            animation: moveBox 2s ease-in-out infinite alternate;
+        }
+
+        @keyframes moveBox {
+            0% { transform: translateX(-50px); }
+            100% { transform: translateX(50px); }
+        }
+
+        /* Демонстрация timing functions */
+        .timing-demo {
+            display: flex;
+            gap: 1rem;
+            flex-wrap: wrap;
+        }
+
+        .timing-box {
+            width: 60px;
+            height: 60px;
+            background: #3498db;
+            color: white;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 12px;
+            text-align: center;
+            border-radius: 4px;
+            animation: slide 2s infinite alternate;
+        }
+
+        .timing-box.linear { animation-timing-function: linear; }
+        .timing-box.ease { animation-timing-function: ease; }
+        .timing-box.ease-in { animation-timing-function: ease-in; }
+        .timing-box.ease-out { animation-timing-function: ease-out; }
+
+        @keyframes slide {
+            0% { transform: translateX(0); }
+            100% { transform: translateX(100px); }
+        }
+
+        /* Демо спиннера */
+        .spinner {
+            width: 40px;
+            height: 40px;
+            border: 4px solid #f3f3f3;
+            border-top: 4px solid #3498db;
+            border-radius: 50%;
+            animation: spin 1s linear infinite;
+        }
+
+        @keyframes spin {
+            0% { transform: rotate(0deg); }
+            100% { transform: rotate(360deg); }
+        }
+
+        /* Демо точек */
+        .dots-demo {
+            display: flex;
+            gap: 8px;
+        }
+
+        .dot {
+            width: 10px;
+            height: 10px;
+            background: #3498db;
+            border-radius: 50%;
+            animation: pulse 0.8s ease-in-out infinite;
+        }
+
+        .dot:nth-child(2) { animation-delay: 0.2s; }
+        .dot:nth-child(3) { animation-delay: 0.4s; }
+
+        @keyframes pulse {
+            0%, 100% { transform: scale(1); opacity: 1; }
+            50% { transform: scale(1.3); opacity: 0.5; }
+        }
+
+        /* Демо прогресс-бара */
+        .progress-bar {
+            width: 200px;
+            height: 6px;
+            background: #f3f3f3;
+            border-radius: 3px;
+            overflow: hidden;
+        }
+
+        .progress {
+            width: 100%;
+            height: 100%;
+            background: #3498db;
+            animation: progress 2s ease-in-out infinite;
+        }
+
+        @keyframes progress {
+            0% { transform: translateX(-100%); }
+            100% { transform: translateX(100%); }
+        }
+
+        /* Стили для практических заданий */
+        .preview-frame {
+            border: 1px solid #ddd;
+            border-radius: 4px;
+            padding: 1rem;
+            margin-top: 1rem;
+            min-height: 200px;
+            background: white;
+        }
+
+        /* Стили для демонстрации загрузчиков */
+        .loaders-showcase {
+            display: grid;
+            gap: 2rem;
+            margin: 2rem 0;
+        }
+
+        .loader-type {
+            background: #fff;
+            border-radius: 8px;
+            padding: 1.5rem;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+        }
+
+        /* Стили для волнового загрузчика */
+        .wave-loader {
+            display: flex;
+            gap: 6px;
+            height: 40px;
+            align-items: center;
+        }
+
+        .wave-bar {
+            width: 6px;
+            height: 100%;
+            background: #3498db;
+            border-radius: 3px;
+            animation: wave 1s ease-in-out infinite;
+        }
+
+        /* Стили для пульсирующих точек */
+        .dots-demo {
+            display: flex;
+            gap: 8px;
+            justify-content: center;
+            align-items: center;
+            height: 40px;
+        }
+
+        .dot {
+            width: 12px;
+            height: 12px;
+            background: #3498db;
+            border-radius: 50%;
+            animation: pulse 0.8s ease-in-out infinite;
+        }
+
+        /* Медиа-запросы для адаптивности */
+        @media (min-width: 768px) {
+            .loaders-showcase {
+                grid-template-columns: repeat(2, 1fr);
+            }
+        }
+
+        @media (min-width: 1024px) {
+            .loaders-showcase {
+                grid-template-columns: repeat(2, 1fr);
+            }
+        }
+
+        /* Улучшенные стили для демонстрационных контейнеров */
+        .demo-container {
+            background: #f8f9fa;
+            border-radius: 8px;
+            padding: 2rem;
+            margin: 1rem 0;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-height: 150px;
+            border: 1px solid #e9ecef;
+        }
+
+        /* Стили для примеров кода */
+        .example {
+            margin-top: 1rem;
+            background: #f8f9fa;
+            border-radius: 4px;
+            overflow: hidden;
+        }
+
+        .example pre {
+            margin: 0;
+            padding: 1rem;
+            overflow-x: auto;
+        }
+
+        .example code {
+            font-family: 'Fira Code', monospace;
+            font-size: 0.9rem;
+        }
+    </style>
+</head>
+<body>
+    <header class="main-header">
+        <nav class="main-nav">
+            <div class="logo">CSS Курс</div>
+            <ul class="nav-links">
+                <li><a href="/">На главную</a></li>
+                <li><a href="#chapters">Главы</a></li>
+            </ul>
+        </nav>
+    </header>
+
+    <main class="lesson-content">
+        <nav class="lesson-nav">
+            <a href="/lessons/2-6" class="prev-lesson">← Урок 2.6: Доступность</a>
+            <a href="/lessons/3-2" class="next-lesson">Урок 3.2: Структура загрузчика →</a>
+        </nav>
+
+        <article class="lesson">
+            <header class="lesson-header">
+                <h1>Урок 3.1: Введение в CSS анимации</h1>
+            </header>
+
+            <section class="theory">
+                <h2>Теория</h2>
+                <div class="theory-content">
+                    <h3>Анатомия CSS анимации</h3>
+                    <p>CSS анимации состоят из двух основных компонентов: описания ключевых кадров (@keyframes) и свойств анимации.</p>
+
+                    <div class="animation-anatomy">
+                        <div class="keyframes-explanation">
+                            <h4>Ключевые кадры (@keyframes)</h4>
+                            <div class="example">
+                                <pre><code>@keyframes moveRight {
+    0% {
+        transform: translateX(0);
+        opacity: 0;
+    }
+    50% {
+        opacity: 1;
+    }
+    100% {
+        transform: translateX(200px);
+        opacity: 0;
+    }
+}</code></pre>
+                            </div>
+                            <p class="explanation">
+                                <strong>Структура @keyframes:</strong>
+                                <ul class="styled-list">
+                                    <li><code>@keyframes</code> - объявление анимации</li>
+                                    <li><code>moveRight</code> - имя анимации, используется для привязки к элементу</li>
+                                    <li><code>0%, 50%, 100%</code> - ключевые точки анимации (можно использовать from/to)</li>
+                                    <li>Внутри каждой точки определяются значения свойств для анимации</li>
+                                </ul>
+                            </p>
+                        </div>
+
+                        <div class="animation-properties">
+                            <h4>Свойства анимации</h4>
+                            <div class="example">
+                                <pre><code>.animated-element {
+    animation-name: moveRight;        /* Имя анимации */
+    animation-duration: 2s;           /* Продолжительность */
+    animation-timing-function: ease;  /* Функция времени */
+    animation-delay: 0.5s;           /* Задержка перед началом */
+    animation-iteration-count: 3;     /* Количество повторений */
+    animation-direction: alternate;   /* Направление */
+    animation-fill-mode: forwards;    /* Состояние до/после */
+    animation-play-state: running;    /* Состояние воспроизведения */
+}</code></pre>
+                            </div>
+                            <div class="properties-explanation">
+                                <h5>Подробное описание свойств:</h5>
+                                <ul class="styled-list">
+                                    <li>
+                                        <strong>animation-name</strong>
+                                        <p>Указывает имя @keyframes анимации, которую нужно применить</p>
+                                    </li>
+                                    <li>
+                                        <strong>animation-duration</strong>
+                                        <p>Определяет время выполнения одного цикла анимации (в секундах или миллисекундах)</p>
+                                    </li>
+                                    <li>
+                                        <strong>animation-timing-function</strong>
+                                        <p>Задает характер протекания анимации во времени:</p>
+                                        <ul>
+                                            <li><code>linear</code> - равномерная скорость</li>
+                                            <li><code>ease</code> - плавное начало и конец</li>
+                                            <li><code>ease-in</code> - плавное начало</li>
+                                            <li><code>ease-out</code> - плавное завершение</li>
+                                            <li><code>ease-in-out</code> - плавное начало и завершение</li>
+                                        </ul>
+                                    </li>
+                                    <li>
+                                        <strong>animation-delay</strong>
+                                        <p>Задержка перед началом анимации. Может быть отрицательной для мгновенного начала с определенной точки</p>
+                                    </li>
+                                    <li>
+                                        <strong>animation-iteration-count</strong>
+                                        <p>Количество повторений анимации (число или infinite для бесконечного повторения)</p>
+                                    </li>
+                                    <li>
+                                        <strong>animation-direction</strong>
+                                        <p>Определяет направление анимации:</p>
+                                        <ul>
+                                            <li><code>normal</code> - обычное направление</li>
+                                            <li><code>reverse</code> - обратное направление</li>
+                                            <li><code>alternate</code> - чередование направлений</li>
+                                            <li><code>alternate-reverse</code> - чередование с обратного</li>
+                                        </ul>
+                                    </li>
+                                    <li>
+                                        <strong>animation-fill-mode</strong>
+                                        <p>Определяет состояние элемента до и после анимации:</p>
+                                        <ul>
+                                            <li><code>none</code> - без применения стилей</li>
+                                            <li><code>forwards</code> - сохранение конечного состояния</li>
+                                            <li><code>backwards</code> - применение начального состояния</li>
+                                            <li><code>both</code> - комбинация forwards и backwards</li>
+                                        </ul>
+                                    </li>
+                                </ul>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="transform-section">
+                        <h3>Трансформации (Transform)</h3>
+                        <p>Трансформации позволяют изменять положение и форму элементов.</p>
+                        <div class="transforms-grid">
+                            <div class="transform-demo">
+                                <h4>translate</h4>
+                                <div class="demo-element translate">
+                                    <div class="element">translate</div>
+                                </div>
+                                <pre><code>transform: translate(50px, 20px);</code></pre>
+                            </div>
+
+                            <div class="transform-demo">
+                                <h4>rotate</h4>
+                                <div class="demo-element rotate">
+                                    <div class="element">rotate</div>
+                                </div>
+                                <pre><code>transform: rotate(45deg);</code></pre>
+                            </div>
+
+                            <div class="transform-demo">
+                                <h4>scale</h4>
+                                <div class="demo-element scale">
+                                    <div class="element">scale</div>
+                                </div>
+                                <pre><code>transform: scale(1.5);</code></pre>
+                            </div>
+
+                            <div class="transform-demo">
+                                <h4>skew</h4>
+                                <div class="demo-element skew">
+                                    <div class="element">skew</div>
+                                </div>
+                                <pre><code>transform: skew(10deg);</code></pre>
+                            </div>
+                        </div>
+                    </div>
+
+                    <h3>Виды анимаций загрузки</h3>
+                    <div class="loaders-showcase">
+                        <div class="loader-type">
+                            <h4>1. Спиннер</h4>
+                            <div class="demo-container">
+                                <div class="spinner"></div>
+                            </div>
+                            <div class="example">
+                                <pre><code>.spinner {
+    width: 40px;
+    height: 40px;
+    border: 4px solid #f3f3f3;
+    border-top: 4px solid #3498db;
+    border-radius: 50%;
+    animation: spin 1s linear infinite;
+}
+
+@keyframes spin {
+    0% { transform: rotate(0deg); }
+    100% { transform: rotate(360deg); }
+}</code></pre>
+                            </div>
+                        </div>
+
+                        <div class="loader-type">
+                            <h4>2. Пульсирующие точки</h4>
+                            <div class="demo-container dots-demo">
+                                <div class="dot"></div>
+                                <div class="dot"></div>
+                                <div class="dot"></div>
+                            </div>
+                            <div class="example">
+                                <pre><code>.dot {
+    width: 10px;
+    height: 10px;
+    background: #3498db;
+    border-radius: 50%;
+    animation: pulse 0.8s ease-in-out infinite;
+}
+
+.dot:nth-child(2) { animation-delay: 0.2s; }
+.dot:nth-child(3) { animation-delay: 0.4s; }
+
+@keyframes pulse {
+    0%, 100% { transform: scale(1); opacity: 1; }
+    50% { transform: scale(1.3); opacity: 0.5; }
+}</code></pre>
+                            </div>
+                        </div>
+
+                        <div class="loader-type">
+                            <h4>3. Прогресс-бар</h4>
+                            <div class="demo-container">
+                                <div class="progress-bar">
+                                    <div class="progress"></div>
+                                </div>
+                            </div>
+                            <div class="example">
+                                <pre><code>.progress-bar {
+    width: 200px;
+    height: 6px;
+    background: #f3f3f3;
+    border-radius: 3px;
+    overflow: hidden;
+}
+
+.progress {
+    width: 100%;
+    height: 100%;
+    background: #3498db;
+    animation: progress 2s ease-in-out infinite;
+}
+
+@keyframes progress {
+    0% { transform: translateX(-100%); }
+    100% { transform: translateX(100%); }
+}</code></pre>
+                            </div>
+                        </div>
+
+                        <div class="loader-type">
+                            <h4>4. Волновой загрузчик</h4>
+                            <div class="demo-container">
+                                <div class="wave-loader">
+                                    <div class="wave-bar"></div>
+                                    <div class="wave-bar"></div>
+                                    <div class="wave-bar"></div>
+                                    <div class="wave-bar"></div>
+                                    <div class="wave-bar"></div>
+                                </div>
+                            </div>
+                            <div class="example">
+                                <pre><code>.wave-loader {
+    display: flex;
+    gap: 6px;
+}
+
+.wave-bar {
+    width: 6px;
+    height: 40px;
+    background: #3498db;
+    animation: wave 1s ease-in-out infinite;
+}
+
+.wave-bar:nth-child(2) { animation-delay: 0.1s; }
+.wave-bar:nth-child(3) { animation-delay: 0.2s; }
+.wave-bar:nth-child(4) { animation-delay: 0.3s; }
+.wave-bar:nth-child(5) { animation-delay: 0.4s; }
+
+@keyframes wave {
+    0%, 100% { transform: scaleY(1); }
+    50% { transform: scaleY(2); }
+}</code></pre>
+                            </div>
+                        </div>
+                    </div>
+
+                    <h3>Оптимизация производительности</h3>
+                    <div class="performance-tips">
+                        <div class="tip-card">
+                            <h4>Лучшие практики</h4>
+                            <ul class="styled-list">
+                                <li>
+                                    <strong>Используйте transform и opacity</strong>
+                                    <div class="example">
+                                        <pre><code>/* Хорошо - анимируется на GPU */
+@keyframes goodAnimation {
+    0% { transform: translateX(0); opacity: 1; }
+    100% { transform: translateX(100px); opacity: 0; }
+}
+
+/* Плохо - вызывает перекомпоновку */
+@keyframes badAnimation {
+    0% { left: 0; height: 100px; }
+    100% { left: 100px; height: 200px; }
+}</code></pre>
+                                    </div>
+                                </li>
+                                <li>
+                                    <strong>will-change</strong>
+                                    <div class="example">
+                                        <pre><code>.optimized-animation {
+    will-change: transform, opacity;
+}</code></pre>
+                                    </div>
+                                </li>
+                            </ul>
+                        </div>
+                    </div>
+
+                    <div class="info-block">
+                        <h4>Важные моменты</h4>
+                        <ul class="styled-list">
+                            <li>Анимации должны быть плавными (60 fps)</li>
+                            <li>Избегайте анимации свойств, вызывающих перекомпоновку</li>
+                            <li>Используйте DevTools для отладки производительности</li>
+                            <li>Учитывайте настройки пользователя (prefers-reduced-motion)</li>
+                        </ul>
+                    </div>
+                </div>
+            </section>
+
+            <section class="practice">
+                <h2>Практика</h2>
+                <div class="task">
+                    <h3>Задание 1: Создание комплексного экрана загрузки</h3>
+                    <p>Создайте экран загрузки, комбинирующий несколько анимаций: спиннер, прогресс-бар и текст.</p>
+                    
+                    <div class="code-editor">
+                        <div class="editor-tabs">
+                            <button class="tab active">HTML</button>
+                            <button class="tab">CSS</button>
+                        </div>
+                        <textarea class="code-input html-input">
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <title>Комплексный экран загрузки</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+</head>
+<body>
+    <div class="loader">
+        <div class="spinner"></div>
+        <div class="progress-bar">
+            <div class="progress"></div>
+        </div>
+        <div class="loading-text">Загрузка...</div>
+    </div>
+</body>
+</html></textarea>
+                        <textarea class="code-input css-input" style="display: none;">
+.loader {
+    /* Добавьте стили для контейнера */
+}
+
+.spinner {
+    /* Добавьте анимацию спиннера */
+}
+
+.progress-bar {
+    /* Добавьте стили для прогресс-бара */
+}
+
+.loading-text {
+    /* Добавьте анимацию текста */
+}</textarea>
+                    </div>
+
+                    <button class="run-button">Запустить</button>
+
+                    <div class="result-preview">
+                        <h3>Результат</h3>
+                        <div class="preview-frame"></div>
+                    </div>
+                </div>
+
+                <div class="task">
+                    <h3>Задание 2: Анимация с учетом производительности</h3>
+                    <p>Создайте анимированную карточку товара с оптимизированной производительностью.</p>
+                    
+                    <div class="code-editor">
+                        <div class="editor-tabs">
+                            <button class="tab active">HTML</button>
+                            <button class="tab">CSS</button>
+                        </div>
+                        <textarea class="code-input html-input">
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <title>Оптимизированная анимация</title>
+</head>
+<body>
+    <div class="product-card">
+        <img src="product.jpg" alt="Товар">
+        <h2>Название товара</h2>
+        <p class="price">1000 ₽</p>
+        <button class="buy-button">Купить</button>
+    </div>
+</body>
+</html></textarea>
+                        <textarea class="code-input css-input" style="display: none;">
+.product-card {
+    /* Добавьте базовые стили */
+}
+
+.product-card:hover {
+    /* Добавьте оптимизированную анимацию при наведении */
+}
+
+.buy-button {
+    /* Добавьте анимацию для кнопки */
+}</textarea>
+                    </div>
+
+                    <button class="run-button">Запустить</button>
+
+                    <div class="result-preview">
+                        <h3>Результат</h3>
+                        <div class="preview-frame"></div>
+                    </div>
+                </div>
+            </section>
+        </article>
+    </main>
+
+    <footer class="main-footer">
+        <p>&copy; 2024 CSS Курс. Все права защищены.</p>
+    </footer>
+
+    <script src="/scripts/lesson.js"></script>
+</body>
+</html>
+
+<!-- Добавляем в секцию с анимациями -->
+<div class="loader-types">
+    <div class="loader-type">
+        <h4>Анимированный спиннер</h4>
+        <div class="demo-container">
+            <div class="spinner-loader"></div>
+        </div>
+        <div class="example">
+            <pre><code>.spinner-loader {
+    width: 50px;
+    height: 50px;
+    border: 5px solid #f3f3f3;
+    border-top: 5px solid #3498db;
+    border-radius: 50%;
+    animation: spin 1s linear infinite;
+}
+
+@keyframes spin {
+    0% { transform: rotate(0deg); }
+    100% { transform: rotate(360deg); }
+}</code></pre>
+        </div>
+    </div>
+
+    <div class="loader-type">
+        <h4>Пульсирующий загрузчик</h4>
+        <div class="demo-container">
+            <div class="pulse-loader"></div>
+        </div>
+        <div class="example">
+            <pre><code>.pulse-loader {
+    width: 50px;
+    height: 50px;
+    background: #3498db;
+    border-radius: 50%;
+    animation: pulse 1.5s ease-in-out infinite;
+}
+
+@keyframes pulse {
+    0% { transform: scale(0.8); opacity: 0.5; }
+    50% { transform: scale(1.2); opacity: 1; }
+    100% { transform: scale(0.8); opacity: 0.5; }
+}</code></pre>
+        </div>
+    </div>
+
+    <div class="loader-type">
+        <h4>Прогресс-бар</h4>
+        <div class="demo-container">
+            <div class="progress-bar">
+                <div class="progress"></div>
+            </div>
+        </div>
+        <div class="example">
+            <pre><code>.progress-bar {
+    width: 200px;
+    height: 4px;
+    background: #f3f3f3;
+    border-radius: 2px;
+    overflow: hidden;
+}
+
+.progress {
+    width: 100%;
+    height: 100%;
+    background: #3498db;
+    animation: progress 2s ease-in-out infinite;
+}
+
+@keyframes progress {
+    0% { transform: translateX(-100%); }
+    100% { transform: translateX(100%); }
+}</code></pre>
+        </div>
+    </div>
+</div> 

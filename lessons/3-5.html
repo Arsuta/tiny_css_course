@@ -1,0 +1,362 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Урок 3.5: Доступность и медиа-запрос prefers-reduced-motion | CSS Курс</title>
+    <link rel="stylesheet" href="/styles/main.css">
+    <link rel="stylesheet" href="/styles/lesson.css">
+    <style>
+        /* Общие стили для демонстраций */
+        .demo-box {
+            width: 50px;
+            height: 50px;
+            background: #3498db;
+            border-radius: 4px;
+        }
+
+        .demo-area {
+            height: 200px;
+            background: #f8f9fa;
+            border-radius: 8px;
+            padding: 20px;
+            margin: 20px 0;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            position: relative;
+        }
+
+        /* Стили для теоретических блоков */
+        .theory-block {
+            background: white;
+            padding: 1.5rem;
+            border-radius: 8px;
+            margin: 1rem 0;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+        }
+
+        /* Стили для блоков с кодом */
+        .code-block {
+            background: #f8f9fa;
+            padding: 1.5rem;
+            border-radius: 8px;
+            margin: 1.5rem 0;
+            overflow-x: auto;
+        }
+
+        /* Стили для блоков с советами */
+        .tips-block {
+            background: #ebf5fb;
+            padding: 1.5rem;
+            border-radius: 8px;
+            margin: 1.5rem 0;
+            border-left: 4px solid #3498db;
+        }
+
+        /* Общие стили из предыдущих уроков */
+        .container {
+            max-width: 800px;
+            margin: 0 auto;
+            padding: 20px;
+            font-family: 'Arial', sans-serif;
+        }
+
+        h1 {
+            color: #466A85;
+            font-size: 24px;
+            margin-bottom: 30px;
+        }
+
+        h2 {
+            color: #466A85;
+            font-size: 20px;
+            margin: 25px 0 15px;
+        }
+
+        section {
+            margin-bottom: 30px;
+        }
+
+        .task-section {
+            background: #f8f9fa;
+            border-left: 4px solid #466A85;
+            padding: 20px;
+            margin: 30px 0;
+        }
+
+        .demo {
+            padding: 20px;
+            background: #f5f5f5;
+            border-radius: 8px;
+            margin: 20px 0;
+        }
+
+        .animated-box {
+            width: 100px;
+            height: 100px;
+            background: #466A85;
+            animation: move 2s infinite;
+        }
+
+        @keyframes move {
+            from { transform: translateX(0); }
+            to { transform: translateX(200px); }
+        }
+
+        @media (prefers-reduced-motion: reduce) {
+            .animated-box {
+                animation: none;
+            }
+        }
+
+        .code-example {
+            background: #1E1E1E;
+            color: #1E1E1E;
+            padding: 15px;
+            border-radius: 8px;
+            margin: 10px 0;
+            font-family: monospace;
+        }
+
+        .note {
+            background: #fff3cd;
+            border-left: 4px solid #ffc107;
+            padding: 15px;
+            margin: 15px 0;
+        }
+
+        /* Стили для практического задания */
+        .practice-demo {
+            border: 2px solid #466A85;
+            padding: 20px;
+            margin: 20px 0;
+            border-radius: 8px;
+        }
+
+        .loader {
+            width: 50px;
+            height: 50px;
+            border: 5px solid #f3f3f3;
+            border-top: 5px solid #466A85;
+            border-radius: 50%;
+            animation: spin 1s linear infinite;
+        }
+
+        @keyframes spin {
+            0% { transform: rotate(0deg); }
+            100% { transform: rotate(360deg); }
+        }
+
+        @media (prefers-reduced-motion: reduce) {
+            .loader {
+                animation-duration: 3s;
+                /* или animation: none; если хотите полностью отключить */
+            }
+        }
+
+        .sr-only {
+            position: absolute;
+            width: 1px;
+            height: 1px;
+            padding: 0;
+            margin: -1px;
+            overflow: hidden;
+            clip: rect(0, 0, 0, 0);
+            border: 0;
+        }
+
+        /* Стили для навигации */
+        .chapter-navigation {
+            background: #f8f9fa;
+            padding: 10px 20px;
+            margin-bottom: 30px;
+            border-radius: 4px;
+        }
+
+        .chapter-navigation .current {
+            color: #466A85;
+            font-weight: bold;
+        }
+
+        .breadcrumbs {
+            margin-bottom: 20px;
+            color: #666;
+        }
+
+        .breadcrumbs a {
+            color: #466A85;
+            text-decoration: none;
+        }
+
+        .breadcrumbs a:hover {
+            text-decoration: underline;
+        }
+    </style>
+</head>
+<body>
+    <header class="main-header">
+        <nav class="main-nav">
+            <div class="logo">CSS Курс</div>
+            <ul class="nav-links">
+                <li><a href="/">На главную</a></li>
+                <li><a href="#chapters">Главы</a></li>
+            </ul>
+        </nav>
+    </header>
+
+    <main class="lesson-content">
+        <nav class="lesson-nav">
+            <a href="/lessons/3-4" class="prev-lesson">← Урок 3.4: Анимация элементов в CSS</a>
+            <a href="/lessons/3-6" class="next-lesson">Урок 3.6: Стилизация HTML progress bar →</a>
+        </nav>
+
+        <article class="lesson">
+            <header class="lesson-header">
+                <h1>3.5 Доступность и медиа-запрос prefers-reduced-motion</h1>
+            </header>
+
+            <section class="theory">
+                <h2>Теория</h2>
+                <p>В современном веб-дизайне анимации стали неотъемлемой частью пользовательского интерфейса. Однако не все пользователи могут комфортно воспринимать движущиеся элементы на странице. В этом уроке мы рассмотрим, как сделать наши анимации более доступными с помощью медиа-запроса prefers-reduced-motion.</p>
+            </section>
+
+            <section>
+                <h2>Проблемы доступности анимаций</h2>
+                <p>Анимации могут вызывать следующие проблемы у пользователей:</p>
+                <ul>
+                    <li>Головные боли</li>
+                    <li>Головокружение</li>
+                    <li>Тошноту</li>
+                    <li>Приступы у людей с вестибулярными расстройствами</li>
+                    <li>Эпилептические припадки (особенно при наличии мигающих элементов)</li>
+                </ul>
+            </section>
+
+            <section>
+                <h2>Медиа-запрос prefers-reduced-motion</h2>
+                <p>CSS предоставляет медиа-запрос prefers-reduced-motion, который позволяет определить предпочтения пользователя относительно анимаций. У этого запроса есть два значения:</p>
+                <ul>
+                    <li><code>no-preference</code> - пользователь не указал особых предпочтений</li>
+                    <li><code>reduce</code> - пользователь предпочитает уменьшенное количество анимаций</li>
+                </ul>
+
+                <div class="code-example">
+                    <pre>
+@media (prefers-reduced-motion: reduce) {
+    /* Стили для пользователей, предпочитающих меньше анимаций */
+    .animated-element {
+        animation: none;
+        transition: none;
+    }
+}
+                    </pre>
+                </div>
+            </section>
+
+            <section>
+                <h2>Пример использования</h2>
+                <p>Ниже представлен пример анимированного элемента. Если в настройках вашей системы включено уменьшение анимаций, элемент останется статичным.</p>
+                
+                <div class="demo">
+                    <div class="animated-box"></div>
+                </div>
+
+                <div class="code-example">
+                    <pre>
+.animated-box {
+    width: 100px;
+    height: 100px;
+    background: #466A85;
+    animation: move 2s infinite;
+}
+
+@keyframes move {
+    from { transform: translateX(0); }
+    to { transform: translateX(200px); }
+}
+
+@media (prefers-reduced-motion: reduce) {
+    .animated-box {
+        animation: none;
+    }
+}
+                    </pre>
+                </div>
+            </section>
+
+            <section>
+                <h2>Рекомендации по использованию анимаций</h2>
+                <p>При разработке анимаций следует учитывать следующие факторы:</p>
+                <ul>
+                    <li>Скорость анимации</li>
+                    <li>Продолжительность</li>
+                    <li>Размер анимированной области относительно viewport</li>
+                    <li>Частота мерцания</li>
+                    <li>Важность анимации для функционирования сайта</li>
+                </ul>
+                
+                <div class="note">
+                    <p><strong>Важно:</strong> Согласно рекомендациям по доступности, пользователь должен иметь возможность приостановить, остановить или скрыть анимацию, которая длится более 3 секунд и не является существенной для функционирования сайта.</p>
+                </div>
+            </section>
+
+            <section>
+                <h2>Практические советы</h2>
+                <ul>
+                    <li>Всегда предоставляйте альтернативу анимированному контенту</li>
+                    <li>Избегайте автоматически воспроизводящихся анимаций, если они не являются критически важными</li>
+                    <li>Рассмотрите возможность добавления кнопки для отключения анимаций на сайте</li>
+                    <li>Тестируйте ваш сайт с включенной настройкой prefers-reduced-motion</li>
+                </ul>
+            </section>
+
+            <section class="practice">
+                <h2>Практика</h2>
+                <div class="task">
+                    <h3>Задание: Создание доступного анимированного загрузчика</h3>
+                    <p>Создайте анимированный загрузчик с учетом доступности:</p>
+                    
+                    <ol>
+                        <li>Создайте простой спиннер загрузки (пример ниже)</li>
+                        <li>Добавьте анимацию вращения</li>
+                        <li>Реализуйте поддержку prefers-reduced-motion</li>
+                        <li>Добавьте текстовую альтернативу для скринридеров</li>
+                    </ol>
+
+                    <p>Пример загрузчика:</p>
+                    <div class="practice-demo">
+                        <div class="loader" role="status">
+                            <span class="sr-only">Загрузка...</span>
+                        </div>
+                    </div>
+
+                    <div class="code-editor">
+                        <div class="editor-tabs">
+                            <button class="tab active">HTML</button>
+                            <button class="tab">CSS</button>
+                        </div>
+                        <textarea class="code-input html-input">
+<!-- HTML код для редактирования -->
+</textarea>
+                        <textarea class="code-input css-input" style="display: none;">
+/* CSS код для редактирования */
+</textarea>
+                    </div>
+                    <button class="run-button">Запустить</button>
+                    <div class="result-preview">
+                        <h3>Результат</h3>
+                        <div class="preview-frame"></div>
+                    </div>
+                </div>
+            </section>
+        </article>
+    </main>
+
+    <footer class="main-footer">
+        <p>&copy; 2024 CSS Курс. Все права защищены.</p>
+    </footer>
+
+    <script src="/scripts/lesson.js"></script>
+</body>
+</html> 

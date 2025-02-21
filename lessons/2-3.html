@@ -1,0 +1,253 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Урок 2.3: Треки и линии сетки | CSS Курс</title>
+    <link rel="stylesheet" href="/styles/main.css">
+    <link rel="stylesheet" href="/styles/lesson.css">
+</head>
+<body>
+    <header class="main-header">
+        <nav class="main-nav">
+            <div class="logo">CSS Курс</div>
+            <ul class="nav-links">
+                <li><a href="/">На главную</a></li>
+                <li><a href="#chapters">Главы</a></li>
+            </ul>
+        </nav>
+    </header>
+
+    <main class="lesson-content">
+        <nav class="lesson-nav">
+            <a href="/lessons/2-2" class="prev-lesson">← Урок 2.2: Display grid</a>
+            <a href="/lessons/2-4" class="next-lesson">Урок 2.4: Grid template areas →</a>
+        </nav>
+
+        <article class="lesson">
+            <header class="lesson-header">
+                <h1>Урок 2.3: Треки и линии сетки</h1>
+            </header>
+
+            <section class="theory">
+                <h2>Теория</h2>
+                <div class="theory-content">
+                    <h3>Треки сетки</h3>
+                    <p>Треки - это пространство между двумя соседними линиями сетки, которое может быть горизонтальным (ряды) или вертикальным (колонки).</p>
+
+                    <div class="tracks-explanation">
+                        <div class="track-card">
+                            <h4>Определение треков</h4>
+                            <div class="example">
+                                <pre><code>.grid {
+    display: grid;
+    /* Колонки */
+    grid-template-columns: 100px 1fr 2fr;
+    /* Ряды */
+    grid-template-rows: auto minmax(100px, auto) 200px;
+}</code></pre>
+                            </div>
+                            <div class="grid-demo tracks-demo">
+                                <div>100px</div>
+                                <div>1fr</div>
+                                <div>2fr</div>
+                                <div>auto</div>
+                                <div>minmax</div>
+                                <div>200px</div>
+                            </div>
+                        </div>
+
+                        <div class="track-card">
+                            <h4>Единицы измерения треков</h4>
+                            <ul class="styled-list">
+                                <li><code>px, em, rem</code> - фиксированные размеры</li>
+                                <li><code>%</code> - процент от размера контейнера</li>
+                                <li><code>fr</code> - доля свободного пространства</li>
+                                <li><code>auto</code> - размер на основе содержимого</li>
+                                <li><code>minmax(min, max)</code> - адаптивный размер</li>
+                            </ul>
+                        </div>
+                    </div>
+
+                    <h3>Линии сетки</h3>
+                    <div class="lines-explanation">
+                        <div class="line-card">
+                            <h4>Нумерация линий</h4>
+                            <div class="example">
+                                <pre><code>.item {
+    /* От 1 до 3 линии */
+    grid-column: 1 / 3;
+    /* От 2 до 4 линии */
+    grid-row: 2 / 4;
+}</code></pre>
+                            </div>
+                            <div class="grid-demo lines-demo">
+                                <div class="numbered-grid">
+                                    <div class="line-number">1</div>
+                                    <div class="line-number">2</div>
+                                    <div class="line-number">3</div>
+                                    <div class="line-number">4</div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="line-card">
+                            <h4>Именованные линии</h4>
+                            <div class="example">
+                                <pre><code>.grid {
+    grid-template-columns: 
+        [sidebar-start] 200px 
+        [content-start] 1fr 
+        [content-end];
+}
+
+.sidebar {
+    grid-column: sidebar-start / content-start;
+}</code></pre>
+                            </div>
+                        </div>
+                    </div>
+
+                    <h3>Функция repeat()</h3>
+                    <div class="repeat-explanation">
+                        <div class="repeat-card">
+                            <h4>Простое повторение</h4>
+                            <div class="example">
+                                <pre><code>/* 3 колонки по 1fr */
+grid-template-columns: repeat(3, 1fr);
+
+/* 4 ряда по 100px */
+grid-template-rows: repeat(4, 100px);</code></pre>
+                            </div>
+                        </div>
+
+                        <div class="repeat-card">
+                            <h4>Сложные паттерны</h4>
+                            <div class="example">
+                                <pre><code>/* Чередование размеров */
+grid-template-columns: repeat(2, 100px 1fr);
+
+/* Автозаполнение */
+grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));</code></pre>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="info-block">
+                        <h4>Важные моменты</h4>
+                        <ul class="styled-list">
+                            <li>Линии нумеруются начиная с 1</li>
+                            <li>Можно использовать отрицательные номера линий (справа налево)</li>
+                            <li>fr распределяет оставшееся пространство</li>
+                            <li>minmax() помогает создавать адаптивные сетки</li>
+                        </ul>
+                    </div>
+                </div>
+            </section>
+
+            <section class="practice">
+                <h2>Практика</h2>
+                <div class="task">
+                    <h3>Задание 1: Работа с треками</h3>
+                    <p>Создайте сетку с разными типами треков, используя различные единицы измерения.</p>
+                    
+                    <div class="code-editor">
+                        <div class="editor-tabs">
+                            <button class="tab active">HTML</button>
+                            <button class="tab">CSS</button>
+                        </div>
+                        <textarea class="code-input html-input">
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Треки сетки</title>
+</head>
+<body>
+    <div class="grid-container">
+        <div class="item">Фиксированный</div>
+        <div class="item">Гибкий</div>
+        <div class="item">Процентный</div>
+        <div class="item">Минимакс</div>
+    </div>
+</body>
+</html></textarea>
+                        <textarea class="code-input css-input" style="display: none;">
+.grid-container {
+    display: grid;
+    /* Добавьте определение треков с разными единицами измерения */
+    gap: 10px;
+}
+
+.item {
+    background-color: #e9ecef;
+    padding: 20px;
+    text-align: center;
+    border-radius: 4px;
+}</textarea>
+                    </div>
+
+                    <button class="run-button">Запустить</button>
+
+                    <div class="result-preview">
+                        <h3>Результат</h3>
+                        <div class="preview-frame"></div>
+                    </div>
+                </div>
+
+                <div class="task">
+                    <h3>Задание 2: Именованные линии</h3>
+                    <p>Создайте макет с использованием именованных линий сетки.</p>
+                    
+                    <div class="code-editor">
+                        <div class="editor-tabs">
+                            <button class="tab active">HTML</button>
+                            <button class="tab">CSS</button>
+                        </div>
+                        <textarea class="code-input html-input">
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Именованные линии</title>
+</head>
+<body>
+    <div class="layout">
+        <header class="header">Шапка</header>
+        <nav class="sidebar">Боковая панель</nav>
+        <main class="content">Основной контент</main>
+        <footer class="footer">Подвал</footer>
+    </div>
+</body>
+</html></textarea>
+                        <textarea class="code-input css-input" style="display: none;">
+.layout {
+    display: grid;
+    /* Добавьте именованные линии и определите размеры треков */
+    gap: 20px;
+}
+
+.header, .sidebar, .content, .footer {
+    background-color: #e9ecef;
+    padding: 20px;
+    text-align: center;
+    border-radius: 4px;
+}</textarea>
+                    </div>
+
+                    <button class="run-button">Запустить</button>
+
+                    <div class="result-preview">
+                        <h3>Результат</h3>
+                        <div class="preview-frame"></div>
+                    </div>
+                </div>
+            </section>
+        </article>
+    </main>
+
+    <footer class="main-footer">
+        <p>&copy; 2024 CSS Курс. Все права защищены.</p>
+    </footer>
+
+    <script src="/scripts/lesson.js"></script>
+</body>
+</html> 

@@ -1,0 +1,230 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Урок 2.4: Grid template areas | CSS Курс</title>
+    <link rel="stylesheet" href="/styles/main.css">
+    <link rel="stylesheet" href="/styles/lesson.css">
+</head>
+<body>
+    <header class="main-header">
+        <nav class="main-nav">
+            <div class="logo">CSS Курс</div>
+            <ul class="nav-links">
+                <li><a href="/">На главную</a></li>
+                <li><a href="#chapters">Главы</a></li>
+            </ul>
+        </nav>
+    </header>
+
+    <main class="lesson-content">
+        <nav class="lesson-nav">
+            <a href="/lessons/2-3" class="prev-lesson">← Урок 2.3: Треки и линии сетки</a>
+            <a href="/lessons/2-5" class="next-lesson">Урок 2.5: Медиа-запросы →</a>
+        </nav>
+
+        <article class="lesson">
+            <header class="lesson-header">
+                <h1>Урок 2.4: Grid template areas</h1>
+            </header>
+
+            <section class="theory">
+                <h2>Теория</h2>
+                <div class="theory-content">
+                    <h3>Grid Template Areas</h3>
+                    <p>Grid Template Areas позволяет создавать макеты с помощью именованных областей, делая код более наглядным и понятным.</p>
+
+                    <div class="areas-explanation">
+                        <div class="area-card">
+                            <h4>Определение областей</h4>
+                            <div class="example">
+                                <pre><code>.grid {
+    display: grid;
+    grid-template-areas:
+        "header header header"
+        "sidebar content content"
+        "footer footer footer";
+    grid-template-columns: 200px 1fr 1fr;
+    grid-template-rows: auto 1fr auto;
+    gap: 20px;
+}</code></pre>
+                            </div>
+                            <div class="grid-demo areas-demo">
+                                <div class="header">header</div>
+                                <div class="sidebar">sidebar</div>
+                                <div class="content">content</div>
+                                <div class="footer">footer</div>
+                            </div>
+                        </div>
+
+                        <div class="area-card">
+                            <h4>Привязка элементов к областям</h4>
+                            <div class="example">
+                                <pre><code>.header { grid-area: header; }
+.sidebar { grid-area: sidebar; }
+.content { grid-area: content; }
+.footer { grid-area: footer; }</code></pre>
+                            </div>
+                        </div>
+                    </div>
+
+                    <h3>Пустые ячейки и точки</h3>
+                    <div class="empty-cells">
+                        <div class="cell-card">
+                            <h4>Использование точки для пустой ячейки</h4>
+                            <div class="example">
+                                <pre><code>.grid {
+    grid-template-areas:
+        "header header ."
+        "sidebar content content"
+        ". footer footer";
+}</code></pre>
+                            </div>
+                        </div>
+                    </div>
+
+                    <h3>Адаптивные макеты</h3>
+                    <div class="responsive-layouts">
+                        <div class="layout-card">
+                            <h4>Изменение макета с помощью медиа-запросов</h4>
+                            <div class="example">
+                                <pre><code>@media (max-width: 768px) {
+    .grid {
+        grid-template-areas:
+            "header"
+            "content"
+            "sidebar"
+            "footer";
+        grid-template-columns: 1fr;
+    }
+}</code></pre>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="info-block">
+                        <h4>Важные правила</h4>
+                        <ul class="styled-list">
+                            <li>Каждая строка должна иметь одинаковое количество ячеек</li>
+                            <li>Область должна формировать прямоугольник</li>
+                            <li>Имена областей должны быть уникальными</li>
+                            <li>Точка (.) обозначает пустую ячейку</li>
+                        </ul>
+                    </div>
+                </div>
+            </section>
+
+            <section class="practice">
+                <h2>Практика</h2>
+                <div class="task">
+                    <h3>Задание 1: Создание макета блога</h3>
+                    <p>Создайте адаптивный макет блога с использованием grid-template-areas.</p>
+                    
+                    <div class="code-editor">
+                        <div class="editor-tabs">
+                            <button class="tab active">HTML</button>
+                            <button class="tab">CSS</button>
+                        </div>
+                        <textarea class="code-input html-input">
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Макет блога</title>
+</head>
+<body>
+    <div class="blog-layout">
+        <header class="blog-header">Заголовок блога</header>
+        <nav class="blog-nav">Навигация</nav>
+        <main class="blog-main">Основной контент</main>
+        <aside class="blog-sidebar">Боковая панель</aside>
+        <footer class="blog-footer">Подвал</footer>
+    </div>
+</body>
+</html></textarea>
+                        <textarea class="code-input css-input" style="display: none;">
+.blog-layout {
+    display: grid;
+    /* Добавьте grid-template-areas и другие необходимые свойства */
+    gap: 20px;
+    padding: 20px;
+}
+
+/* Стилизация элементов */
+.blog-layout > * {
+    padding: 20px;
+    background: #e9ecef;
+    border-radius: 4px;
+    text-align: center;
+}
+
+/* Добавьте медиа-запрос для адаптивности */</textarea>
+                    </div>
+
+                    <button class="run-button">Запустить</button>
+
+                    <div class="result-preview">
+                        <h3>Результат</h3>
+                        <div class="preview-frame"></div>
+                    </div>
+                </div>
+
+                <div class="task">
+                    <h3>Задание 2: Сложный макет с пустыми областями</h3>
+                    <p>Создайте макет с пустыми областями, используя точки в grid-template-areas.</p>
+                    
+                    <div class="code-editor">
+                        <div class="editor-tabs">
+                            <button class="tab active">HTML</button>
+                            <button class="tab">CSS</button>
+                        </div>
+                        <textarea class="code-input html-input">
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Сложный макет</title>
+</head>
+<body>
+    <div class="complex-layout">
+        <header class="header">Шапка</header>
+        <nav class="nav">Меню</nav>
+        <main class="content">Контент</main>
+        <aside class="sidebar">Сайдбар</aside>
+        <footer class="footer">Подвал</footer>
+    </div>
+</body>
+</html></textarea>
+                        <textarea class="code-input css-input" style="display: none;">
+.complex-layout {
+    display: grid;
+    /* Создайте макет с пустыми областями */
+    gap: 20px;
+    padding: 20px;
+}
+
+.complex-layout > * {
+    padding: 20px;
+    background: #e9ecef;
+    border-radius: 4px;
+    text-align: center;
+}</textarea>
+                    </div>
+
+                    <button class="run-button">Запустить</button>
+
+                    <div class="result-preview">
+                        <h3>Результат</h3>
+                        <div class="preview-frame"></div>
+                    </div>
+                </div>
+            </section>
+        </article>
+    </main>
+
+    <footer class="main-footer">
+        <p>&copy; 2024 CSS Курс. Все права защищены.</p>
+    </footer>
+
+    <script src="/scripts/lesson.js"></script>
+</body>
+</html> 

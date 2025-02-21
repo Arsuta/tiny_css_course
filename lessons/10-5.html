@@ -1,0 +1,224 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Урок 10.5 - Стилизация меток и легенд | CSS Курс</title>
+    <link rel="stylesheet" href="../styles/main.css">
+    <link rel="stylesheet" href="../styles/lesson.css">
+    <style>
+        .demo-section {
+            margin-bottom: 40px;
+            background: #fff;
+            padding: 20px;
+            border-radius: 8px;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+        }
+
+        /* Стили для меток */
+        .form-label {
+            display: block;
+            margin-bottom: 8px;
+            color: #466A85;
+            font-weight: bold;
+            font-size: 16px;
+        }
+
+        /* Стили для обязательных полей */
+        .required::after {
+            content: '*';
+            color: #e74c3c;
+            margin-left: 4px;
+        }
+
+        /* Стили для легенд */
+        legend {
+            padding: 0 10px;
+            font-weight: bold;
+            color: #466A85;
+            font-size: 18px;
+        }
+
+        /* Стили для подсказок */
+        .form-hint {
+            font-size: 14px;
+            color: #666;
+            margin-top: 4px;
+        }
+
+        /* Стили для группировки */
+        .form-group {
+            margin-bottom: 20px;
+        }
+
+        fieldset {
+            border: 2px solid #ddd;
+            border-radius: 8px;
+            padding: 20px;
+            margin-bottom: 20px;
+        }
+
+        /* Стили для инлайновых меток */
+        .inline-label {
+            display: inline-flex;
+            align-items: center;
+            margin-right: 20px;
+        }
+
+        .inline-label input {
+            margin-right: 8px;
+        }
+
+        /* Код с пояснениями */
+        .code-block {
+            background: #1E1E1E;
+            color: #D4D4D4;
+            padding: 15px;
+            border-radius: 8px;
+            margin: 20px 0;
+            font-family: monospace;
+            line-height: 1.5;
+        }
+
+        .code-block .selector { color: #569CD6; }
+        .code-block .property { color: #9CDCFE; }
+        .code-block .value { color: #CE9178; }
+        .code-block .comment { color: #6A9955; }
+
+        /* Теория */
+        .theory-block {
+            margin-bottom: 30px;
+        }
+
+        .theory-explanation {
+            background: #f7f5e8;
+            padding: 20px;
+            border-radius: 8px;
+            margin: 15px 0;
+        }
+    </style>
+</head>
+<body>
+    <header class="main-header">
+        <nav class="main-nav">
+            <a href="../index.html" class="logo">CSS Курс</a>
+            <ul class="nav-links">
+                <li><a href="../index.html">На главную</a></li>
+                <li><a href="../chapters.html">Главы</a></li>
+            </ul>
+        </nav>
+    </header>
+
+    <main class="lesson-content">
+        <nav class="lesson-nav">
+            <a href="10-4.html" class="prev-lesson">← Урок 10.4: Стилизация выпадающих меню</a>
+            <a href="10-6.html" class="next-lesson">Урок 10.6: Стилизация placeholder →</a>
+        </nav>
+
+        <article class="lesson">
+            <h1>Урок 10.5 - Стилизация меток и легенд</h1>
+
+            <div class="theory-block">
+                <h2>Стилизация меток (labels)</h2>
+                <p>Метки играют важную роль в формах, обеспечивая понятность и доступность:</p>
+
+                <div class="theory-explanation">
+                    <h3>Основные принципы:</h3>
+                    <ul>
+                        <li><strong>Размер шрифта:</strong> Должен быть читаемым</li>
+                        <li><strong>Отступы:</strong> Обеспечивают визуальную связь с полем</li>
+                        <li><strong>Цвет:</strong> Достаточный контраст для читаемости</li>
+                        <li><strong>Обязательные поля:</strong> Четкое обозначение</li>
+                    </ul>
+                </div>
+
+                <div class="demo-section">
+                    <div class="form-group">
+                        <label class="form-label required">Имя пользователя</label>
+                        <input type="text" class="form-control">
+                        <div class="form-hint">Минимум 3 символа</div>
+                    </div>
+                </div>
+
+                <div class="code-block">
+                    <pre><code><span class="comment">/* Стили для меток */</span>
+<span class="selector">.form-label</span> {
+    <span class="property">display</span>: <span class="value">block</span>;
+    <span class="property">margin-bottom</span>: <span class="value">8px</span>;
+    <span class="property">color</span>: <span class="value">#466A85</span>;
+    <span class="property">font-weight</span>: <span class="value">bold</span>;
+}
+
+<span class="comment">/* Обязательные поля */</span>
+<span class="selector">.required::after</span> {
+    <span class="property">content</span>: <span class="value">'*'</span>;
+    <span class="property">color</span>: <span class="value">#e74c3c</span>;
+}</code></pre>
+                </div>
+            </div>
+
+            <div class="theory-block">
+                <h2>Стилизация легенд (legends)</h2>
+                <p>Легенды используются для группировки связанных полей:</p>
+
+                <div class="demo-section">
+                    <fieldset>
+                        <legend>Контактная информация</legend>
+                        <div class="form-group">
+                            <label class="form-label">Email</label>
+                            <input type="email" class="form-control">
+                        </div>
+                        <div class="form-group">
+                            <label class="form-label">Телефон</label>
+                            <input type="tel" class="form-control">
+                        </div>
+                    </fieldset>
+                </div>
+
+                <div class="code-block">
+                    <pre><code><span class="comment">/* Стили для легенд */</span>
+<span class="selector">legend</span> {
+    <span class="property">padding</span>: <span class="value">0 10px</span>;
+    <span class="property">font-weight</span>: <span class="value">bold</span>;
+    <span class="property">color</span>: <span class="value">#466A85</span>;
+}
+
+<span class="selector">fieldset</span> {
+    <span class="property">border</span>: <span class="value">2px solid #ddd</span>;
+    <span class="property">border-radius</span>: <span class="value">8px</span>;
+    <span class="property">padding</span>: <span class="value">20px</span>;
+}</code></pre>
+                </div>
+            </div>
+
+            <div class="theory-block">
+                <h2>Инлайновые метки</h2>
+                <p>Для радиокнопок и чекбоксов часто используются инлайновые метки:</p>
+
+                <div class="demo-section">
+                    <fieldset>
+                        <legend>Выберите опции</legend>
+                        <label class="inline-label">
+                            <input type="checkbox">
+                            Опция 1
+                        </label>
+                        <label class="inline-label">
+                            <input type="checkbox">
+                            Опция 2
+                        </label>
+                    </fieldset>
+                </div>
+
+                <div class="code-block">
+                    <pre><code><span class="comment">/* Стили для инлайновых меток */</span>
+<span class="selector">.inline-label</span> {
+    <span class="property">display</span>: <span class="value">inline-flex</span>;
+    <span class="property">align-items</span>: <span class="value">center</span>;
+    <span class="property">margin-right</span>: <span class="value">20px</span>;
+}</code></pre>
+                </div>
+            </div>
+        </article>
+    </main>
+</body>
+</html> 

@@ -1,0 +1,617 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Урок 8.5 - Широкие экраны | CSS Курс</title>
+    <link rel="stylesheet" href="../styles/main.css">
+    <link rel="stylesheet" href="../styles/lesson.css">
+    <style>
+        /* Базовые стили */
+        .demo-section {
+            margin-bottom: 40px;
+            background: #fff;
+            padding: 20px;
+            border-radius: 8px;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+            position: relative;
+            overflow: hidden;
+        }
+
+        /* Теоретические блоки */
+        .theory-block {
+            background: #fff;
+            padding: 25px;
+            border-radius: 8px;
+            margin-bottom: 30px;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+        }
+
+        .theory-block h2 {
+            color: #466A85;
+            margin-bottom: 20px;
+            font-size: 1.4em;
+            border-bottom: 2px solid #f0f0f0;
+            padding-bottom: 10px;
+        }
+
+        .theory-block p {
+            line-height: 1.6;
+            color: #333;
+            margin-bottom: 15px;
+        }
+
+        /* Код с пояснениями */
+        .code-explanation {
+            background: #f7f5e8;
+            padding: 20px;
+            border-radius: 8px;
+            margin: 20px 0;
+        }
+
+        .code-explanation h3 {
+            color: #466A85;
+            margin-bottom: 15px;
+        }
+
+        .code-explanation ul {
+            list-style: none;
+            padding: 0;
+            margin: 15px 0;
+        }
+
+        .code-explanation li {
+            margin: 10px 0;
+            padding-left: 20px;
+            position: relative;
+        }
+
+        .code-explanation li::before {
+            content: "•";
+            color: #466A85;
+            position: absolute;
+            left: 0;
+        }
+
+        /* Демонстрация широкого макета */
+        .wide-layout-demo {
+            background: #f7f5e8;
+            padding: 20px;
+            border-radius: 8px;
+            margin: 20px 0;
+            display: grid;
+            gap: 20px;
+            transition: all 0.3s ease;
+            position: relative;
+            overflow: visible;
+        }
+
+        /* Стили для разных вариантов сетки */
+        .grid-layout {
+            display: grid;
+            gap: 20px;
+        }
+
+        /* Медиа-запросы для широких экранов */
+        @media (min-width: 1200px) {
+            .grid-layout {
+                grid-template-columns: repeat(3, 1fr);
+            }
+
+            .grid-layout.with-sidebar {
+                grid-template-columns: 250px 1fr;
+            }
+
+            .grid-layout.three-columns {
+                grid-template-columns: 250px 1fr 300px;
+            }
+        }
+
+        /* Стили для карточек */
+        .card {
+            background: white;
+            padding: 20px;
+            border-radius: 8px;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+            transition: all 0.3s ease;
+        }
+
+        .card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 4px 8px rgba(0,0,0,0.2);
+        }
+
+        /* Стили для панели управления */
+        .controls-panel {
+            background: #f7f5e8;
+            padding: 15px;
+            border-radius: 8px;
+            margin-bottom: 20px;
+        }
+
+        .control-group {
+            display: flex;
+            gap: 10px;
+            margin-bottom: 10px;
+        }
+
+        .control-button {
+            padding: 8px 16px;
+            background: #466A85;
+            color: white;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+
+        .control-button:hover {
+            background: #557a95;
+        }
+
+        .control-button.active {
+            background: #7be6e8;
+            color: #333;
+        }
+
+        /* Визуализация макета */
+        .layout-visualizer {
+            position: relative;
+            min-height: 300px;
+            background: #fff;
+            border-radius: 8px;
+            overflow: hidden;
+        }
+
+        .layout-area {
+            padding: 20px;
+            border: 2px dashed #466A85;
+            border-radius: 4px;
+            margin: 10px;
+            background: rgba(70, 106, 133, 0.1);
+        }
+
+        .layout-label {
+            position: absolute;
+            top: 5px;
+            left: 5px;
+            background: #466A85;
+            color: white;
+            padding: 2px 8px;
+            border-radius: 4px;
+            font-size: 12px;
+        }
+
+        /* Стили для блоков с кодом */
+        .code-block {
+            background: #1E1E1E;
+            color: #D4D4D4;
+            padding: 15px;
+            border-radius: 8px;
+            margin: 20px 0;
+            font-family: monospace;
+            line-height: 1.5;
+        }
+
+        /* Улучшенные стили для подсветки синтаксиса */
+        .code-block .selector { color: #569CD6; }
+        .code-block .property { color: #9CDCFE; }
+        .code-block .value { color: #CE9178; }
+        .code-block .comment { color: #6A9955; }
+        .code-block .punctuation { color: #D4D4D4; }
+
+        /* Демонстрация максимальной ширины */
+        .max-width-demo {
+            background: #fff;
+            padding: 20px;
+            margin: 20px auto;
+            border-radius: 8px;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+            transition: all 0.3s ease;
+            position: relative;
+            overflow: hidden;
+            min-height: 100px;
+            border: 1px solid #eee;
+        }
+
+        /* Индикатор текущей ширины */
+        .width-label {
+            position: absolute;
+            top: 5px;
+            right: 5px;
+            background: #466A85;
+            color: white;
+            padding: 2px 8px;
+            border-radius: 4px;
+            font-size: 12px;
+        }
+
+        /* Улучшенные стили для демонстрации */
+        .max-width-demo p {
+            margin: 0;
+            padding: 20px;
+            background: #f7f5e8;
+            border-radius: 4px;
+            line-height: 1.6;
+            color: #333;
+            font-size: 16px;
+            text-align: justify;
+        }
+
+        /* Визуальные подсказки */
+        .width-guide {
+            position: absolute;
+            top: 0;
+            bottom: 0;
+            width: 2px;
+            background: rgba(70, 106, 133, 0.2);
+            pointer-events: none;
+            transition: all 0.3s ease;
+        }
+
+        .width-guide::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            bottom: 0;
+            left: 50%;
+            width: 1px;
+            background: rgba(70, 106, 133, 0.4);
+            transform: translateX(-50%);
+        }
+
+        .width-guide::after {
+            content: attr(data-width);
+            position: absolute;
+            top: -20px;
+            left: 50%;
+            transform: translateX(-50%);
+            background: #466A85;
+            color: white;
+            padding: 2px 8px;
+            border-radius: 4px;
+            font-size: 12px;
+        }
+
+        .width-indicator {
+            position: fixed;
+            top: 20px;
+            right: 20px;
+            background: #466A85;
+            color: white;
+            padding: 5px 10px;
+            border-radius: 4px;
+            font-size: 14px;
+            z-index: 1000;
+        }
+    </style>
+</head>
+<body>
+    <!-- Навигация и заголовок -->
+    <header class="main-header">
+        <nav class="main-nav">
+            <a href="../index.html" class="logo">CSS Курс</a>
+            <ul class="nav-links">
+                <li><a href="../index.html">На главную</a></li>
+                <li><a href="../chapters.html">Главы</a></li>
+            </ul>
+        </nav>
+    </header>
+
+    <main class="lesson-content">
+        <nav class="lesson-nav">
+            <a href="8-4.html" class="prev-lesson">← Урок 8.4: Средние экраны</a>
+            <a href="9-1.html" class="next-lesson">Урок 9.1: Следующая глава →</a>
+        </nav>
+
+        <div class="chapter-navigation">
+            <h3>Навигация по главе 8:</h3>
+            <ul>
+                <li><a href="8-1.html">8.1 Начало работы</a></li>
+                <li><a href="8-2.html">8.2 Оформление</a></li>
+                <li><a href="8-3.html">8.3 Мобильная версия</a></li>
+                <li><a href="8-4.html">8.4 Средние экраны</a></li>
+                <li><a href="8-5.html" class="current">8.5 Широкие экраны</a></li>
+            </ul>
+        </div>
+
+        <article class="lesson">
+            <h1>Урок 8.5 - Широкие экраны</h1>
+
+            <div class="theory-block">
+                <h2>1. Макеты для широких экранов</h2>
+                <p>На широких экранах важно эффективно использовать доступное пространство. Рассмотрим основные принципы и подходы:</p>
+                
+                <div class="code-explanation">
+                    <h3>Основные принципы широких макетов:</h3>
+                    <ul>
+                        <li><strong>Масштабируемость:</strong> Контент должен эффективно заполнять пространство</li>
+                        <li><strong>Читаемость:</strong> Строки текста не должны быть слишком длинными</li>
+                        <li><strong>Иерархия:</strong> Важная информация должна быть заметна</li>
+                    </ul>
+                </div>
+
+                <div class="code-block">
+                    <pre><code><span class="comment">/* Базовая структура для широких экранов */</span>
+<span class="selector">.wide-layout</span> {
+    <span class="property">max-width</span>: <span class="value">1400px</span>;    <span class="comment">/* Максимальная ширина */</span>
+    <span class="property">margin</span>: <span class="value">0 auto</span>;        <span class="comment">/* Центрирование */</span>
+    <span class="property">padding</span>: <span class="value">0 20px</span>;       <span class="comment">/* Отступы по бокам */</span>
++}
+
+<span class="comment">/* Адаптивная сетка */</span>
+<span class="selector">@media (min-width: 1200px)</span> {
+    <span class="selector">.grid-container</span> {
+        <span class="property">display</span>: <span class="value">grid</span>;
+        <span class="property">grid-template-columns</span>: <span class="value">repeat(3, 1fr)</span>;
+        <span class="property">gap</span>: <span class="value">30px</span>;
+    }
+}</code></pre>
+                </div>
+
+                <div class="controls-panel">
+                    <div class="control-group">
+                        <button class="control-button" onclick="toggleLayout('basic')">Базовый макет</button>
+                        <button class="control-button" onclick="toggleLayout('sidebar')">С сайдбаром</button>
+                        <button class="control-button" onclick="toggleLayout('three')">Три колонки</button>
+                    </div>
+                </div>
+
+                <div class="wide-layout-demo" id="layoutDemo">
+                    <!-- Содержимое будет добавлено через JavaScript -->
+                </div>
+            </div>
+
+            <div class="theory-block">
+                <h2>2. Максимальная ширина контента</h2>
+                <p>Для улучшения читаемости важно ограничивать максимальную ширину контента. Оптимальная длина строки составляет 45-75 символов:</p>
+
+                <div class="code-explanation">
+                    <h3>Рекомендации по ширине контента:</h3>
+                    <ul>
+                        <li><strong>1200px:</strong> Оптимально для большинства сайтов</li>
+                        <li><strong>1400px:</strong> Для контента с большим количеством элементов</li>
+                        <li><strong>1600px:</strong> Для специальных случаев (дашборды, таблицы)</li>
+                    </ul>
+                </div>
+
+                <div class="code-block">
+                    <pre><code><span class="comment">/* Контейнеры разной ширины */</span>
+<span class="selector">.container-regular</span> {
+    <span class="property">max-width</span>: <span class="value">1200px</span>;
+    <span class="property">width</span>: <span class="value">100%</span>;
+    <span class="property">margin</span>: <span class="value">0 auto</span>;
++}
+
+<span class="selector">.container-wide</span> {
+    <span class="property">max-width</span>: <span class="value">1400px</span>;
++}
+
+<span class="selector">.container-extra</span> {
+    <span class="property">max-width</span>: <span class="value">1600px</span>;
++}</code></pre>
+                </div>
+
+                <div class="controls-panel">
+                    <div class="control-group">
+                        <button class="control-button" onclick="setMaxWidth('1200px')">1200px</button>
+                        <button class="control-button" onclick="setMaxWidth('1400px')">1400px</button>
+                        <button class="control-button" onclick="setMaxWidth('1600px')">1600px</button>
+                    </div>
+                </div>
+
+                <div class="max-width-demo" id="maxWidthDemo">
+                    <p>Контент с ограниченной шириной для лучшей читаемости.</p>
+                </div>
+            </div>
+
+            <div class="theory-block">
+                <h2>3. Адаптивные отступы</h2>
+                <p>На широких экранах отступы должны масштабироваться пропорционально для сохранения визуального баланса:</p>
+
+                <div class="code-explanation">
+                    <h3>Принципы масштабирования отступов:</h3>
+                    <ul>
+                        <li><strong>Пропорциональность:</strong> Отступы растут вместе с шириной экрана</li>
+                        <li><strong>Читаемость:</strong> Сохранение комфортных расстояний между элементами</li>
+                        <li><strong>Консистентность:</strong> Использование единой системы отступов</li>
+                    </ul>
+                </div>
+
+                <div class="code-block">
+                    <pre><code><span class="comment">/* Адаптивные отступы */</span>
+<span class="selector">@media (min-width: 1200px)</span> {
+    <span class="selector">.content-block</span> {
+        <span class="property">padding</span>: <span class="value">clamp(20px, 3vw, 40px)</span>;
+        <span class="property">margin-bottom</span>: <span class="value">clamp(30px, 4vw, 60px)</span>;
+    }
+
+    <span class="selector">.content-block.wide</span> {
+        <span class="property">padding</span>: <span class="value">clamp(30px, 4vw, 60px)</span>;
+    }
+}</code></pre>
+                </div>
+
+                <div class="controls-panel">
+                    <div class="control-group">
+                        <button class="control-button" onclick="setSpacing('normal')">Обычные</button>
+                        <button class="control-button" onclick="setSpacing('wide')">Широкие</button>
+                        <button class="control-button" onclick="setSpacing('extra')">Максимальные</button>
+                    </div>
+                </div>
+
+                <div class="spacing-demo" id="spacingDemo">
+                    <div class="spacing-example">
+                        <p>Пример с масштабируемыми отступами</p>
+                    </div>
+                </div>
+            </div>
+        </article>
+    </main>
+
+    <div class="width-indicator" id="widthIndicator">
+        Ширина: <span id="currentWidth">0</span>px
+    </div>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            // Функция для обновления активных кнопок в группе
+            function updateActiveButtons(group, activeButton) {
+                const buttons = group.querySelectorAll('button');
+                buttons.forEach(button => {
+                    button.classList.remove('active');
+                });
+                activeButton.classList.add('active');
+            }
+
+            // Функция для переключения макетов
+            window.toggleLayout = function(type) {
+                const demo = document.getElementById('layoutDemo');
+                const button = event.target;
+                const group = button.closest('.control-group');
+                demo.innerHTML = ''; // Очищаем демо
+
+                switch(type) {
+                    case 'basic':
+                        demo.className = 'wide-layout-demo grid-layout';
+                        for(let i = 1; i <= 3; i++) {
+                            demo.innerHTML += `
+                                <div class="card">
+                                    <h3>Колонка ${i}</h3>
+                                    <p>Содержимое колонки ${i}</p>
+                                </div>
+                            `;
+                        }
+                        break;
+                    case 'sidebar':
+                        demo.className = 'wide-layout-demo grid-layout with-sidebar';
+                        demo.innerHTML = `
+                            <div class="card">
+                                <h3>Сайдбар</h3>
+                                <p>Боковая панель</p>
+                            </div>
+                            <div class="card">
+                                <h3>Основной контент</h3>
+                                <p>Основное содержимое страницы</p>
+                            </div>
+                        `;
+                        break;
+                    case 'three':
+                        demo.className = 'wide-layout-demo grid-layout three-columns';
+                        demo.innerHTML = `
+                            <div class="card">
+                                <h3>Левый сайдбар</h3>
+                                <p>Навигация</p>
+                            </div>
+                            <div class="card">
+                                <h3>Основной контент</h3>
+                                <p>Основное содержимое</p>
+                            </div>
+                            <div class="card">
+                                <h3>Правый сайдбар</h3>
+                                <p>Дополнительная информация</p>
+                            </div>
+                        `;
+                        break;
+                }
+                updateActiveButtons(group, button);
+            };
+
+            // Функция для установки максимальной ширины
+            window.setMaxWidth = function(width) {
+                const demo = document.getElementById('maxWidthDemo');
+                const button = event.target;
+                const group = button.closest('.control-group');
+                if (!demo) return;
+
+                const currentWidth = document.createElement('div');
+                currentWidth.className = 'width-label';
+                currentWidth.textContent = width;
+
+                demo.style.maxWidth = width;
+                demo.style.width = '100%';
+                
+                // Удаляем предыдущую метку
+                const oldLabel = demo.querySelector('.width-label');
+                if (oldLabel) oldLabel.remove();
+                demo.appendChild(currentWidth);
+
+                // Добавляем направляющие
+                const guides = demo.querySelectorAll('.width-guide');
+                guides.forEach(guide => guide.remove());
+
+                const leftGuide = document.createElement('div');
+                leftGuide.className = 'width-guide';
+                leftGuide.style.left = '0';
+                leftGuide.setAttribute('data-width', '0');
+
+                const rightGuide = document.createElement('div');
+                rightGuide.className = 'width-guide';
+                rightGuide.style.right = '0';
+                rightGuide.setAttribute('data-width', width);
+
+                demo.appendChild(leftGuide);
+                demo.appendChild(rightGuide);
+
+                updateActiveButtons(group, button);
+                
+                // Добавляем анимацию
+                demo.style.transform = 'scale(0.98)';
+                setTimeout(() => {
+                    demo.style.transform = 'scale(1)';
+                }, 150);
+
+                // Обновляем текст
+                updateDemoContent();
+            };
+
+            // Функция для обновления содержимого демо
+            function updateDemoContent() {
+                const demo = document.getElementById('maxWidthDemo');
+                if (demo) {
+                    let content = demo.querySelector('p');
+                    if (!content) {
+                        content = document.createElement('p');
+                        demo.appendChild(content);
+                    }
+                    const text = 'Lorem ipsum dolor sit amet, consectetur adipiscing elit. '.repeat(10);
+                    content.textContent = text;
+                }
+            }
+
+            // Функция для установки отступов
+            window.setSpacing = function(type) {
+                const demo = document.getElementById('spacingDemo');
+                const button = event.target;
+                const group = button.closest('.control-group');
+                const spacingMap = {
+                    normal: { padding: '20px', margin: '20px' },
+                    wide: { padding: '40px', margin: '40px' },
+                    extra: { padding: '60px', margin: '60px' }
+                };
+                
+                const spacing = spacingMap[type];
+                demo.style.padding = spacing.padding;
+                demo.style.margin = spacing.margin;
+                
+                updateActiveButtons(group, button);
+            };
+
+            // Обновление индикатора ширины
+            function updateWidthIndicator() {
+                const width = window.innerWidth;
+                document.getElementById('currentWidth').textContent = width;
+            }
+
+            // Инициализация
+            toggleLayout('basic');
+            setMaxWidth('1200px');
+            setSpacing('normal');
+            updateWidthIndicator();
+
+            // Слушатель изменения размера окна
+            window.addEventListener('resize', updateWidthIndicator);
+        });
+    </script>
+</body>
+</html> 
